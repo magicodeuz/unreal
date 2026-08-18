@@ -1731,17 +1731,36 @@
     ];
 
     // ============================================================
-    // STATE & STORAGE
+    // STATE & STORAGE (sandbox-safe)
     // ============================================================
     const STORAGE_KEY = 'betraybuilder_progress_v1';
-    let completed = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
+
+    function safeGetStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        console.warn('localStorage unavailable, using memory only');
+        return [];
+      }
+    }
+
+    function safeSetStorage(data) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      } catch (e) {
+        // Sandboxed environment — ignore
+      }
+    }
+
+    let completed = new Set(safeGetStorage());
     let currentView = 'home'; // home | stage | day
     let currentStage = null;
     let currentDay = null;
     let searchQuery = '';
 
     function saveProgress() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify([...completed]));
+      safeSetStorage([...completed]);
       updateProgressUI();
     }
 
@@ -2049,6 +2068,16 @@
               ? '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Bajarildi — belgini olib tashlash'
               : '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Kunni bajarildi deb belgilash'}
           </button>
+
+          <!-- Full documentation button -->
+          <a href="Days/day-${String(dayNum).padStart(2, '0')}.html"
+             class="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold transition
+                    bg-indigo-600 hover:bg-indigo-500 text-white border border-indigo-500/50 mt-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            Ushbu kunni to'liq dokumentatsiyasini bajarishni boshlash
+          </a>
 
           <!-- Concepts -->
           ${d.concepts?.length ? `
