@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 20 — Computer | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 3 · Interaction System</div>
+          <div class="font-semibold text-sm truncate">Kun 20 — Computer</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~3.5–4.5 soat · chuqur dars</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun Computer?</a>
+        <a href="#umg-intro" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">UMG qisqa kirish</a>
+        <a href="#input-modes" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Input Mode</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">To‘liq sxema</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. WBP placeholder</a>
+        <a href="#widget-layout" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Matn + Close</a>
+        <a href="#close-logic" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Close mantiq</a>
+        <a href="#computer-bp" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. BP_Computer</a>
+        <a href="#interact-open" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Interact → Widget</a>
+        <a href="#input-open" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Input Mode UI</a>
+        <a href="#ref-widget" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. Widget reference</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">8. Test</a>
+        <a href="#troubleshooting" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">9. Troubleshooting</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
+        <a href="#stage10" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Stage 10 UI</a>
+        <a href="#bonus" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bonus</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#mistakes" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Ko‘p xatolar</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+          Stage 3 · Kun 20 · Interaction → UI ko‘prigi
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Computer</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          E → <strong class="text-slate-200">Widget</strong> ochiladi, sichqoncha ko‘rinadi, Close → o‘yin qaytadi. Chiroyli UI emas — <em>bog‘lanish tamoyili</em>.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">WBP_ComputerScreen_Placeholder</code> — matn + Close</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">BP_Computer</code> + BPI_Interact</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Interact: <span class="ui-label">Create Widget</span> → <span class="ui-label">Add to Viewport</span></li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <span class="ui-label">Set Input Mode UI Only</span> + Show Mouse Cursor</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Close: Remove from Parent + Input Mode Game Only</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> (Challenge) Widget ochiqda harakat o‘chiriladi</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Chiroyli dizayn, animatsiya, task minigame, inventory UI. Placeholder yetarli. To‘liq UMG — Stage 10 (Day 64+).</p>
+          </div>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima uchun erta UI?</strong> Interact faqat eshik/light emas — ba’zan ekran ochadi. Bog‘lanishni endi o‘rganasiz; bezak keyin.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun Computer?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Betray Builder’da task, voting, map, chat — ko‘pi UI. Agar Interaction faqat world Actor bilan cheklansa, keyin UI’ni “qayerdan chaqirish” chalkashadi.
+          </p>
+          <p>
+            Computer = <strong class="text-white">world interactable → screen UI</strong> namunasi. Player BPI orqali Computer’ga E; Computer Widget ochadi. Keyin WBP ichini to‘ldirasiz.
+          </p>
+        </div>
+      </section>
+
+      <!-- UMG INTRO -->
+      <section id="umg-intro" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">🖥</span>
+          UMG — qisqa kirish
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            <strong class="text-white">UMG</strong> (Unreal Motion Graphics) — Widget Blueprint asosidagi UI tizimi.
+          </p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li><span class="ui-label">Widget Blueprint (WBP_)</span> — UI “class”</li>
+            <li><span class="ui-label">Create Widget</span> — runtime nusxa</li>
+            <li><span class="ui-label">Add to Viewport</span> — ekranga chiqarish</li>
+            <li><span class="ui-label">Remove from Parent</span> — yopish / olib tashlash</li>
+          </ul>
+          <p class="text-slate-400">
+            Designer: Canvas Panel, Text, Button. Graph: OnClicked eventlar. Bugun minimal: 1 Text + 1 Button.
+          </p>
+        </div>
+      </section>
+
+      <!-- INPUT MODES -->
+      <section id="input-modes" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⌨</span>
+          Input Mode — Game vs UI
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700 text-left text-slate-400">
+                  <th class="py-2 pr-3">Mode</th>
+                  <th class="py-2">Ma’no</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Game Only</td>
+                  <td class="py-2">Input o‘yinga (WASD, look). Cursor odatda yashirin.</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">UI Only</td>
+                  <td class="py-2">Input widget’ga. O‘yin harakati to‘xtashi mumkin.</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Game and UI</td>
+                  <td class="py-2">Ikkalasi (pause menu ba’zan).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Computer ochilganda: <strong class="text-white">UI Only</strong> + <span class="ui-label">Show Mouse Cursor = true</span>.
+            Yopilganda: <strong class="text-white">Game Only</strong> + cursor false.
+          </p>
+          <p class="text-slate-400">
+            Node’lar Player Controller da: Set Input Mode UI Only (Widget focus), Set Show Mouse Cursor, Set Input Mode Game Only.
+          </p>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Focus:</strong> Set Input Mode UI Only da In Widget to Focus — ochilgan WBP reference. Aks holda tugmalar “o‘lik” bo‘lishi mumkin.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          To‘liq sxema
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5 space-y-4">
+          <p class="text-xs text-slate-500">BP_Computer</p>
+          <pre class="flow text-cyan-300/90">Event Interact (Instigator)
+  │
+  ├─ (ixtiyoriy) Already open? → return
+  ├─ Create Widget (Class = WBP_ComputerScreen_Placeholder)
+  │     Owning Player = Get Player Controller
+  ├─ Add to Viewport
+  ├─ Save ref → ActiveWidget (optional)
+  ├─ Get Player Controller
+  │     → Set Show Mouse Cursor (true)
+  │     → Set Input Mode UI Only (Widget = created)
+  └─ (challenge) Disable Input on Pawn
+
+WBP Close Button OnClicked:
+  │
+  ├─ Remove from Parent (Self)
+  ├─ Get Player Controller
+  │     → Set Show Mouse Cursor (false)
+  │     → Set Input Mode Game Only
+  └─ (challenge) Enable Input on Pawn</pre>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BPI_Interact + E zanjiri ishlaydi</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Door/Button/Light — pattern tanish</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">WBP_ComputerScreen_Placeholder</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.1</span>
+              <span class="text-sm font-medium text-white">Yaratish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Papka: <span class="ui-label">Content/BetrayBuilder/UI/</span> (yarating)</p>
+              <p>User Interface → Widget Blueprint → <span class="ui-label font-mono">WBP_ComputerScreen_Placeholder</span></p>
+              <p>Parent: User Widget (default).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="widget-layout" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Layout — matn + Close</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–25 daqiqa</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.1</span>
+              <span class="text-sm font-medium text-white">Designer</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <ol class="list-decimal list-inside space-y-2 text-slate-400">
+                <li>Root: Canvas Panel (default) yoki Vertical Box markazda.</li>
+                <li><span class="ui-label">Text</span>: “Computer Screen” / “Placeholder — Stage 10 da to‘ldiriladi”.</li>
+                <li><span class="ui-label">Button</span>: ichida Text “Close”.</li>
+                <li>Button Is Variable ✓ — nom <span class="ui-label">Btn_Close</span>.</li>
+              </ol>
+              <p class="text-slate-500">Fon: oddiy Border yoki Image qora panel — ixtiyoriy, o‘qilishi mumkin bo‘lsin.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Chiroyli qilmang.</strong> Vaqt UI polish’ga ketmasin. Funksional Close muhim.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="close-logic" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Close tugmasi mantiq</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–25 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">3.1</span>
+            <span class="text-sm font-medium text-white">Graph</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Btn_Close → OnClicked:</p>
+            <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">OnClicked (Btn_Close)
+  → Remove from Parent   // Self widget
+  → Get Player Controller (index 0)
+       → Set Show Mouse Cursor (false)
+       → Set Input Mode Game Only</pre>
+            <p class="text-slate-400">Remove from Parent — widget ekrandan ketadi. Reference saqlangan bo‘lsa, uni ham clear qilish mumkin (Computer tomonda).</p>
+            <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+              <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Input qaytmasa:</strong> Game Only chaqirilmagan — o‘yin “sichqonchada qolib” qoladi. Har doim juft: ochishda UI, yopishda Game.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="computer-bp" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BP_Computer</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.1</span>
+              <span class="text-sm font-medium text-white">Actor + mesh</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><span class="ui-label">Interaction/</span> → Actor → <span class="ui-label font-mono">BP_Computer</span></p>
+              <p>Cube/monitor mesh + Collision Visibility. BPI_Interact implement.</p>
+              <p>GetInteractionText: <code class="text-xs">"Kompyuterni ishlatish [E]"</code></p>
+              <p>CanInteract: true (yoki widget ochiq emasligi).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="interact-open" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Interact → Create Widget</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">5.1</span>
+            <span class="text-sm font-medium text-white">Event Interact</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">Event Interact
+  → Create Widget
+       Class = WBP_ComputerScreen_Placeholder
+       Owning Player = Get Player Controller (0)
+  → Add to Viewport (Return Value)
+  → (promote) ActiveScreenWidget = Return Value</pre>
+            <p>Har E da yangi widget — yopilmagan eski qolishi mumkin. Shuning uchun:</p>
+            <ul class="list-disc list-inside text-slate-400">
+              <li>Avval Is Valid ActiveScreenWidget → Remove, yoki</li>
+              <li>CanInteract: ActiveScreenWidget invalid</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="input-open" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Input Mode UI Only + Cursor</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">6.1</span>
+            <span class="text-sm font-medium text-white">Player Controller</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Create Widget dan keyin:</p>
+            <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">PC = Get Player Controller
+PC → Set Show Mouse Cursor (true)
+PC → Set Input Mode UI Only
+       Widget to Focus = created widget
+       Mouse Lock Mode = Do Not Lock (yoki default)</pre>
+            <p class="text-slate-400">Ba’zi versiyalarda Set Input Mode UI Only struct pinlari — barcha maydonlarni to‘ldiring.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="ref-widget" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Widget reference va qayta ochish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            <span class="ui-label font-mono">ActiveScreenWidget</span> (User Widget Object Reference) — Computer’da saqlang.
+          </p>
+          <p>
+            Close widget ichida Computer’ni bilmasligi mumkin — faqat o‘zini Remove qiladi. Computer keyingi Interact’da Is Valid tekshiradi.
+          </p>
+          <p class="text-slate-400">
+            Murakkabroq: Widget’da Event Dispatcher OnClosed → Computer bind. Bugun shart emas.
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 8 TEST -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">8</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test ssenariylari</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Computer E → ekranda placeholder</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Sichqoncha ko‘rinadi, Close bosiladi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Close → widget yo‘qoladi, WASD/look qaytadi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Qayta E → yana ochiladi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Cursor o‘yinda yashirin</span></label>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">9</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Troubleshooting</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-red-500/20 overflow-hidden">
+          <div class="bg-red-500/10 px-5 py-3 border-b border-red-500/20">
+            <span class="text-sm font-medium text-red-300">Muammo → yechim</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300">
+            <div>
+              <p class="font-medium text-white">Widget ko‘rinmaydi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Add to Viewport chaqirilganmi?</li>
+                <li>Create Widget class to‘g‘rimi?</li>
+                <li>ZOrder / visibility</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Close ishlamaydi / cursor yo‘q</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Show Mouse Cursor true?</li>
+                <li>Input Mode UI Only + focus widget?</li>
+                <li>Button Is Enabled, OnClicked ulangan?</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Yopilgach o‘yin boshqarilmaydi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Set Input Mode Game Only</li>
+                <li>Show Mouse Cursor false</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Bir nechta widget qatlam</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Qayta ochishdan oldin eski Remove</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">E widget ochiqda ham ishlaydi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>UI Only ba’zan game input’ni to‘liq kesmaydi — challenge Disable Input</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — Disable Input</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-3">
+          <p>Widget ochilganda Pawn/Player:</p>
+          <p><span class="ui-label">Disable Input</span> (Target = Player Pawn, Player Controller).</p>
+          <p>Close da: <span class="ui-label">Enable Input</span>.</p>
+          <p class="text-slate-500">Instigator Interact’da Player — uni saqlab Close’ga yetkazish qiyinroq (Dispatcher yoki PC orqali Get Pawn). Sodda yo‘l: Computer Interact da Get Player Pawn Disable; Widget Close da Get Player Pawn Enable.</p>
+        </div>
+      </section>
+
+      <!-- STAGE 10 -->
+      <section id="stage10" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm">10</span>
+          Stage 10 (Day 64+) ga ko‘prik
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Keyinroq shu WBP o‘rniga:</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Task panel, map, voting</li>
+            <li>Animation, sound, data binding</li>
+            <li>Widget Component world-space (3D screen)</li>
+          </ul>
+          <p class="text-slate-500">Ochish/yopish + Input Mode pattern o‘zgarmaydi — faqat ichki kontent.</p>
+        </div>
+      </section>
+
+      <!-- BONUS -->
+      <section id="bonus" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">★</span>
+          Bonus
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B1</span>
+            <strong class="text-white ml-2">ESC yopish</strong>
+            <p class="mt-1 text-slate-400">Widget da key binding / listen ESC → Close.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B2</span>
+            <strong class="text-white ml-2">Pause game</strong>
+            <p class="mt-1 text-slate-400">Set Game Paused true/false (multiplayer’da ehtiyot).</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B3</span>
+            <strong class="text-white ml-2">Owning Computer ref</strong>
+            <p class="mt-1 text-slate-400">Create Widget dan keyin custom event SetOwner(Computer) — Close da Computer ActiveWidget clear.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">?</span>
+          FAQ
+        </h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Widget Component (3D) bilan farqi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Widget Component — dunyoda mesh ustida UI. Viewport — to‘liq ekran. Task odatda Viewport; monitor 3D bo‘lishi mumkin.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Nima uchun har safar Create?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Sodda. Alternative: bir marta yaratib Hide/Show. Create+Remove ham OK placeholder uchun.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Common UI / Enhanced Input UI?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Keyinroq. Hozir classic Set Input Mode yetarli.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- MISTAKES -->
+      <section id="mistakes" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm">!</span>
+          Ko‘p xatolar
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">1. UI Only ochib, Game Only yopmaslik</p>
+            <p class="text-slate-400 mt-1">Input “qolib ketadi”.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">2. Add to Viewport’siz Create</p>
+            <p class="text-slate-400 mt-1">Widget xotirada, ekranda yo‘q.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">3. Close’da faqat Hide</p>
+            <p class="text-slate-400 mt-1">Input Mode qaytarilmasa bir xil muammo.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">4. Chiroyli UI ga 2 soat</p>
+            <p class="text-slate-400 mt-1">Stage 10 vazifasi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center text-sm">Aa</span>
+          Lug‘at
+        </h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">UMG</td><td class="py-2.5 px-4 text-slate-400">Unreal UI tizimi</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">WBP</td><td class="py-2.5 px-4 text-slate-400">Widget Blueprint</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Add to Viewport</td><td class="py-2.5 px-4 text-slate-400">Ekranga chiqarish</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Remove from Parent</td><td class="py-2.5 px-4 text-slate-400">Widget’ni olib tashlash</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Input Mode UI Only</td><td class="py-2.5 px-4 text-slate-400">Input faqat UI</td></tr>
+              <tr><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Owning Player</td><td class="py-2.5 px-4 text-slate-400">Widget qaysi PC ga tegishli</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- STACK -->
+      <section id="stack" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm">📦</span>
+          Interactable oilasi + UI
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">Door / Button / Light  → world reaction
+BP_Computer            → opens WBP (screen)
+WBP_..._Placeholder    → Close restores game input</pre>
+        </div>
+      </section>
+
+      <!-- CHECKLIST -->
+      <section id="checklist" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">✓</span>
+          Yakuniy checklist
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">WBP: Text + Close + OnClicked Remove + Game Only</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BP_Computer: BPI + Create + Add to Viewport</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">UI Only + Show Cursor</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Play: ochish/yopish silliq</span></label>
+        </div>
+      </section>
+
+      <!-- SEQUENCE -->
+      <section id="sequence" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Vaqt ketma-ketligi</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">E on Computer
+  → Create WBP → Viewport
+  → Cursor on, Input UI Only
+Click Close
+  → Remove WBP
+  → Cursor off, Input Game Only
+  → (optional) Enable Input Pawn</pre>
+        </div>
+      </section>
+
+      <!-- WORKED -->
+      <section id="worked" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Tezkor xulosa</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <p>1. WBP placeholder + Close restores Game input.</p>
+          <p>2. Computer Interact creates + shows widget.</p>
+          <p>3. Always pair UI Only ↔ Game Only.</p>
+          <p>4. Beauty later (Stage 10).</p>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ Interaction → UI ochish zanjiri</li>
+            <li>✓ Create Widget + Viewport + Input Mode</li>
+            <li>✓ Close to‘liq o‘yin holatiga qaytaradi</li>
+            <li>✓ Stage 10 uchun joy tayyor</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4 space-y-1">
+            <code class="text-cyan-300 text-xs block">.../UI/WBP_ComputerScreen_Placeholder</code>
+            <code class="text-cyan-300 text-xs block">.../Interaction/BP_Computer</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4">
+            <p class="text-slate-400"><strong class="text-white">Stage 3 boyidi:</strong> world + screen interact. Keyingi kunlar — ko‘proq usable yoki Milestone.</p>
+          </div>
+          <div class="mt-4 rounded-lg border border-slate-700 bg-slate-950 p-4">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">O‘zingizga savol</p>
+            <p class="text-slate-400">Close bosilganda nima qaytarilmasa o‘yin “sinadi”? (Input Mode Game Only + cursor.)</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="prep21" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Keyingi kunga</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-400 space-y-2">
+          <p>Computer ochilish/yopilish ishonchli bo‘lsin.</p>
+          <p>Placeholder matnida “Stage 10” eslatmasi — kelajak o‘zingizga.</p>
+        </div>
+      </section>
+
+      
+      <section id="extra-depth" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Qo‘shimcha: Owning Player va local multiplayer</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Create Widget da <span class="ui-label">Owning Player</span> — qaysi Player Controller widget’ni “egalik” qiladi. Single player: index 0.</p>
+          <p class="text-slate-400">Split-screen da har o‘yinchi o‘z UI’siga ega bo‘lishi kerak — noto‘g‘ri PC bo‘lsa widget boshqa ekranda chiqadi.</p>
+          <p class="text-slate-500">Hozir Get Player Controller 0 yetarli.</p>
+        </div>
+      </section>
+      <section id="extra-focus" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Qo‘shimcha: Focus va gamepad</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>UI Only da Widget to Focus — klaviatura/gamepad navigatsiyasi shu widget’dan boshlanadi.</p>
+          <p class="text-slate-400">Button uchun Is Focusable. Sichqoncha asosiy bo‘lsa ham focus bering.</p>
+        </div>
+      </section>
+      <section id="extra-zorder" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">ZOrder</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300">
+          <p>Add to Viewport ZOrder — qatlam. HUD 0, modal computer 10. Placeholder da default OK.</p>
+        </div>
+      </section>
+      <section id="anti-ui" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">UI anti-patternlar</h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Tick da Create Widget</p>
+            <p class="text-slate-400 mt-1">Har frame yangi UI — crash / lag. Faqat Interact da.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Hard reference levelga WBP instance</p>
+            <p class="text-slate-400 mt-1">Runtime Create — to‘g‘ri yo‘l.</p>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="deep-1" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-4">Chuqlashtirish 1</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer UI ochilganda o‘yinchi e’tibori ekranga o‘tadi. Bu design jihatdan “modal” interaksya: dunyo to‘xtamasa ham, boshqaruv UI ga beriladi.</p>
+          <p class="text-slate-400">Input Mode juftligi (UI Only / Game Only) — eng muhim intizom. Bir tomonini unutsangiz, playtest “buzilgan his” beradi: sichqoncha o‘yinda qoladi yoki WASD UI da ishlaydi.</p>
+          <p class="text-slate-400">Placeholder matnni ongli ravishda oddiy qoldiring. Vaqtni Stage 10 dizayniga saqlang; hozir zanjir ishonchliligi muhimroq.</p>
+          <p class="text-slate-500">BP_Computer mesh faqat nishon — haqiqiy “ish” WBP da. Shu ajratish clean architecture.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Create Widget — instance</li>
+            <li>Add to Viewport — ko‘rinish</li>
+            <li>Input Mode — boshqaruv</li>
+            <li>Remove + Game Only — tozalash</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section id="deep-2" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-4">Chuqlashtirish 2</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer UI ochilganda o‘yinchi e’tibori ekranga o‘tadi. Bu design jihatdan “modal” interaksya: dunyo to‘xtamasa ham, boshqaruv UI ga beriladi.</p>
+          <p class="text-slate-400">Input Mode juftligi (UI Only / Game Only) — eng muhim intizom. Bir tomonini unutsangiz, playtest “buzilgan his” beradi: sichqoncha o‘yinda qoladi yoki WASD UI da ishlaydi.</p>
+          <p class="text-slate-400">Placeholder matnni ongli ravishda oddiy qoldiring. Vaqtni Stage 10 dizayniga saqlang; hozir zanjir ishonchliligi muhimroq.</p>
+          <p class="text-slate-500">BP_Computer mesh faqat nishon — haqiqiy “ish” WBP da. Shu ajratish clean architecture.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Create Widget — instance</li>
+            <li>Add to Viewport — ko‘rinish</li>
+            <li>Input Mode — boshqaruv</li>
+            <li>Remove + Game Only — tozalash</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section id="deep-3" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-4">Chuqlashtirish 3</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer UI ochilganda o‘yinchi e’tibori ekranga o‘tadi. Bu design jihatdan “modal” interaksya: dunyo to‘xtamasa ham, boshqaruv UI ga beriladi.</p>
+          <p class="text-slate-400">Input Mode juftligi (UI Only / Game Only) — eng muhim intizom. Bir tomonini unutsangiz, playtest “buzilgan his” beradi: sichqoncha o‘yinda qoladi yoki WASD UI da ishlaydi.</p>
+          <p class="text-slate-400">Placeholder matnni ongli ravishda oddiy qoldiring. Vaqtni Stage 10 dizayniga saqlang; hozir zanjir ishonchliligi muhimroq.</p>
+          <p class="text-slate-500">BP_Computer mesh faqat nishon — haqiqiy “ish” WBP da. Shu ajratish clean architecture.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Create Widget — instance</li>
+            <li>Add to Viewport — ko‘rinish</li>
+            <li>Input Mode — boshqaruv</li>
+            <li>Remove + Game Only — tozalash</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section id="deep-4" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-4">Chuqlashtirish 4</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer UI ochilganda o‘yinchi e’tibori ekranga o‘tadi. Bu design jihatdan “modal” interaksya: dunyo to‘xtamasa ham, boshqaruv UI ga beriladi.</p>
+          <p class="text-slate-400">Input Mode juftligi (UI Only / Game Only) — eng muhim intizom. Bir tomonini unutsangiz, playtest “buzilgan his” beradi: sichqoncha o‘yinda qoladi yoki WASD UI da ishlaydi.</p>
+          <p class="text-slate-400">Placeholder matnni ongli ravishda oddiy qoldiring. Vaqtni Stage 10 dizayniga saqlang; hozir zanjir ishonchliligi muhimroq.</p>
+          <p class="text-slate-500">BP_Computer mesh faqat nishon — haqiqiy “ish” WBP da. Shu ajratish clean architecture.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Create Widget — instance</li>
+            <li>Add to Viewport — ko‘rinish</li>
+            <li>Input Mode — boshqaruv</li>
+            <li>Remove + Game Only — tozalash</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section id="deep-5" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-4">Chuqlashtirish 5</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer UI ochilganda o‘yinchi e’tibori ekranga o‘tadi. Bu design jihatdan “modal” interaksya: dunyo to‘xtamasa ham, boshqaruv UI ga beriladi.</p>
+          <p class="text-slate-400">Input Mode juftligi (UI Only / Game Only) — eng muhim intizom. Bir tomonini unutsangiz, playtest “buzilgan his” beradi: sichqoncha o‘yinda qoladi yoki WASD UI da ishlaydi.</p>
+          <p class="text-slate-400">Placeholder matnni ongli ravishda oddiy qoldiring. Vaqtni Stage 10 dizayniga saqlang; hozir zanjir ishonchliligi muhimroq.</p>
+          <p class="text-slate-500">BP_Computer mesh faqat nishon — haqiqiy “ish” WBP da. Shu ajratish clean architecture.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Create Widget — instance</li>
+            <li>Add to Viewport — ko‘rinish</li>
+            <li>Input Mode — boshqaruv</li>
+            <li>Remove + Game Only — tozalash</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section id="deep-6" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-4">Chuqlashtirish 6</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer UI ochilganda o‘yinchi e’tibori ekranga o‘tadi. Bu design jihatdan “modal” interaksya: dunyo to‘xtamasa ham, boshqaruv UI ga beriladi.</p>
+          <p class="text-slate-400">Input Mode juftligi (UI Only / Game Only) — eng muhim intizom. Bir tomonini unutsangiz, playtest “buzilgan his” beradi: sichqoncha o‘yinda qoladi yoki WASD UI da ishlaydi.</p>
+          <p class="text-slate-400">Placeholder matnni ongli ravishda oddiy qoldiring. Vaqtni Stage 10 dizayniga saqlang; hozir zanjir ishonchliligi muhimroq.</p>
+          <p class="text-slate-500">BP_Computer mesh faqat nishon — haqiqiy “ish” WBP da. Shu ajratish clean architecture.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Create Widget — instance</li>
+            <li>Add to Viewport — ko‘rinish</li>
+            <li>Input Mode — boshqaruv</li>
+            <li>Remove + Game Only — tozalash</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section id="deep-7" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-4">Chuqlashtirish 7</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer UI ochilganda o‘yinchi e’tibori ekranga o‘tadi. Bu design jihatdan “modal” interaksya: dunyo to‘xtamasa ham, boshqaruv UI ga beriladi.</p>
+          <p class="text-slate-400">Input Mode juftligi (UI Only / Game Only) — eng muhim intizom. Bir tomonini unutsangiz, playtest “buzilgan his” beradi: sichqoncha o‘yinda qoladi yoki WASD UI da ishlaydi.</p>
+          <p class="text-slate-400">Placeholder matnni ongli ravishda oddiy qoldiring. Vaqtni Stage 10 dizayniga saqlang; hozir zanjir ishonchliligi muhimroq.</p>
+          <p class="text-slate-500">BP_Computer mesh faqat nishon — haqiqiy “ish” WBP da. Shu ajratish clean architecture.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Create Widget — instance</li>
+            <li>Add to Viewport — ko‘rinish</li>
+            <li>Input Mode — boshqaruv</li>
+            <li>Remove + Game Only — tozalash</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section id="deep-8" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-4">Chuqlashtirish 8</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer UI ochilganda o‘yinchi e’tibori ekranga o‘tadi. Bu design jihatdan “modal” interaksya: dunyo to‘xtamasa ham, boshqaruv UI ga beriladi.</p>
+          <p class="text-slate-400">Input Mode juftligi (UI Only / Game Only) — eng muhim intizom. Bir tomonini unutsangiz, playtest “buzilgan his” beradi: sichqoncha o‘yinda qoladi yoki WASD UI da ishlaydi.</p>
+          <p class="text-slate-400">Placeholder matnni ongli ravishda oddiy qoldiring. Vaqtni Stage 10 dizayniga saqlang; hozir zanjir ishonchliligi muhimroq.</p>
+          <p class="text-slate-500">BP_Computer mesh faqat nishon — haqiqiy “ish” WBP da. Shu ajratish clean architecture.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Create Widget — instance</li>
+            <li>Add to Viewport — ko‘rinish</li>
+            <li>Input Mode — boshqaruv</li>
+            <li>Remove + Game Only — tozalash</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section id="deep-9" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-4">Chuqlashtirish 9</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer UI ochilganda o‘yinchi e’tibori ekranga o‘tadi. Bu design jihatdan “modal” interaksya: dunyo to‘xtamasa ham, boshqaruv UI ga beriladi.</p>
+          <p class="text-slate-400">Input Mode juftligi (UI Only / Game Only) — eng muhim intizom. Bir tomonini unutsangiz, playtest “buzilgan his” beradi: sichqoncha o‘yinda qoladi yoki WASD UI da ishlaydi.</p>
+          <p class="text-slate-400">Placeholder matnni ongli ravishda oddiy qoldiring. Vaqtni Stage 10 dizayniga saqlang; hozir zanjir ishonchliligi muhimroq.</p>
+          <p class="text-slate-500">BP_Computer mesh faqat nishon — haqiqiy “ish” WBP da. Shu ajratish clean architecture.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Create Widget — instance</li>
+            <li>Add to Viewport — ko‘rinish</li>
+            <li>Input Mode — boshqaruv</li>
+            <li>Remove + Game Only — tozalash</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section id="deep-10" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-4">Chuqlashtirish 10</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer UI ochilganda o‘yinchi e’tibori ekranga o‘tadi. Bu design jihatdan “modal” interaksya: dunyo to‘xtamasa ham, boshqaruv UI ga beriladi.</p>
+          <p class="text-slate-400">Input Mode juftligi (UI Only / Game Only) — eng muhim intizom. Bir tomonini unutsangiz, playtest “buzilgan his” beradi: sichqoncha o‘yinda qoladi yoki WASD UI da ishlaydi.</p>
+          <p class="text-slate-400">Placeholder matnni ongli ravishda oddiy qoldiring. Vaqtni Stage 10 dizayniga saqlang; hozir zanjir ishonchliligi muhimroq.</p>
+          <p class="text-slate-500">BP_Computer mesh faqat nishon — haqiqiy “ish” WBP da. Shu ajratish clean architecture.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Create Widget — instance</li>
+            <li>Add to Viewport — ko‘rinish</li>
+            <li>Input Mode — boshqaruv</li>
+            <li>Remove + Game Only — tozalash</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section id="deep-11" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-4">Chuqlashtirish 11</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer UI ochilganda o‘yinchi e’tibori ekranga o‘tadi. Bu design jihatdan “modal” interaksya: dunyo to‘xtamasa ham, boshqaruv UI ga beriladi.</p>
+          <p class="text-slate-400">Input Mode juftligi (UI Only / Game Only) — eng muhim intizom. Bir tomonini unutsangiz, playtest “buzilgan his” beradi: sichqoncha o‘yinda qoladi yoki WASD UI da ishlaydi.</p>
+          <p class="text-slate-400">Placeholder matnni ongli ravishda oddiy qoldiring. Vaqtni Stage 10 dizayniga saqlang; hozir zanjir ishonchliligi muhimroq.</p>
+          <p class="text-slate-500">BP_Computer mesh faqat nishon — haqiqiy “ish” WBP da. Shu ajratish clean architecture.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Create Widget — instance</li>
+            <li>Add to Viewport — ko‘rinish</li>
+            <li>Input Mode — boshqaruv</li>
+            <li>Remove + Game Only — tozalash</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-19.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 19
+        </a>
+        <div class="text-xs text-slate-600">Kun 20 / 90 · Stage 3</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 21 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

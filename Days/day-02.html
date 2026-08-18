@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 2 — Actor va Component | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ue: {
+              dark: '#1a1a1a',
+              panel: '#242424',
+              border: '#3a3a3a',
+              accent: '#26c6da',
+              blue: '#0078d4',
+              green: '#4caf50',
+              orange: '#ff9800',
+              text: '#e0e0e0',
+              muted: '#9e9e9e'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .prose h2 { scroll-margin-top: 5rem; }
+    .prose h3 { scroll-margin-top: 5rem; }
+    .step-num {
+      background: linear-gradient(135deg, #26c6da, #0078d4);
+    }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout {
+      border-left: 4px solid;
+    }
+    .toc-link.active {
+      color: #26c6da;
+      border-left-color: #26c6da;
+    }
+    pre, .tree {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <!-- TOP BAR -->
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 1 · Fundamentals</div>
+          <div class="font-semibold text-sm truncate">Kun 2 — Actor va Component</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">Taxminiy vaqt: 1–1.5 soat</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <!-- SIDE TOC -->
+    <aside class="hidden lg:block w-56 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#tushunchalar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Asosiy tushunchalar</a>
+        <a href="#hierarchy" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Component hierarchy</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. Blueprint yaratish</a>
+        <a href="#mesh" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Static Mesh qo'shish</a>
+        <a href="#collision" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Box Collision</a>
+        <a href="#parent" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Parent / Child</a>
+        <a href="#level" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Levelga joylashtirish</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Test qilish</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <!-- HERO -->
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+          Stage 1 · Kun 2 / 7
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Actor va Component</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          O‘zingizning birinchi Actor Blueprint’ingizni yaratasiz, unga Static Mesh va Box Collision qo‘shasiz, hierarchy tushunchasini amalda ko‘rasiz.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3">
+          <p class="text-slate-300 leading-relaxed">Bugun siz:</p>
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Yangi <strong class="text-white">Actor Blueprint</strong> yaratasiz (<code class="text-cyan-300 text-sm">BP_TestObject</code>)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Unga <strong class="text-white">Static Mesh Component</strong> qo‘shib, Cube modelini biriktirasiz</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <strong class="text-white">Box Collision</strong> qo‘shib, fizik chegarani sozlaysiz</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Component’lar orasidagi <strong class="text-white">Parent / Child</strong> bog‘lanishni tushunasiz</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Levelga 2–3 nusxa joylashtirib, Transform bilan sinab ko‘rasiz</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3 mt-4">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Widget Component qo‘shmang, Event Graph’da script yozmang. Faqat Component hierarchy bilan ishlang.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TUSHUNCHALAR -->
+      <section id="tushunchalar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📖</span>
+          Asosiy tushunchalar
+        </h2>
+        <p class="text-slate-400 text-sm mb-4">Kecha o‘rgangan Actor tushunchasini chuqurlashtiramiz.</p>
+
+        <div class="space-y-3">
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Actor Blueprint</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Oddiy Actor’ning “shablon”i. Bir marta yaratib, Levelga istalgancha nusxa (instance) qo‘yishingiz mumkin. Har bir nusxa bir xil Component’larga ega, lekin Transform’i (joylashuvi) alohida.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Component</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Actor ichidagi qism. Actor o‘zi “bo‘sh quti” — uni to‘ldiradigan narsalar Component’lar. Mesh (ko‘rinish), Collision (chegar), Light (yorug‘lik), Audio va h.k.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Static Mesh Component</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              3D modelni ko‘rsatadi. “Static” — animatsiyalanmaydi (skeletal emas). Cube, eshik, stol, devor — ko‘pincha Static Mesh.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Box Collision</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Actor atrofida ko‘rinmas to‘rtburchak (yoki boshqa shakl) fizik chegara. Keyinchalik Overlap (kimdir ichiga kirdi) va Hit (urildi) eventlari shu orqali ishlaydi. Interaction System (Stage 3) asosan Collision’ga tayanadi.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Parent / Child Component</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Component’lar daraxt (hierarchy) shaklida bog‘lanadi. Parent harakatlansa yoki aylansa — Child ham u bilan birga harakatlanadi. Masalan: Mesh Parent, Collision uning Child’i bo‘lsa — Mesh’ni ko‘chirsangiz, Collision ham ergashadi.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">DefaultSceneRoot</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Har bir Actor Blueprint’da avtomatik yaratiladigan ildiz (root) Component. Boshqa barcha Component’lar odatda uning ostida turadi. Uni o‘chirish mumkin emas (yoki o‘rniga boshqa root qo‘yiladi).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- HIERARCHY DIAGRAM -->
+      <section id="hierarchy" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">🌳</span>
+          Bugungi maqsad hierarchy
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <p class="text-sm text-slate-400 mb-3">Yakuniy Component daraxti shunday bo‘lishi kerak:</p>
+          <pre class="tree text-cyan-300/90 leading-relaxed">BP_TestObject
+└── DefaultSceneRoot          ← ildiz (avtomatik)
+      ├── StaticMeshComponent   ← vizual ko‘rinish (Cube)
+      └── BoxCollision          ← fizik chegara (Parent: StaticMesh yoki Root)</pre>
+          <p class="text-sm text-slate-500 mt-4">Ba’zi holatlarda BoxCollision’ni to‘g‘ridan-to‘g‘ri StaticMesh ostiga (Child qilib) qo‘yish qulay — Mesh ko‘chsa, Collision ham ergashadi.</p>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+          <ul class="space-y-2 text-sm text-slate-300">
+            <li class="flex gap-3">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span>Kun 1 bajarilgan: <code class="text-cyan-300 text-xs">BetrayBuilder</code> project ochiq, papka strukturasi bor</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><code class="text-cyan-300 text-xs">Content/BetrayBuilder/Blueprints/</code> papkasi mavjud</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span>Istalgan Level ochiq (masalan <code class="text-cyan-300 text-xs">MAP_Day01</code> yoki yangi bo‘sh Level)</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== STEP 1 ===================== -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Actor Blueprint yaratish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5–10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <!-- 1.1 -->
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.1</span>
+              <span class="text-sm font-medium text-white">Blueprints papkasiga o‘ting</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Content Browser’da chapdagi papka daraxtidan:</p>
+              <p><span class="ui-label">Content → BetrayBuilder → Blueprints</span></p>
+              <p>Agar <code class="text-cyan-300 text-xs">Blueprints</code> papkasi yo‘q bo‘lsa — Kun 1 dagi strukturani qayta yarating.</p>
+            </div>
+          </div>
+
+          <!-- 1.2 -->
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.2</span>
+              <span class="text-sm font-medium text-white">Yangi Blueprint Class yaratish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Content Browser’da <strong class="text-white">bo‘sh joyda o‘ng sichqoncha</strong> bosing.</p>
+              <p>Menyudan: <span class="ui-label">Blueprint Class</span></p>
+              <p>Yoki yuqoridagi yashil <span class="ui-label">+ Add</span> → <span class="ui-label">Blueprint Class</span>.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima ochiladi:</strong> “Pick Parent Class” oynasi. Bu yerda Blueprint qaysi turdan meros olishini tanlaysiz.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1.3 -->
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.3</span>
+              <span class="text-sm font-medium text-white">Parent Class: Actor</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Ochilgan oynada yuqorida bir nechta umumiy class’lar ko‘rinadi:</p>
+              <ul class="space-y-1.5 pl-1">
+                <li><span class="ui-label">Actor</span> ← <strong class="text-white">mana shuni tanlang</strong></li>
+                <li>Pawn</li>
+                <li>Character</li>
+                <li>Player Controller</li>
+                <li>...</li>
+              </ul>
+              <p><strong class="text-white">Actor</strong> ga bir marta bosing (yoki ikki marta).</p>
+              <p class="text-slate-400">Nima uchun Actor? Chunki bizga oddiy joylashtiriladigan obyekt kerak — yurmaydi, boshqarilmaydi, faqat sahnada turadi. Character/Pawn keyinroq (Stage 2).</p>
+            </div>
+          </div>
+
+          <!-- 1.4 -->
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.4</span>
+              <span class="text-sm font-medium text-white">Nom berish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Content Browser’da yangi asset paydo bo‘ladi va nomini so‘raydi.</p>
+              <p>Nom: <span class="ui-label font-mono">BP_TestObject</span></p>
+              <p><span class="ui-label">Enter</span> bosing.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nomlash:</strong> <code class="text-blue-300">BP_</code> = Blueprint. Butun kursda Blueprint’lar shu prefiks bilan yuritiladi (BP_Player, BP_Door, BP_GameMode...).</p>
+              </div>
+              <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Tekshirish:</strong> <code class="text-emerald-300">Content/BetrayBuilder/Blueprints/BP_TestObject</code> ko‘rinishi kerak. Ikonka odatda ko‘k/binafsha rangdagi Blueprint belgisi.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1.5 -->
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.5</span>
+              <span class="text-sm font-medium text-white">Blueprint Editor’ni ochish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><span class="ui-label">BP_TestObject</span> ga <strong class="text-white">ikki marta bosing</strong> (yoki o‘ng sichqoncha → Edit).</p>
+              <p>Yangi oyna / tab ochiladi — <strong class="text-white">Blueprint Editor</strong>.</p>
+              <p>Asosiy qismlar:</p>
+              <ul class="space-y-1.5 pl-1">
+                <li><strong class="text-white">Components</strong> (chap yuqori) — Component daraxti</li>
+                <li><strong class="text-white">Viewport</strong> (markaz) — shu Actor’ning 3D ko‘rinishi</li>
+                <li><strong class="text-white">Details</strong> (o‘ng) — tanlangan Component sozlamalari</li>
+                <li><strong class="text-white">My Blueprint</strong> (chap past) — Variables, Functions, Event Graph (bugun tegmaymiz)</li>
+              </ul>
+              <p>Hozir Components panelida faqat <span class="ui-label">DefaultSceneRoot</span> turadi. Keyingi qadamda Mesh qo‘shamiz.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== STEP 2 ===================== -->
+      <section id="mesh" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Static Mesh Component qo‘shish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <!-- 2.1 -->
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.1</span>
+              <span class="text-sm font-medium text-white">Add Component</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Blueprint Editor’da chapdagi <strong class="text-white">Components</strong> panelini toping.</p>
+              <p>Yuqorisida <span class="ui-label">+ Add</span> (yoki “Add Component”) tugmasi bor — uni bosing.</p>
+              <p>Ochilgan ro‘yxatda qidiring yoki yozing: <span class="ui-label">Static Mesh</span></p>
+              <p><span class="ui-label">Static Mesh</span> ni tanlang.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Natija:</strong> Components daraxtida <code class="text-blue-300">StaticMesh</code> (yoki StaticMeshComponent) paydo bo‘ladi. Odatda DefaultSceneRoot ostida Child sifatida qo‘shiladi.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2.2 -->
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.2</span>
+              <span class="text-sm font-medium text-white">Cube mesh’ni biriktirish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Components’da <span class="ui-label">StaticMesh</span> ni tanlang (bir marta bosing).</p>
+              <p>O‘ngdagi <strong class="text-white">Details</strong> panelida <span class="ui-label">Static Mesh</span> maydonini toping (bo‘sh yoki “None”).</p>
+              <p>O‘ngdagi pastga ochiladigan ro‘yxatni bosing (yoki maydon ichiga bosing).</p>
+              <p>Qidiruvga yozing: <span class="ui-label">Cube</span></p>
+              <p>Engine Content’dan keladigan <strong class="text-white">Cube</strong> (yoki Shape_Cube) ni tanlang.</p>
+              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Agar Cube topilmasa:</strong> Details’dagi Static Mesh maydonida o‘ngdagi papka ikonkasini bosing → Content Browser ochiladi. Qidiruvga “Cube” yozing. Agar baribir yo‘q bo‘lsa — View Options (Content Browser pastki o‘ng) da “Show Engine Content” ni yoqing.</p>
+              </div>
+              <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Tekshirish:</strong> Blueprint Viewport (markaziy 3D oyna) da endi kulrang Cube ko‘rinishi kerak. Agar ko‘rinsa — muvaffaqiyat.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2.3 -->
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.3</span>
+              <span class="text-sm font-medium text-white">Saqlash</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Toolbar’dan <span class="ui-label">Compile</span> (yoki Ctrl+Alt+F7) bosing — xato yo‘qligini tekshiradi.</p>
+              <p>Keyin <span class="ui-label">Save</span> (Ctrl+S).</p>
+              <p>Compile muvaffaqiyatli bo‘lsa, yashil belgi chiqadi. Qizil xato bo‘lsa — pastdagi Compiler Results panelida sababini o‘qing (bugun odatda xato bo‘lmasligi kerak).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== STEP 3 ===================== -->
+      <section id="collision" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Box Collision qo‘shish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10–15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <!-- 3.1 -->
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.1</span>
+              <span class="text-sm font-medium text-white">Box Collision Component qo‘shish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Yana Components panelida <span class="ui-label">+ Add</span> bosing.</p>
+              <p>Qidiring: <span class="ui-label">Box Collision</span></p>
+              <p>Tanlang. Daraxtga <span class="ui-label">Box</span> (yoki BoxCollision) qo‘shiladi.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Eslatma:</strong> Collision Component odatda Viewport’da ko‘rinmas (yashirin). Uni ko‘rish uchun keyinroq “Show Collision” yoqamiz. Hozircha Details orqali sozlaymiz.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3.2 -->
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.2</span>
+              <span class="text-sm font-medium text-white">Collision o‘lchamini sozlash</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Components’da <span class="ui-label">Box</span> ni tanlang.</p>
+              <p>Details panelida <strong class="text-white">Shape</strong> yoki <strong class="text-white">Box Extent</strong> bo‘limini toping.</p>
+              <p><span class="ui-label">Box Extent</span> — yarim o‘lcham (markazdan chetga). Cube taxminan 50×50×50 unit atrofida bo‘ladi (engine Cube o‘lchamiga qarab).</p>
+              <p>Collision Mesh’dan <strong class="text-white">biroz kattaroq</strong> bo‘lishi kerak — o‘yinchi yaqinlashganda “ushlab” olish uchun.</p>
+              <p>Misol qiymatlar (sinab ko‘ring):</p>
+              <ul class="space-y-1 font-mono text-xs text-cyan-300/90">
+                <li>Box Extent X: 55</li>
+                <li>Box Extent Y: 55</li>
+                <li>Box Extent Z: 55</li>
+              </ul>
+              <p class="text-slate-400">Yoki Viewport’da Box tanlang → <span class="ui-label">R</span> (Scale mode) → gizmo bilan biroz kattalashtiring. Lekin Extent orqali aniqroq.</p>
+            </div>
+          </div>
+
+          <!-- 3.3 -->
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.3</span>
+              <span class="text-sm font-medium text-white">Collision joylashuvini tekshirish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Box Collision markazi Mesh markazi bilan ustma-ust tushishi kerak.</p>
+              <p>Agar Box uzoqda turgan bo‘lsa — Details → Transform → Location ni <span class="ui-label">0, 0, 0</span> qiling (relative to parent).</p>
+              <p>Compile + Save qiling.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== STEP 4 ===================== -->
+      <section id="parent" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Parent / Child bog‘lanish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5–10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.1</span>
+              <span class="text-sm font-medium text-white">Hierarchy’ni ko‘rish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Components panelida daraxt taxminan shunday:</p>
+              <pre class="tree text-cyan-300/90 bg-slate-950 rounded-lg p-4 border border-slate-800">DefaultSceneRoot
+  ├── StaticMesh
+  └── Box</pre>
+              <p>Ikkalasi ham Root’ning Child’i. Bu yaxshi ishlaydi.</p>
+              <p><strong class="text-white">Ixtiyoriy yaxshilash:</strong> Box’ni StaticMesh’ning Child’i qilish — Mesh’ni local space’da siljitsangiz, Collision ham ergashadi.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.2</span>
+              <span class="text-sm font-medium text-white">Parent’ni o‘zgartirish (ixtiyoriy)</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Components’da <span class="ui-label">Box</span> ni <strong class="text-white">sichqoncha bilan ushlab</strong>, <span class="ui-label">StaticMesh</span> ustiga <strong class="text-white">tashlang</strong> (drag & drop).</p>
+              <p>Daraxt endi shunday bo‘ladi:</p>
+              <pre class="tree text-cyan-300/90 bg-slate-950 rounded-lg p-4 border border-slate-800">DefaultSceneRoot
+  └── StaticMesh
+        └── Box</pre>
+              <p>Bu — Parent/Child bog‘lanish. StaticMesh Parent, Box uning Child’i.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima o‘zgaradi?</strong> StaticMesh’ning relative Location/Rotation/Scale’ini o‘zgartirsangiz, Box ham u bilan birga siljiydi. Root’ni (butun Actor’ni) ko‘chirsangiz — hammasi birga ko‘chadi (bu har doim shunday).</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.3</span>
+              <span class="text-sm font-medium text-white">Compile va Save</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><span class="ui-label">Compile</span> → <span class="ui-label">Save</span>. Blueprint Editor’ni yopishingiz mumkin (yoki ochiq qoldiring).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== STEP 5 ===================== -->
+      <section id="level" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Levelga joylashtirish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">5.1</span>
+              <span class="text-sm font-medium text-white">Level’ni ochish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Asosiy Editor oynasiga qayting (Level Viewport).</p>
+              <p>Kun 1 dagi <code class="text-cyan-300 text-xs">MAP_Day01</code> ni oching yoki yangi bo‘sh Level yarating va saqlang.</p>
+              <p>Content Browser’da <span class="ui-label">BP_TestObject</span> ni toping.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">5.2</span>
+              <span class="text-sm font-medium text-white">Nusxalarni joylashtirish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><span class="ui-label">BP_TestObject</span> ni Content Browser’dan <strong class="text-white">Viewport’ga sudrab tashlang</strong>.</p>
+              <p>Yana 1–2 marta tashlang — jami 2 yoki 3 ta instance bo‘lsin.</p>
+              <p>Har birini tanlab, turli joyga ko‘chiring (<span class="ui-label">W</span> + gizmo yoki Details → Location).</p>
+              <p>Masalan:</p>
+              <ul class="space-y-1 font-mono text-xs text-cyan-300/90">
+                <li>Birinchisi: Location 0, 0, 50</li>
+                <li>Ikkinchisi: Location 300, 0, 50 · Scale 2, 2, 2</li>
+                <li>Uchinchi: Location -300, 100, 50 · Rotation 0, 45, 0</li>
+              </ul>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Muhim:</strong> Bu yerda o‘zgartirayotganingiz — instance’ning Transform’i. Blueprint ichidagi Component hierarchy o‘zgarmaydi. Bitta BP_TestObject’da Mesh o‘zgartirsangiz — barcha instance’lar yangilanadi.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">5.3</span>
+              <span class="text-sm font-medium text-white">Level’ni saqlash</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><span class="ui-label">Ctrl + S</span> — Level saqlansin.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== STEP 6 ===================== -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test qilish — Collision ko‘rinishi</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5–10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
+              <span class="text-sm font-medium text-white">Show Collision</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Viewport’da biror <span class="ui-label">BP_TestObject</span> instance’ini tanlang.</p>
+              <p>Viewport yuqorisidagi menyudan (yoki Viewport ichida o‘ng burchakdagi “Show” / “View Mode”:</p>
+              <p><span class="ui-label">Show → Collision</span> (yoki <span class="ui-label">View → Show → Collision</span> — versiyaga qarab).</p>
+              <p>Ba’zi versiyalarda: Viewport chap yuqorisidagi <span class="ui-label">Lit</span> yoki ko‘z ikonkasi → <span class="ui-label">Player Collision</span> / <span class="ui-label">Collision</span>.</p>
+              <p>Yoqilganda Cube atrofida <strong class="text-white">yashil (yoki binafsha) simli to‘rtburchak</strong> — Box Collision — ko‘rinishi kerak.</p>
+              <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Muvaffaqiyat:</strong> Collision Mesh atrofida, biroz kattaroq, markazlashtirilgan bo‘lsa — to‘g‘ri sozlangan.</p>
+              </div>
+              <div class="callout border-red-500/50 bg-red-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-red-200/90"><strong class="text-red-400">Agar Collision ko‘rinmasa yoki noto‘g‘ri joyda bo‘lsa:</strong></p>
+                <ul class="mt-2 space-y-1 text-red-200/80">
+                  <li>BP_TestObject’ni qayta oching → Box tanlang → Location 0,0,0 va Extent’ni tekshiring</li>
+                  <li>Compile + Save qiling, keyin Level’dagi instance’lar avtomatik yangilanadi</li>
+                  <li>Show Collision haqiqatan yoqilganiga ishonch hosil qiling</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
+              <span class="text-sm font-medium text-white">Play bilan qisqa tekshiruv</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><span class="ui-label">Play</span> bosing. Uchala (yoki ikkala) BP_TestObject ko‘rinishi kerak. Hozircha ular bilan interact qilishning iloji yo‘q — bu keyingi kunlar. Faqat vizual va joylashuvni tekshiring.</p>
+              <p><span class="ui-label">Esc</span> bilan chiqing.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge (ixtiyoriy)</h2>
+            <p class="text-sm text-slate-500">Uchinchi Component — Point Light</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>BP_TestObject’ga yorug‘lik qo‘shing:</p>
+          <ol class="space-y-2 list-decimal list-inside">
+            <li>BP_TestObject’ni oching (ikki marta bosing).</li>
+            <li>Components → <span class="ui-label">+ Add</span> → <span class="ui-label">Point Light</span>.</li>
+            <li>Point Light’ni tanlang → Details:</li>
+            <ul class="ml-6 mt-1 space-y-1 list-disc list-inside text-slate-400">
+              <li><span class="ui-label">Intensity</span> — masalan 2000–5000</li>
+              <li><span class="ui-label">Light Color</span> — istalgan rang (masalan och ko‘k yoki sariq)</li>
+              <li><span class="ui-label">Attenuation Radius</span> — masalan 500</li>
+            </ul>
+            <li>Location’ni biroz yuqoriga ko‘taring (masalan Z = 80), shunda yorug‘lik Cube tepasidan tushsin.</li>
+            <li>Compile + Save.</li>
+            <li>Level’da instance’larga qarang — endi ular atrofida yorug‘lik bo‘lishi kerak (Lumen/dynamic lighting yoqilgan bo‘lsa).</li>
+          </ol>
+          <p class="text-slate-400 mt-3">Bu challenge hierarchy’ga yana bitta Component qo‘shishni mustahkamlaydi va keyinroq Light Switch / Sabotage uchun foydali bo‘ladi.</p>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>Bugun siz:</p>
+          <ul class="space-y-1.5">
+            <li>✓ <strong class="text-white">BP_TestObject</strong> Actor Blueprint yaratdingiz</li>
+            <li>✓ Unga <strong class="text-white">Static Mesh Component</strong> qo‘shib, Cube biriktirdingiz</li>
+            <li>✓ <strong class="text-white">Box Collision</strong> qo‘shib, o‘lchamini sozladingiz</li>
+            <li>✓ Component <strong class="text-white">Parent / Child</strong> hierarchy’sini ko‘rdingiz va (ixtiyoriy) o‘zgartirdingiz</li>
+            <li>✓ Levelga 2–3 nusxa joylashtirib, Transform bilan ishladingiz</li>
+            <li>✓ <strong class="text-white">Show Collision</strong> orqali chegarani tekshirdingiz</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <p class="text-xs text-slate-500 mb-1">Yakuniy struktura:</p>
+            <code class="text-cyan-300 text-xs">Content/BetrayBuilder/Blueprints/BP_TestObject</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4">
+            <p class="text-slate-400"><strong class="text-white">Ertaga (Kun 3):</strong> Blueprint Event Graph — node, pin, execution flow va o‘zgaruvchilar. Birinchi marta haqiqiy mantiq yozasiz (Print String, Branch, Boolean).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NAV BOTTOM -->
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-01.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 1
+        </a>
+        <div class="text-xs text-slate-600">Kun 2 / 90</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 3 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-16"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>

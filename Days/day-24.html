@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 24 — Doors &amp; Windows | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 4 · Level &amp; Spaces</div>
+          <div class="font-semibold text-sm truncate">Kun 24 — Doors &amp; Windows</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~3–4 soat</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun endi?</a>
+        <a href="#day17-link" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Day 17 BP_Door</a>
+        <a href="#swing" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Ochilish yo‘nalishi</a>
+        <a href="#windows" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Windows roli</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. Proyomlarni sanash</a>
+        <a href="#place-doors" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. BP_Door joylash</a>
+        <a href="#name-doors" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Nomlash</a>
+        <a href="#fit" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. O‘lcham va pivot</a>
+        <a href="#swing-test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Swing test</a>
+        <a href="#windows-place" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Windows 2–3</a>
+        <a href="#interact-test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. E test hammasi</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge (maxfiy yo‘l)</a>
+        <a href="#avoid" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima qilmaslik</a>
+        <a href="#troubleshooting" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Troubleshooting</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+          Stage 4 · Kun 24 · Stage 3 eshiklari xaritada
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Doors &amp; Windows</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Proyomlar → <strong class="text-slate-200">BP_Door</strong> instansiyalari. Oyna — vizual “ko‘rinish”; qulf yo‘q (Day 33).
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Har proyomga <code class="text-xs text-cyan-300">BP_Door</code> (Day 17)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Nom: <code class="text-xs">BP_Door_Office</code>, <code class="text-xs">BP_Door_Utility</code>…</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Ochilish yo‘nalishi xonani to‘smasin</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> 2–3 <strong class="text-white">Window</strong> (shaffof mesh, asosan vizual)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Barcha eshiklarda E ishlaydi</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Qulflash, kalit, auto-close murakkabligi. Faqat joylash + swing + interact.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun endi eshik?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Kun 22–23: bo‘shliq va nom. Endi <strong class="text-white">Stage 3 Interaction</strong> xaritaga kiradi — xonalar “o‘ynaladigan” bo‘ladi.
+          </p>
+          <p>
+            Eshik = tempo (ochish vaqti), ovoz (keyin), kim qayerda ekanligi. Window = “ko‘rinamanmi?” — betrayal uchun psixologiya.
+          </p>
+        </div>
+      </section>
+
+      <!-- DAY 17 -->
+      <section id="day17-link" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm">17</span>
+          BP_Door (Day 17) eslatma
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Timeline + Lerp Rotator + BPI_Interact. Instance Editable OpenAngle (±90).</p>
+          <p class="text-slate-400">Agar BP_Door yo‘q / buzilgan — avval MAP_InteractionTest da tuzating, keyin nusxa ko‘chiring.</p>
+          <p>Levelga <strong class="text-white">instance</strong> joylashtirasiz — class asset emas, har eshik alohida Actor.</p>
+        </div>
+      </section>
+
+      <!-- SWING -->
+      <section id="swing" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">↗</span>
+          Ochilish yo‘nalishi (swing)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Eshik ochilganda panel <strong class="text-white">koridor yoki xona ichidagi mesh</strong>ga urilmasligi kerak.
+          </p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Pivot menteşe — to‘g‘ri tomonda</li>
+            <li>OpenAngle +90 yoki −90 — Details / variable</li>
+            <li>Tor koridorda: eshik xona ichiga ochilsin (yoki sliding keyin)</li>
+          </ul>
+          <p class="text-slate-400">Play da ochib ko‘ring; tiqilsa burchakni aylantiring.</p>
+        </div>
+      </section>
+
+      <!-- WINDOWS -->
+      <section id="windows" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🪟</span>
+          Windows — vizual, deyarli gameplay yo‘q
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Oddiy plane/cube + shaffof material (yoki Translucent default). Collision: <strong class="text-white">Query only</strong> yoki NoCollision — o‘tish shart emas; ba’zan Block (oyna sindirish keyin).
+          </p>
+          <p>
+            Ideal joy: Security ↔ Office / Hallway — “kimdir monitor oldida”. Betrayal mechanic keyin shu hissiyotdan foydalanadi.
+          </p>
+          <p class="text-slate-500">2–3 ta yetarli. Har devorga oyna shart emas.</p>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4">Oldindan talab</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BP_Door ishlaydi (E toggle)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> MAP_BetrayBuilder 8 xona + proyomlar</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Player Interact zanjiri</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Proyomlarni sanash</h2>
+            <p class="text-sm text-slate-500">10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <p>Top view: har bo‘shliq = 1 eshik (yoki juft). Ro‘yxat yozing: Lobby–Hall, Office–Hall, Utility–Hall…</p>
+          <p class="text-slate-500">Qancha proyom — shuncha BP_Door instance.</p>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="place-doors" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BP_Door joylash</h2>
+            <p class="text-sm text-slate-500">30–50 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Content Browser → BP_Door → proyomga drag. Pivot menteşe devor chetiga.</p>
+          <p>Mesh proyomni to‘ldirsin (bo‘shliq qolmasin yoki minimal). Scale kerak bo‘lsa ehtiyot — collision ham o‘zgaradi.</p>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="name-doors" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Nomlash</h2>
+            <p class="text-sm text-slate-500">10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300">
+          <p>Outliner: <code class="text-xs">Door_Lobby_Hall</code>, <code class="text-xs">Door_Office</code>, <code class="text-xs">Door_Utility</code>… Folder <code class="text-xs">Doors</code>.</p>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="fit" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">O‘lcham va pivot</h2>
+            <p class="text-sm text-slate-500">20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Proyom balandligi / kengligiga mos. Pivot noto‘g‘ri bo‘lsa — mesh relative offset (Day 17 menteşe).</p>
+          <p class="text-slate-400">ClosedRotation BeginPlay da olinadi — levelda aylantirib qo‘yish OK.</p>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="swing-test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Swing test</h2>
+            <p class="text-sm text-slate-500">20–30 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Har eshik ochiladi, devorga tiqilmaydi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Yopilganda proyom yopiq</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Player o‘ta oladi (ochiq holatda)</span></label>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="windows-place" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">2–3 Window</h2>
+            <p class="text-sm text-slate-500">20–30 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Devorda teshik + plane mesh. Material: Translucent, past opacity, yoki Engine glass.</p>
+          <p>Masalan: Security devori Hallwayga; Office ichki deraza.</p>
+          <p class="text-slate-500">Collision ixtiyoriy — vizual asosiy.</p>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="interact-test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Barcha eshiklarda E</h2>
+            <p class="text-sm text-slate-500">15–25 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Har Door focus + Interact</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Collision Visibility OK</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Anim spam himoyasi (bIsAnimating)</span></label>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — maxfiy yo‘lak</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-2">
+          <p>Utility yoki Storage orqasida tor yashirin proyom / eshik (label yozmang).</p>
+          <p>Hozir faqat blockout — Betrayer qochish g‘oyasi. Qulf keyin.</p>
+        </div>
+      </section>
+
+      <!-- AVOID -->
+      <section id="avoid" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Nima qilmaslik</h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Qulflash mantig‘i</p>
+            <p class="text-slate-400 mt-1">Day 33 Item System.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Har derazaga interact</p>
+            <p class="text-slate-400 mt-1">Hozir vizual.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Troubleshooting</h2>
+        <div class="rounded-xl border border-red-500/20 p-5 space-y-3 text-sm text-slate-300">
+          <p><strong class="text-white">E ishlamaydi:</strong> Collision, BPI, focus masofa, proyom ichida mesh yo‘qmi.</p>
+          <p><strong class="text-white">Devorga tiqiladi:</strong> OpenAngle ishorasi, pivot, joylash.</p>
+          <p><strong class="text-white">Bo‘shliq:</strong> eshik kichik — scale yoki proyom toraytirish.</p>
+          <p><strong class="text-white">Noto‘g‘ri instance:</strong> bir class, ko‘p instance — har biri alohida transform.</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">FAQ</h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Sliding door kerakmi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">Hozir swing yetarli. Sliding — Timeline Location (keyin).</div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Button bilan ochish?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">Day 18 pattern — ixtiyoriy 1–2 eshikda.</div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Oyna orqali o‘tish?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">Collision Block qilsangiz yo‘q. NoCollision — o‘tadi (design tanlovi).</div>
+          </details>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Lug‘at</h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Instance</td><td class="py-2.5 px-4 text-slate-400">Leveldagi aniq Actor nusxasi</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Swing</td><td class="py-2.5 px-4 text-slate-400">Aylanib ochilish</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Sightline</td><td class="py-2.5 px-4 text-slate-400">Ko‘rish chizig‘i (oyna)</td></tr>
+              <tr><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Translucent</td><td class="py-2.5 px-4 text-slate-400">Shaffof material</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CHECKLIST -->
+      <section id="checklist" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Yakuniy checklist</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Barcha proyomlarda Door</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Nomlar tartibli</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Swing to‘siqsiz</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">2–3 window</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">E hammada ishlaydi</span></label>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ Xarita BP_Door bilan bog‘langan</li>
+            <li>✓ Stage 3 × Stage 4 integratsiya</li>
+            <li>✓ Windows — vizual sightline</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">MAP_BetrayBuilder + Doors/*</code>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="d24-1" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 1</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-2" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 2</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-3" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 3</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-4" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 4</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-5" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 5</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-6" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 6</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-7" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 7</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-8" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 8</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-9" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 9</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-10" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 10</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-11" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 11</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-12" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 12</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-13" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 13</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-14" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 14</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-15" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 15</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-16" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 16</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-17" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 17</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-18" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 18</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-19" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 19</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-20" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 20</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-21" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 21</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-22" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 22</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-23" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 23</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-24" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 24</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-25" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 25</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-26" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 26</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-27" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 27</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-28" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 28</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+
+      <section id="d24-29" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Doors &amp; Windows eslatma 29</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>BP_Door har instance o'z bIsOpen holatini saqlaydi. Bitta ochiq, boshqasi yopiq — normal. Multiplayer keyin replicate qilinadi.</p>
+          <p>Proyom bilan eshik orasida 1-2 unit bo'shliq bo'lsa "yorug'lik chizig'i" ko'rinadi; mesh scale yoki devor siljiting.</p>
+          <p>Window sightline: Security dan Hallway'ni ko'rish — Betrayer monitoring fantasy. Collision o'chirish yoki qoldirish design tanlovi.</p>
+          <p>Nomlash Door_A_B (xonaA_xonaB) wiring va debug uchun eng yaxshi.</p>
+          <p>OpenAngle Instance Editable bo'lsa, har eshikda Details dan ±90 sozlanadi — bir class, ko'p yo'nalish.</p>
+        </div>
+      </section>
+
+      
+      <section id="more24-30" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 30</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-31" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 31</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-32" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 32</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-33" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 33</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-34" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 34</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-35" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 35</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-36" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 36</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-37" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 37</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-38" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 38</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-39" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 39</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-40" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 40</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-41" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 41</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-42" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 42</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-43" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 43</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-44" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 44</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-45" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 45</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-46" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 46</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-47" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 47</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-48" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 48</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-49" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 49</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-50" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 50</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-51" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 51</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-52" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 52</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-53" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 53</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+
+      <section id="more24-54" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yozuv 54</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Stage 3 eshik mantiq'i Stage 4 xaritada yashaydi. Bu "systems meet space" — keyingi kunlar spawn, lighting, prop.</p>
+          <p>Har eshikni E bilan sinash checklist'dan o'tkazing; bitta ishlamasa collision yoki BPI implement tekshiring.</p>
+          <p>Maxfiy yo'lak challenge faqat geometriya — interact qulfsiz eshik yoki oddiy proyom.</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-23.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 23
+        </a>
+        <div class="text-xs text-slate-600">Kun 24 / 90 · Stage 4</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 25 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

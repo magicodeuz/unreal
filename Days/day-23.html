@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 23 — Rooms | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 4 · Level &amp; Spaces</div>
+          <div class="font-semibold text-sm truncate">Kun 23 — Rooms</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~3–4.5 soat · layout</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun 8 xona?</a>
+        <a href="#room-table" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">8 xona funksiyasi</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bog‘lanish oqimi</a>
+        <a href="#utility-special" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Utility maxsus</a>
+        <a href="#size-guide" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">O‘lcham qo‘llanma</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. Blockout’ni ochish</a>
+        <a href="#partition" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Devorlar bilan bo‘lish</a>
+        <a href="#labels" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Text Render nomlar</a>
+        <a href="#utility-place" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Utility joyi</a>
+        <a href="#connections" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Proyom bog‘lanish</a>
+        <a href="#walkthrough" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Walkthrough test</a>
+        <a href="#outliner" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. Outliner tartib</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge (task g‘oya)</a>
+        <a href="#avoid" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima qilmaslik</a>
+        <a href="#troubleshooting" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Troubleshooting</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+          Stage 4 · Kun 23 · Funksional xonalar
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Rooms</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Greybox endi <strong class="text-slate-200">8 nomli zona</strong>: Lobby, Office, Storage, Lab, Security, Kitchen, Hallway, Utility — har biri gameplay uchun.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Blockout’ni <strong class="text-white">8 xona</strong>ga bo‘lish</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Har biriga Text Render: LOBBY, OFFICE, …</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Utility biroz ajratilgan (Sabotage / Day 54)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Hallway bog‘lovchi — labirint emas</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Walkthrough: har xonaga kirib chiqish</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Juda katta xonalar, murakkab labirint, material, BP_Door to‘liq o‘rnatish (ixtiyoriy proyom yetarli).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun aniq 8 xona?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Social deduction xaritasi “bo‘sh kub” emas — har joy <strong class="text-white">vazifa</strong> beradi: spawn, task, item, monitoring, sabotage.
+          </p>
+          <p>
+            8 ta — o‘rganish uchun yetarli, boshqarish mumkin. Keyin qo‘shish oson; 20 ta xona bilan boshlanganda oqim yo‘qoladi.
+          </p>
+          <p class="text-slate-400">
+            Nomlar Betray Builder lore’iga moslashishi mumkin; funksiya muhimroq.
+          </p>
+        </div>
+      </section>
+
+      <!-- ROOM TABLE -->
+      <section id="room-table" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📋</span>
+          8 xona — funksiya
+        </h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-slate-700 text-left text-slate-400 bg-slate-900">
+                <th class="py-2 px-3">Xona</th>
+                <th class="py-2 px-3">Gameplay roli</th>
+                <th class="py-2 px-3">Keyinroq</th>
+              </tr>
+            </thead>
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">Lobby</td>
+                <td class="py-2 px-3">Spawn / uchrashuv boshlanishi</td>
+                <td class="py-2 px-3 text-slate-500">Meeting, intro</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">Office</td>
+                <td class="py-2 px-3">Hujjat / computer task</td>
+                <td class="py-2 px-3 text-slate-500">BP_Computer</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">Storage</td>
+                <td class="py-2 px-3">Item topish</td>
+                <td class="py-2 px-3 text-slate-500">Item system</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">Laboratory</td>
+                <td class="py-2 px-3">Maxsus topshiriqlar</td>
+                <td class="py-2 px-3 text-slate-500">Minigame</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">Security</td>
+                <td class="py-2 px-3">Kamera / monitoring</td>
+                <td class="py-2 px-3 text-slate-500">Betrayer qiziqishi</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">Kitchen</td>
+                <td class="py-2 px-3">Kichik tasklar</td>
+                <td class="py-2 px-3 text-slate-500">Oddiy interact</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">Hallway</td>
+                <td class="py-2 px-3">Bog‘lovchi yo‘lak</td>
+                <td class="py-2 px-3 text-slate-500">Oqim / sightline</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">Utility</td>
+                <td class="py-2 px-3">Generator / sabotage</td>
+                <td class="py-2 px-3 text-slate-500">Day 54+</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          Bog‘lanish oqimi (namuna)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">              [Lobby]
+                 |
+            [Hallway]----+----[Hallway]
+               /    \         |
+        [Office]  [Kitchen]  [Security]
+               \    |         |
+            [Storage]     [Laboratory]
+                    \       /
+                   [Utility]  ← biroz chetda</pre>
+          <p class="text-sm text-slate-500 mt-3">Bu majburiy emas — sizning blockout’ingizga moslang. Muhimi: Har xona kamida 1 yo‘lak orqali bog‘langan; dead-end kam.</p>
+        </div>
+      </section>
+
+      <!-- UTILITY -->
+      <section id="utility-special" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">⚡</span>
+          Utility — nima uchun ajratilgan?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Sabotage / generator (Day 54) odatda “xavfli zona”: uzoqroq yugurish, yolg‘iz qolish xavfi, ta’mirlash vazifasi.
+          </p>
+          <p>
+            Markazga qo‘ysangiz — har doim odam to‘la. Chetda: strategik tanlov (borish / kutish).
+          </p>
+          <p class="text-slate-400">Bugun faqat joy: bitta yo‘lak orqali kirish kifoya.</p>
+        </div>
+      </section>
+
+      <!-- SIZE -->
+      <section id="size-guide" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">📐</span>
+          O‘lcham qo‘llanma (taxminiy)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700 text-left text-slate-400">
+                  <th class="py-2 pr-3">Xona</th>
+                  <th class="py-2">Tavsiya</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                <tr class="border-b border-slate-800"><td class="py-2 pr-3">Lobby</td><td class="py-2 text-slate-500">Kattaroq — 800×800+</td></tr>
+                <tr class="border-b border-slate-800"><td class="py-2 pr-3">Office / Lab / Security</td><td class="py-2 text-slate-500">O‘rta — 500×500</td></tr>
+                <tr class="border-b border-slate-800"><td class="py-2 pr-3">Storage / Kitchen</td><td class="py-2 text-slate-500">Kichikroq — 400×400</td></tr>
+                <tr class="border-b border-slate-800"><td class="py-2 pr-3">Hallway</td><td class="py-2 text-slate-500">Kenglik 200–300, uzun bog‘lovchi</td></tr>
+                <tr><td class="py-2 pr-3">Utility</td><td class="py-2 text-slate-500">O‘rta, 1–2 kirish</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-slate-400">Labirint qilmang: 3+ aylanib ketadigan yo‘l chalkashtiradi.</p>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4">Oldindan talab</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> MAP_BetrayBuilder blockout (Kun 22)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Player yurishi ishlaydi</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">MAP_BetrayBuilder’ni ochish</h2>
+            <p class="text-sm text-slate-500">5 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300">
+          <p>Kecha top view’ni eslang. Qog‘oz plan bo‘lsa — yonida ochiq turing.</p>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="partition" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Devorlar bilan 8 zonaga bo‘lish</h2>
+            <p class="text-sm text-slate-500">45–90 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Ichki Cube devorlar: Lobby markaz yoki kirish; Hallway “umurtqa”; yon xonalar; Utility oxirida.</p>
+          <p>Har bo‘linmadan keyin Play — o‘tish qulaymi?</p>
+          <p class="text-slate-400">Mavjud blockout katta bo‘lsa — kesib nomlang. Kichik bo‘lsa — kengaytiring.</p>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="labels" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Text Render Actor — nomlar</h2>
+            <p class="text-sm text-slate-500">15–20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
+            <span class="text-sm font-medium text-white">Place Actors → Text Render</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Har xona markaziga: Text = <code class="text-xs">LOBBY</code>, <code class="text-xs">OFFICE</code>, … World Size katta (masalan 50–100).</p>
+            <p>Horizontal / Billboard — o‘qish oson.</p>
+            <p class="text-slate-400">Bu faqat editor/play navigatsiya — final UI emas. Keyin o‘chiriladi yoki yashirinadi.</p>
+            <p>8 ta: LOBBY, OFFICE, STORAGE, LABORATORY, SECURITY, KITCHEN, HALLWAY, UTILITY.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="utility-place" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Utility joylashuvi</h2>
+            <p class="text-sm text-slate-500">15 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <p>Lobby’dan eng uzoq yoki 1–2 Hallway orqali. Bitta asosiy kirish.</p>
+          <p class="text-slate-500">Ikkinchi “escape” yo‘l ixtiyoriy — sabotage drama uchun keyin.</p>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="connections" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Proyom bog‘lanishlari</h2>
+            <p class="text-sm text-slate-500">20–30 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Har xona ↔ Hallway yoki qo‘shni xona. Izolyatsiya qilingan xona bo‘lmasin (Utility bundan mustasno — bitta yo‘l OK).</p>
+          <p>Proyom kengligi kechagi norma (120–180).</p>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="walkthrough" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Walkthrough test</h2>
+            <p class="text-sm text-slate-500">20–30 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Lobby → barcha xonalar ketma-ket</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Utility topiladi va qaytish mumkin</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Adashib qolish yo‘q (yoki minimal)</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Text label’lar o‘qiladi</span></label>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="outliner" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Outliner tartib</h2>
+            <p class="text-sm text-slate-500">10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <p>Folder: <code class="text-xs">Rooms/Lobby</code>, <code class="text-xs">Rooms/Office</code>, … yoki prefix <code class="text-xs">RM_Lobby_Wall_01</code>.</p>
+          <p class="text-slate-500">Keyin light/door qo‘yishda vaqt tejaydi.</p>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — har xona uchun task g‘oya</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-2">
+          <p>Qisqa yozuv (notepad / Notion):</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Kitchen — yoqilg‘i kanistr olish</li>
+            <li>Office — fayl yuklash (Computer)</li>
+            <li>Storage — quti ochish</li>
+            <li>…</li>
+          </ul>
+          <p class="text-slate-500">Keyin task system shu ro‘yxatdan oziqlanadi.</p>
+        </div>
+      </section>
+
+      <!-- AVOID -->
+      <section id="avoid" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Nima qilmaslik</h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Labirint</p>
+            <p class="text-slate-400 mt-1">O‘yinchi yo‘qoladi; betrayal emas, frustratsiya.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Bir xil o‘lchamli 8 kub</p>
+            <p class="text-slate-400 mt-1">Lobby kattaroq, Storage kichik — o‘qiladi.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Utility markazda</p>
+            <p class="text-slate-400 mt-1">Sabotage dramasi yo‘qoladi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Troubleshooting</h2>
+        <div class="rounded-xl border border-red-500/20 p-5 space-y-3 text-sm text-slate-300">
+          <p><strong class="text-white">Joy yetmaydi:</strong> tashqi devorni kengaytiring yoki 2 qavat keyinroq.</p>
+          <p><strong class="text-white">Hallway chalkash:</strong> bitta asosiy “umurtqa” hallway.</p>
+          <p><strong class="text-white">Text ko‘rinmaydi:</strong> World Size, yorug‘lik, collision yo‘q text da.</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">FAQ</h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Hallway ham “xona”mi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">Ha — oqim va sightline gameplay. Nomlang.</div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">9-xona qo‘shsam bo‘ladimi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">Keyin. Avval 8 ni barqaror qiling.</div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Text Render o‘rniga decal?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">Ixtiyoriy. Text tezroq.</div>
+          </details>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Lug‘at</h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Layout planning</td><td class="py-2.5 px-4 text-slate-400">Xona joylashuvi rejalash</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Text Render</td><td class="py-2.5 px-4 text-slate-400">Dunyoda matn actor</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Spine hallway</td><td class="py-2.5 px-4 text-slate-400">Asosiy bog‘lovchi yo‘lak</td></tr>
+              <tr><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Dead-end</td><td class="py-2.5 px-4 text-slate-400">Chiqish yo‘q xona (kam ishlating)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CHECKLIST -->
+      <section id="checklist" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Yakuniy checklist</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">8 xona ajratilgan</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">8 Text label</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Utility chetda</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Walkthrough OK</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Labirint emas</span></label>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ 8 funksional xona</li>
+            <li>✓ Nomlar + oqim</li>
+            <li>✓ Utility sabotage uchun tayyor joy</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">MAP_BetrayBuilder</code>
+          </div>
+          <p class="text-slate-400 mt-2">Keyingi: eshiklar, spawn, yoki verticality — rejangizga qarab.</p>
+        </div>
+      </section>
+
+      
+      <section id="room-detail-1" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Lobby — chuqurroq</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Spawn nuqtasi, o'yinchilar birinchi ko'rinadigan joy. Kattaroq qilib, markaziy o'rin bering. Meeting keyin shu yerga yaqin yoki shu yerda.</p>
+          <p class="text-slate-500">Playtest: shu xonaga 3 marta kiring-chiqing. Qulaymi? Tor mi?</p>
+        </div>
+      </section>
+
+
+      <section id="room-detail-2" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Office — chuqurroq</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Computer va hujjat tasklari. Devor bo'ylab 'stol' joyi qoldiring (keyin mesh). Bitta proyom yetarli.</p>
+          <p class="text-slate-500">Playtest: shu xonaga 3 marta kiring-chiqing. Qulaymi? Tor mi?</p>
+        </div>
+      </section>
+
+
+      <section id="room-detail-3" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Storage — chuqurroq</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Item qutilari, yashirin burchak. Kichikroq, biroz chalkash joylash — qidirish hissi.</p>
+          <p class="text-slate-500">Playtest: shu xonaga 3 marta kiring-chiqing. Qulaymi? Tor mi?</p>
+        </div>
+      </section>
+
+
+      <section id="room-detail-4" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Laboratory — chuqurroq</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Maxsus minigame. Toza to'rtburchak, markazda 'stanok' uchun bo'sh joy.</p>
+          <p class="text-slate-500">Playtest: shu xonaga 3 marta kiring-chiqing. Qulaymi? Tor mi?</p>
+        </div>
+      </section>
+
+
+      <section id="room-detail-5" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Security — chuqurroq</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Kamera monitörlari. Kichik xona, Hallway'ga yaqin ko'rinish — Betrayer uchun qiziqarli.</p>
+          <p class="text-slate-500">Playtest: shu xonaga 3 marta kiring-chiqing. Qulaymi? Tor mi?</p>
+        </div>
+      </section>
+
+
+      <section id="room-detail-6" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Kitchen — chuqurroq</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Tez tasklar. Lobby yoki Hallway'ga yaqin — odam oqimi.</p>
+          <p class="text-slate-500">Playtest: shu xonaga 3 marta kiring-chiqing. Qulaymi? Tor mi?</p>
+        </div>
+      </section>
+
+
+      <section id="room-detail-7" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Hallway — chuqurroq</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Umurtqa. Tor labirint qilmang; 200-300 kenglik. Sightline uzun bo'lmasin yoki burchak qo'ying.</p>
+          <p class="text-slate-500">Playtest: shu xonaga 3 marta kiring-chiqing. Qulaymi? Tor mi?</p>
+        </div>
+      </section>
+
+
+      <section id="room-detail-8" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Utility — chuqurroq</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Generator. Chetda, 1-2 kirish. Day 54 sabotage shu yerda.</p>
+          <p class="text-slate-500">Playtest: shu xonaga 3 marta kiring-chiqing. Qulaymi? Tor mi?</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-1" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 1</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-2" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 2</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-3" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 3</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-4" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 4</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-5" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 5</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-6" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 6</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-7" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 7</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-8" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 8</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-9" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 9</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-10" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 10</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-11" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 11</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-12" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 12</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-13" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 13</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-14" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 14</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-15" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 15</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-16" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 16</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-17" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 17</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-18" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 18</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+
+      <section id="layout-note-19" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Layout eslatma 19</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Xona funksiyasi o'lchamdan oldin keladi. Avval "bu yerda nima bo'ladi" deb yozing, keyin devor torting.</p>
+          <p>Ikki xona orasidagi proyom soni: odatda 1. Ko'p eshik — oqim yo'qoladi; o'yinchi qayerga borishni bilmaydi.</p>
+          <p>Text Render faqat blockout uchun. Shipping build da o'chiring yoki gameplay label tizimiga o'tkazing.</p>
+          <p>Utility ni Hallway oxiriga qo'yish — klassik "yugurib borib ta'mirlash" hissi beradi.</p>
+        </div>
+      </section>
+
+      
+      <section id="extra23-20" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 20</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-21" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 21</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-22" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 22</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-23" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 23</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-24" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 24</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-25" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 25</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-26" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 26</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-27" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 27</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-28" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 28</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-29" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 29</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-30" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 30</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-31" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 31</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-32" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 32</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-33" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 33</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-34" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 34</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-35" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 35</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-36" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 36</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-37" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 37</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-38" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 38</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+
+      <section id="extra23-39" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 39</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>8 xona — Betray Builder uchun "minimal to'liq" xarita. Keyinroq qavat yoki qo'shimcha wing qo'shasiz; bugun skelet mustahkam bo'lsin.</p>
+          <p>Har xona uchun challenge task g'oyasi yozilgan bo'lsa, Stage task tizimiga o'tganda vaqt tejaysiz.</p>
+          <p>Top view screenshot + nomlar — jamoa yoki kelajakdagi o'zingiz uchun hujjat.</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-22.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 22
+        </a>
+        <div class="text-xs text-slate-600">Kun 23 / 90 · Stage 4</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 24 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 18 — Button | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 3 · Interaction System</div>
+          <div class="font-semibold text-sm truncate">Kun 18 — Button</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~3–4 soat · chuqur dars</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun Button?</a>
+        <a href="#zanjir" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Uch tomonlama zanjir</a>
+        <a href="#reference" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Actor Reference</a>
+        <a href="#nazariya" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Interface kuchi</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">To‘liq sxema</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. BP_Button yaratish</a>
+        <a href="#mesh" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Mesh + Collision</a>
+        <a href="#bpi" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. BPI_Interact</a>
+        <a href="#target" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. TargetDoor variable</a>
+        <a href="#interact" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Interact → Message</a>
+        <a href="#text-can" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Text + CanInteract</a>
+        <a href="#level" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. Levelda bog‘lash</a>
+        <a href="#instigator" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">8. Instigator uzatish</a>
+        <a href="#null" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">9. Null / Is Valid</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">10. Test</a>
+        <a href="#troubleshooting" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">11. Troubleshooting</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge (Array)</a>
+        <a href="#sabotage" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Sabotage uchun asos</a>
+        <a href="#bonus" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bonus</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#mistakes" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Ko‘p xatolar</a>
+        <a href="#compare" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Door vs Button</a>
+        <a href="#level-design" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Level design</a>
+        <a href="#sequence" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Vaqt ketma-ketligi</a>
+        <a href="#debug-tips" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Debug</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+          Stage 3 · Kun 18 · Cross-actor communication
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Button</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Player → Button → Door. Bitta Actor ikkinchisiga <strong class="text-slate-200">Interface orqali</strong> buyruq beradi — Sabotage / remote control asosi.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">BP_Button</code> — kichik mesh + BPI_Interact</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">TargetDoor</code> — Instance Editable Actor reference</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Button Interact → TargetDoor ga <strong class="text-white">Interact Message</strong></li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Levelda Button Details dan Door tanlash</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> E Button’da → Door ochiladi/yopiladi (Button o‘zi ochilmaydi)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Player kodi yana <strong class="text-white">o‘zgarmaydi</strong></li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Ko‘p target (faqat challenge), UI, kalit, network. Bitta Button → bitta Door.</p>
+          </div>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima uchun muhim?</strong> “Uzoqdan ta’sir” — generator, alarm, sabotage panel hammasi shu pattern: local interact → boshqa Actor’ga Message.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun alohida Button?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Kun 17 da Player to‘g‘ridan Door’ga E bosardi. Bu har doim kerak emas: eshik yuqorida, tugma pastda; yoki “xavfsizlik paneli” eshikdan uzoqda.
+          </p>
+          <p>
+            Button — <strong class="text-white">proxy</strong>: o‘yinchi unga tegadi, u boshqa obyektni ishga tushiradi. Dizayn: xona layout’i erkinlashadi.
+          </p>
+          <p class="text-slate-400">
+            Betray Builder’da saboteur tugmasi yoritishni o‘chirishi, yoki crew button eshikni ochishi — bir xil texnika.
+          </p>
+        </div>
+      </section>
+
+      <!-- ZANJIR -->
+      <section id="zanjir" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm">⛓</span>
+          Uch tomonlama zanjir
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">┌──────────┐   E / Message    ┌───────────┐   Message    ┌─────────┐
+│ BP_Player│ ───────────────► │ BP_Button │ ───────────► │ BP_Door │
+└──────────┘   BPI_Interact   └───────────┘  BPI_Interact └─────────┘
+   focus=Button                 TargetDoor=Door instance
+                                (levelda tanlangan)</pre>
+          <p class="text-sm text-slate-500 mt-3">
+            Player Door’ni bilmaydi. Button Door class’ini bilmaydi — faqat “BPI_Interact implement qilgan Actor”. Door o‘z Timeline’ini biladi.
+          </p>
+        </div>
+      </section>
+
+      <!-- REFERENCE -->
+      <section id="reference" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">🔗</span>
+          Actor Reference nima?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Variable tipi <span class="ui-label">Actor</span> (Object Reference) — “shu leveldagi aniq nusxaga ko‘rsatkich”.
+          </p>
+          <p>
+            <strong class="text-white">Instance Editable</strong> bo‘lsa, levelda Button tanlab Details’dan boshqa Actor’ni pick qilasiz (eyedropper / dropdown).
+          </p>
+          <p>
+            Bu hardcode emas: bir Button A eshik, ikkinchi Button B eshik — bir xil BP_Button class, turli reference.
+          </p>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Soft vs hard:</strong> Hozir oddiy Object Reference yetarli. Soft reference — asset stream / katta loyiha; keyinroq.</p>
+          </div>
+          <p class="text-slate-400">
+            Tipni <span class="ui-label">BP_Door</span> qilib cheklash mumkin (faqat Door pick). Interface ruhida yaxshiroq: tip <span class="ui-label">Actor</span> yoki interface implement qiluvchi — lekin UE da “interface type variable” cheklangan; praktika: Actor + Is Valid + Message (Message implement qilmasa jim).
+          </p>
+        </div>
+      </section>
+
+      <!-- NAZARIYA -->
+      <section id="nazariya" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📖</span>
+          Interface’ning haqiqiy kuchi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Agar Button ichida <span class="ui-label">Cast To BP_Door</span> bo‘lsa — keyin “Button light’ni ham yoqsin” deganingizda yangi Cast. Interface Message: TargetDoor o‘rniga TargetActor — eshik, chiroq, alarm hammasi Interact implement qilsa ishlaydi.
+          </p>
+          <p>
+            Bugun nom <code class="text-xs text-cyan-300">TargetDoor</code> — o‘qish uchun aniq. Ichki mantiqda Message orqali chaqirasiz, Cast shart emas.
+          </p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700 text-left text-slate-400">
+                  <th class="py-2 pr-3">Yondashuv</th>
+                  <th class="py-2">Natija</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3">Cast To BP_Door → OpenDoor()</td>
+                  <td class="py-2 text-slate-500">Faqat Door; yangi tip = kod o‘zgarishi</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-3 text-cyan-300">Interact Message</td>
+                  <td class="py-2 text-emerald-400/90">Har qanday BPI_Interact implement</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          To‘liq sxema (BP_Button)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">Event Interact (Instigator from Player)
+  │
+  ├─ Is Valid (TargetDoor)?
+  │     False → Print "No target assigned" / return
+  │
+  ├─ (ixtiyoriy) Does TargetDoor implement BPI_Interact?
+  │
+  ├─ CanInteract Message → TargetDoor
+  │     False → return
+  │
+  └─ Interact Message → TargetDoor
+        Instigator = Instigator (Player’dan kelgan)
+        // yoki Self — design tanlovi
+
+GetInteractionText:
+  Return "Tugmani bosish [E]"  // yoki Target holatiga qarab
+
+CanInteract:
+  Return IsValid(TargetDoor)  // target yo‘q bo‘lsa false</pre>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BP_Door ishlaydi (E to‘g‘ridan ochadi)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BPI_Interact + Player Message zanjiri</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Line Trace focus ishlaydi</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BP_Button yaratish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">1.1</span>
+            <span class="text-sm font-medium text-white">Actor Blueprint</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p><span class="ui-label">Content/BetrayBuilder/Blueprints/Interaction/</span></p>
+            <p>Actor → <span class="ui-label font-mono">BP_Button</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="mesh" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Mesh va Collision</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.1</span>
+              <span class="text-sm font-medium text-white">Vizual</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Static Mesh: kichik Cube / Cylinder (tugma ko‘rinishi). Scale ~0.3–0.5.</p>
+              <p>Material ixtiyoriy (qizil/yashil) — keyinroq emissive.</p>
+            </div>
+          </div>
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.2</span>
+              <span class="text-sm font-medium text-white">Trace uchun collision</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Mesh yoki Box Collision: Visibility Block. Kichik tugmada Box biroz kattaroq — nishon oson.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="bpi" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BPI_Interact implement</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">3.1</span>
+            <span class="text-sm font-medium text-white">Class Settings</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Interfaces → Add → <span class="ui-label">BPI_Interact</span> → Compile.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="target" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">TargetDoor variable</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10–15 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">4.1</span>
+            <span class="text-sm font-medium text-white">Sozlamalar</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <ul class="space-y-2">
+              <li>Name: <span class="ui-label font-mono">TargetDoor</span></li>
+              <li>Type: Object Reference → <span class="ui-label">Actor</span> (yoki BP_Door agar faqat eshik)</li>
+              <li><span class="ui-label">Instance Editable</span> ✓</li>
+              <li><span class="ui-label">Expose on Spawn</span> ixtiyoriy</li>
+              <li>Category: <span class="ui-label">Interaction|Wiring</span></li>
+              <li>Tooltip: “Leveldagi eshik instance”</li>
+            </ul>
+            <p class="text-slate-400">Compile. Levelda Details’da TargetDoor maydoni paydo bo‘ladi.</p>
+            <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+              <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima uchun Actor?</strong> Keyin xuddi shu Button light yoki alarm’ga ham bog‘lanishi mumkin. BP_Door tipi qattiqroq xavfsizlik; Actor + Message — moslashuvchan.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="interact" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Interact — Message yuborish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–25 daqiqa</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">5.1</span>
+              <span class="text-sm font-medium text-white">Event Interact</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">Event Interact (Instigator)
+  → Is Valid TargetDoor?
+       False → Print "Button: TargetDoor not set"
+               return
+  → Interact (BPI_Interact Message)
+       Target = TargetDoor
+       Instigator = Instigator   // Player’ni uzating
+  → (ixtiyoriy) Print "Button pressed"</pre>
+              <p>Qidiruvda <strong class="text-white">Message</strong> variantini tanlang, “Call function on BP_Door” emas.</p>
+            </div>
+          </div>
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">5.2</span>
+              <span class="text-sm font-medium text-white">CanInteract target’da?</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Yaxshi odat: avval TargetDoor ga CanInteract Message, True bo‘lsa Interact.</p>
+              <p>Door animatsiya paytida CanInteract false — Button bosilsa ham Door rad etadi. Izchil.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="text-can" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">GetInteractionText va CanInteract</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">6.1</span>
+            <span class="text-sm font-medium text-white">Implementatsiya</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p><strong class="text-white">GetInteractionText:</strong> Return <code class="text-xs">"Tugmani bosish [E]"</code></p>
+            <p class="text-slate-400">Ixtiyoriy: TargetDoor valid bo‘lsa uning GetInteractionText’ini uzatish — “Eshikni ochish” matni Button’da ham chiqadi. Murakkabroq; avval oddiy matn.</p>
+            <p><strong class="text-white">CanInteract:</strong> Return IsValid(TargetDoor). Target bo‘sh — tugma “o‘lik”.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="level" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Levelda bog‘lash (wiring)</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa · eng muhim amaliyot</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">7.1</span>
+              <span class="text-sm font-medium text-white">Joylashtirish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <ol class="list-decimal list-inside space-y-2">
+                <li>Levelga BP_Door qo‘ying (yoki mavjudini ishlating).</li>
+                <li>BP_Button ni eshik yoniga yoki boshqa xonaga qo‘ying.</li>
+                <li>Button’ni tanlang → Details → TargetDoor.</li>
+                <li>Eyedropper yoki dropdown’dan <strong class="text-white">shu leveldagi Door instance</strong> ni tanlang.</li>
+              </ol>
+              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Class emas, instance:</strong> Content’dagi BP_Door asset emas — Viewport’dagi joylashtirilgan eshik. Noto‘g‘ri tanlansa reference null yoki noto‘g‘ri.</p>
+              </div>
+              <p>Save level. Play.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 8 -->
+      <section id="instigator" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">8</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Instigator — kim bosgan?</h2>
+            <p class="text-sm text-slate-500">Dizayn tanlovi</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Player Button’ga Interact yuboradi, Instigator = Player. Button Door’ga yuborayotganda:
+          </p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li><strong class="text-slate-200">Instigator = kelgan Instigator</strong> — Door “o‘yinchi bosdi” deb biladi (inventory, role)</li>
+            <li><strong class="text-slate-200">Instigator = Button Self</strong> — Door “tugma bosdi” deb biladi</li>
+          </ul>
+          <p class="text-slate-400">
+            Ko‘pincha <strong class="text-white">Player’ni uzatish</strong> to‘g‘ri. Door keyinroq “faqat crew ochadi” desa Instigator’dan role oladi.
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 9 -->
+      <section id="null" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">9</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Is Valid — majburiy himoya</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            TargetDoor bo‘sh bo‘lsa Message xato / no-op. Har doim <span class="ui-label">Is Valid</span> (yoki Is Valid Soft).
+          </p>
+          <p>
+            Levelda unutib qo‘yilgan wiring — eng ko‘p bug. Print “not set” debug’da yordam beradi; release’da olib tashlang.
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 10 TEST -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">10</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test ssenariylari</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Button’ga qarab E → Door ochiladi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Yana Button E → Door yopiladi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">To‘g‘ridan Door E hali ham ishlaydi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">TargetDoor bo‘sh Button → xavfsiz (crash yo‘q)</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Player’da Cast To BP_Button yo‘q</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Ikkinchi Button boshqa Door’ga bog‘langan — ishlaydi</span></label>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">11</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Troubleshooting</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-red-500/20 overflow-hidden">
+          <div class="bg-red-500/10 px-5 py-3 border-b border-red-500/20">
+            <span class="text-sm font-medium text-red-300">Muammo → yechim</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300">
+            <div>
+              <p class="font-medium text-white">Button E — hech narsa</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Focus Button’mi? (debug line / Print focus)</li>
+                <li>BPI implement?</li>
+                <li>TargetDoor Details’da to‘ldirilganmi?</li>
+                <li>Is Valid o‘taptimi?</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Button ishlaydi, Door ochilmaydi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Message Target = TargetDoor?</li>
+                <li>Door CanInteract false (animating)?</li>
+                <li>Noto‘g‘ri instance tanlangan?</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">TargetDoor pick qilib bo‘lmaydi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Instance Editable?</li>
+                <li>Tip BP_Door bo‘lsa faqat Door ko‘rinadi</li>
+                <li>Levelda Door joylashganmi?</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Package / PIE da reference yo‘qoladi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Level Save qilinganmi?</li>
+                <li>Door boshqa sublevel’dami?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — Array of doors</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-3">
+          <p><span class="ui-label font-mono">TargetDoors</span> — Array of Actor (Instance Editable).</p>
+          <p>Interact da ForEach Loop → har bir elementga Is Valid + Interact Message.</p>
+          <p>Levelda 2–3 eshikni array’ga qo‘shing — bitta Button hammasi ochadi/yopadi (har biri o‘z toggle holatida).</p>
+          <p class="text-slate-500">Eslatma: har eshik o‘z bIsOpen’iga ega — ba’zilari ochiq, ba’zilari yopiq bo‘lishi mumkin. “Hammasini och” alohida mantiq (keyinroq).</p>
+        </div>
+      </section>
+
+      <!-- SABOTAGE -->
+      <section id="sabotage" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">⚡</span>
+          Sabotage System uchun asos
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Bugungi pattern:
+          </p>
+          <pre class="flow text-cyan-300/90 bg-black/40 rounded-lg p-3 border border-slate-800">Local interactable (Button / Panel)
+  → references to systems (Door, Light, Reactor)
+  → Interface Message(s)</pre>
+          <p class="text-slate-400">
+            Saboteur “Lights” panelini bosadi → ko‘p light Actor’larga Message. Crew “Fix” panel → teskari. Siz hozir bitta Door bilan shu arxitekturani qurdiz.
+          </p>
+        </div>
+      </section>
+
+      <!-- BONUS -->
+      <section id="bonus" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">★</span>
+          Bonus
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B1</span>
+            <strong class="text-white ml-2">Cooldown-only Button</strong>
+            <p class="mt-1 text-slate-400">TargetDoor o‘rniga TargetActor — nom umumiyroq.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B2</span>
+            <strong class="text-white ml-2">Cooldown-only Press feedback</strong>
+            <p class="mt-1 text-slate-400">Interact da mesh biroz scale yoki material param — “bosildi” hissi (Timeline 0.1 s).</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B3</span>
+            <strong class="text-white ml-2">Cooldown-only Cooldown</strong>
+            <p class="mt-1 text-slate-400">bIsOnCooldown + Timer 1 s — spam E oldini olish.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B4</span>
+            <strong class="text-white ml-2">Data-only</strong>
+            <p class="mt-1 text-slate-400">GetInteractionText da TargetDoor GetInteractionText chaqirish — UI bir xil matn.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">?</span>
+          FAQ
+        </h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Nima uchun Door’ni Button child qilmaymiz?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Parent-child transform bog‘laydi. Eshik va tugma turli joyda bo‘lishi kerak — reference erkinroq.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Event Dispatcher yaxshiroq emasmi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Dispatcher “e’lon”: kim tinglasa eshitadi. Bu yerda aniq target bor — Message to‘g‘ridan. Dispatcher ko‘p listener uchun (UI, achievement).
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Blueprint Interface o‘rniga to‘g‘ridan Open chaqirish?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Open faqat Door’da. Message — kelajakdagi Light/Alarm uchun bir xil kanal.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Multiplayer’da reference?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Levelda joylashtirilgan Actor’lar odatda serverda mavjud; reference replicate qilinishi kerak bo‘lishi mumkin. Hozir single-player.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- MISTAKES -->
+      <section id="mistakes" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm">!</span>
+          Ko‘p xatolar
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">1. TargetDoor’ga class asset bog‘lash</p>
+            <p class="text-slate-400 mt-1">Instance kerak — leveldagi actor.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">2. Cast To BP_Door yozish</p>
+            <p class="text-slate-400 mt-1">Message ishlating.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">3. Is Valid o‘tkazib yuborish</p>
+            <p class="text-slate-400 mt-1">Bo‘sh reference — jim xato yoki warning.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">4. Player’da Button uchun maxsus kod</p>
+            <p class="text-slate-400 mt-1">Kerak emas — BPI yetarli.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center text-sm">Aa</span>
+          Lug‘at
+        </h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Actor Reference</td><td class="py-2.5 px-4 text-slate-400">Leveldagi aniq Actor’ga ko‘rsatkich</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Instance Editable</td><td class="py-2.5 px-4 text-slate-400">Details’da per-instance sozlash</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Wiring</td><td class="py-2.5 px-4 text-slate-400">Button’ni Door’ga bog‘lash</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Proxy</td><td class="py-2.5 px-4 text-slate-400">O‘zi emas, boshqasini ishga tushiruvchi</td></tr>
+              <tr><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Indirect communication</td><td class="py-2.5 px-4 text-slate-400">A → B → C, A C ni bilmasligi mumkin</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CHECKLIST -->
+      <section id="checklist" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">✓</span>
+          Yakuniy checklist
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BP_Button + mesh + collision</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BPI_Interact implement</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">TargetDoor Instance Editable</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Interact → Message Door</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Level wiring</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Play: Button E → Door harakati</span></label>
+        </div>
+      </section>
+
+      <!-- COMPARE -->
+      <section id="compare" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">⇄</span>
+          Door to‘g‘ridan vs Button orqali
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700 text-left text-slate-400">
+                  <th class="py-2 pr-3">Holat</th>
+                  <th class="py-2 pr-3">Focus</th>
+                  <th class="py-2">Natija</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3">Player → Door</td>
+                  <td class="py-2 pr-3">Door</td>
+                  <td class="py-2 text-slate-500">Door.Interact (Timeline)</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-3">Player → Button → Door</td>
+                  <td class="py-2 pr-3">Button</td>
+                  <td class="py-2 text-slate-500">Button.Interact → Door.Interact</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-slate-400">Ikkalasi birga yashashi mumkin. Ba’zi eshiklar faqat panel orqali (Player to‘g‘ridan CanInteract false qilib “faqat button” — keyinroq design).</p>
+        </div>
+      </section>
+
+      <!-- LEVEL DESIGN -->
+      <section id="level-design" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">🗺</span>
+          Level design maslahatlari
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p><strong class="text-white">1. Tugma ko‘rinadigan joyda</strong> — o‘yinchi izlab topishi kerak, lekin adashmasin.</p>
+          <p><strong class="text-white">2. Bir xona — bir mantiqiy panel</strong> — chalkash wiring’dan qoching.</p>
+          <p><strong class="text-white">3. Test xonasida</strong> Door yonida Button, keyin uzoqroq Button — masofa hissi.</p>
+          <p><strong class="text-white">4. Naming</strong> — levelda Actor label: <code class="text-xs">Door_Security</code>, <code class="text-xs">Btn_Security</code> — Details’da topish oson.</p>
+          <p class="text-slate-500">Outliner’da filter: Button / Door.</p>
+        </div>
+      </section>
+
+      <!-- SEQUENCE DIAGRAM -->
+      <section id="sequence" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↓</span>
+          Vaqt bo‘yicha ketma-ketlik
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">t0  Player looks at Button (Trace hit)
+t1  bHasFocus=true, CurrentFocusedActor=Button
+t2  Player presses E (IA_Interact Started)
+t3  Player: DoesImplement(Button)? yes
+t4  Player: CanInteract(Button)? → IsValid(TargetDoor)
+t5  Player: Interact Message → Button
+t6  Button: IsValid(TargetDoor)? yes
+t7  Button: Interact Message → Door (Instigator=Player)
+t8  Door: !bIsAnimating → Timeline Play
+t9  Door mesh rotates 0→90 over 0.5s
+t10 Door Finished → bIsOpen=true</pre>
+        </div>
+      </section>
+
+      <!-- DEBUG TIPS -->
+      <section id="debug-tips" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-sm">🐛</span>
+          Debug usullari
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <ul class="list-disc list-inside space-y-2 text-slate-400">
+            <li>Button Interact boshida Print Display Name + TargetDoor name</li>
+            <li>Door Interact boshida Print “Door received interact from …” Instigator</li>
+            <li>Viewport’da Button tanlab TargetDoor none emasligini tekshirish</li>
+            <li>Breakpoint (Blueprint debug) Interact Message pinida</li>
+          </ul>
+          <p class="text-slate-500">Ishlagach Print’larni o‘chiring yoki bDebug flag orqasiga yashiring.</p>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ BP_Button + TargetDoor reference</li>
+            <li>✓ Cross-actor Interact Message</li>
+            <li>✓ Levelda Instance Editable wiring</li>
+            <li>✓ Player o‘zgarmagan</li>
+            <li>✓ Sabotage / remote pattern poydevori</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">Content/BetrayBuilder/Blueprints/Interaction/BP_Button</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4 space-y-2">
+            <p class="text-slate-400"><strong class="text-white">Stage 3 holati:</strong> Trace → Interface → Door → Button→Door. Interact tizimi “o‘sgan”.</p>
+            <p class="text-slate-500">Keyingi kunlar: ko‘proq interactable’lar yoki polish (feedback, prompt).</p>
+          </div>
+          <div class="mt-4 rounded-lg border border-slate-700 bg-slate-950 p-4">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">O‘zingizga savol</p>
+            <p class="text-slate-400">Button Door class nomini biladimi? Javob: yo‘q — faqat reference + BPI.</p>
+          </div>
+          <div class="mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-2">
+            <p class="text-xs font-semibold text-emerald-400/90 uppercase tracking-wider">Stage 3 progress</p>
+            <p class="text-slate-400">15 Trace · 16 BPI · 17 Door · 18 Button→Door. Interact “stack” to‘liq prototip.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="worked-nodes" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">1:1</span>
+          BP_Button Event Interact — node ro‘yxati
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm text-slate-300">
+          <ol class="list-decimal list-inside space-y-2 text-slate-400">
+            <li>Event Interact (BPI) — Instigator pin</li>
+            <li>Get TargetDoor → Is Valid → Branch</li>
+            <li>False: Print String (optional) → return</li>
+            <li>True: CanInteract Message (Target = TargetDoor) → Branch (optional but recommended)</li>
+            <li>True: Interact Message (Target = TargetDoor, Instigator = Instigator)</li>
+            <li>Optional: local feedback Print / mesh pulse</li>
+          </ol>
+          <p class="text-slate-500 mt-3">Compile → levelda TargetDoor assign → PIE → look at button → E.</p>
+        </div>
+      </section>
+
+      <section id="prep19" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">→</span>
+          Keyingi kunga
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm text-slate-400">
+          <p>Button+Door juftligi ishlayotganini saqlang (level + BP).</p>
+          <p>Challenge Array qilgan bo‘lsangiz — multi-target pattern sabotage uchun tayyor.</p>
+          <p>Player graph’iga tegmagan holda ikki xil interactable (Door, Button) ishlashi — Stage 3 muvaffaqiyati.</p>
+        </div>
+      </section>
+
+      <section id="anti-patterns-extra" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm">✕</span>
+          Yana bir nechta anti-pattern
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Get All Actors of Class + masofa</p>
+            <p class="text-slate-400 mt-1">Har E da barcha eshiklarni qidirish — sekin va chalkash. Reference aniqroq.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Button ichida Door Timeline nusxasi</p>
+            <p class="text-slate-400 mt-1">Mantiq Door’da qolsin. Button faqat “bos” deydi.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Hardcoded Actor name (Find Actor by Name)</p>
+            <p class="text-slate-400 mt-1">Nom o‘zgarsa buziladi. Instance reference barqarorroq.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">BeginPlay da Get All va “birinchi Door”</p>
+            <p class="text-slate-400 mt-1">Level tartibiga bog‘liq. Designer wiring’ni boshqarishi kerak.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="summary-stack" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm">📦</span>
+          Interaction stack — hozirgi holat
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">Layer 1  Line Trace          → kim focus?
+Layer 2  BPI_Interact         → gaplashish tili
+Layer 3  BP_Door              → Timeline ochilish
+Layer 4  BP_Button            → reference + forward Message
+Layer 5  (keyin) UI Prompt    → GetInteractionText
+Layer 6  (keyin) Sabotage     → multi-target panels</pre>
+          <p class="text-sm text-slate-500 mt-3">Siz 1–4 qatlamdasiz. Har qatlam oldingisiga tayanadi; buzilsa yuqorisi ham ishlamaydi.</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-17.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 17
+        </a>
+        <div class="text-xs text-slate-600">Kun 18 / 90 · Stage 3</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 19 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    
+      
+      <section id="quick-recap" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Tezkor xulosa (30 soniya)</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <p>1. BP_Button yarating, BPI_Interact qo‘shing.</p>
+          <p>2. TargetDoor (Actor, Instance Editable).</p>
+          <p>3. Interact → Is Valid → Message Interact to TargetDoor.</p>
+          <p>4. Levelda Button Details → Door instance tanlang.</p>
+          <p>5. Play: Button’ga E → Door harakatlanadi.</p>
+        </div>
+      </section>
+<section id="closing-note" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center text-sm">※</span>
+          Yopilish eslatmasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Agar bugun faqat bitta narsani eslab qolsangiz: <strong class="text-white">Button Door emas — u Door ga xabar yuboradi</strong>.</p>
+          <p class="text-slate-400">Shu farq Stage 3 ning markaziy darsi. Qolgani mesh, collision va Details wiring.</p>
+          <p class="text-slate-500">Tabriklaymiz — bilvosita aloqa ishlaydi.</p>
+        </div>
+      </section>
+
+</main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>
+
+
+
+
+

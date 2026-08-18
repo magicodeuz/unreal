@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 22 — Blockout | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 4 · Level &amp; Spaces</div>
+          <div class="font-semibold text-sm truncate">Kun 22 — Blockout</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~3.5–5 soat · greybox</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#stage4" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Stage 4 nima?</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun blockout?</a>
+        <a href="#greybox" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Greybox tamoyillari</a>
+        <a href="#scale" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Masshtab (Capsule)</a>
+        <a href="#units" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">UE unitlar</a>
+        <a href="#tools" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Vositalar: Cube vs BSP</a>
+        <a href="#layout-concept" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4–5 xona g‘oya</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. MAP_BetrayBuilder</a>
+        <a href="#grid" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Grid va snap</a>
+        <a href="#floor" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Pol</a>
+        <a href="#walls" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Devorlar</a>
+        <a href="#doors-openings" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Proyomlar</a>
+        <a href="#rooms" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Xonalar ajratish</a>
+        <a href="#playtest" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. Player bilan sinash</a>
+        <a href="#checklist-geo" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">8. Geometriya checklist</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge (plan)</a>
+        <a href="#avoid" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima qilmaslik</a>
+        <a href="#troubleshooting" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Troubleshooting</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+          Stage 4 · Kun 22 · Level &amp; Spaces boshlanishi
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Blockout</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Faqat <strong class="text-slate-200">kublar va o‘lchamlar</strong>. Material, chiroq, dekor — keyin. Bugun: masshtab, oqim, “yurib ko‘rish”.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">MAP_BetrayBuilder</code> — asosiy o‘yin xaritasi</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> 4–5 xonali greybox (Cube / Plane)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Devor balandligi ≥ 2× Player capsule height (96 → ~200+)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Eshik o‘rniga oddiy <strong class="text-white">proyom</strong> (teshik)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> BP_Player bilan yurib masshtabni his qilish</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Material, Lumen chiroq, dekor mesh, BP_Door joylash (ertaga xona rejasi). Faqat geometriya.</p>
+          </div>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima uchun erta Player?</strong> Capsule 42×96 — “odam o‘lchami”. Koridor tor bo‘lsa, playtest darhol aytadi. Keyin mesh almashtirish qimmat.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STAGE 4 -->
+      <section id="stage4" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-sm">4</span>
+          Stage 4 — Level &amp; Spaces
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Stage 1–2: Blueprint va Player. Stage 3: Interaction. Endi <strong class="text-white">qayerda</strong> o‘ynaladi — bino.
+          </p>
+          <p>
+            Typik ketma-ketlik (kurs bo‘yicha):
+          </p>
+          <pre class="flow text-cyan-300/90 bg-black/40 rounded-lg p-3 border border-slate-800">22 Blockout (bugun)
+23+ Xonalar, koridorlar, verticality
+…  Keyinroq art pass, lighting, polish</pre>
+          <p class="text-slate-400">
+            Interaction test map (MAP_InteractionTest) qolsin — regression uchun. Asosiy o‘yin endi MAP_BetrayBuilder.
+          </p>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun blockout / greybox?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            <strong class="text-white">Blockout</strong> (greybox, whitebox) — level design’ning birinchi bosqichi: faqat shakl va o‘lcham.
+          </p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Gameplay oqimi (qayerdan qayerga)</li>
+            <li>Masshtab (odam o‘lchamiga mos)</li>
+            <li>Sightline, yashirin joy, choke point</li>
+            <li>Tez o‘zgartirish (devorni siljitish arzon)</li>
+          </ul>
+          <p>
+            Material qo‘yilgach o‘zgartirish qimmat. Shuning uchun avval “to‘g‘ri tuyuladigan” bo‘shliq.
+          </p>
+          <p class="text-slate-400">
+            Among Us / social deduction: xonalar aniq, koridorlar bog‘laydi, meeting / task joylari ajratilgan. Blockout shu skelet.
+          </p>
+        </div>
+      </section>
+
+      <!-- GREYBOX PRINCIPLES -->
+      <section id="greybox" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">⬜</span>
+          Greybox tamoyillari
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <ol class="list-decimal list-inside space-y-2 text-slate-400">
+            <li><strong class="text-slate-200">Bitta material / default</strong> — ko‘z “go‘zallikka” chalg‘imasin.</li>
+            <li><strong class="text-slate-200">Grid</strong> — 10 / 50 / 100 unit snap; tartibli o‘lcham.</li>
+            <li><strong class="text-slate-200">Player bilan tez-tez Play</strong> — har 15–20 daqiqada.</li>
+            <li><strong class="text-slate-200">Nomlar</strong> — Floor_Main, Wall_N, Room_Cafeteria (keyin topish oson).</li>
+            <li><strong class="text-slate-200">Qayta ishlash</strong> — birinchi versiya noto‘g‘ri bo‘lishi normal.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- SCALE -->
+      <section id="scale" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">📐</span>
+          Masshtab — Capsule 42 × 96
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>Day 8 dan: Capsule radius ~42, half-height tegishli, to‘liq balandlik ~96 unit atrofida.</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700 text-left text-slate-400">
+                  <th class="py-2 pr-3">Element</th>
+                  <th class="py-2 pr-3">Tavsiya (unit)</th>
+                  <th class="py-2">Izoh</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3">Devor balandligi</td>
+                  <td class="py-2 pr-3">200–300+</td>
+                  <td class="py-2 text-slate-500">≥ 2× capsule; shift bo‘lishi mumkin</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3">Eshik / proyom kengligi</td>
+                  <td class="py-2 pr-3">120–180</td>
+                  <td class="py-2 text-slate-500">Capsule 84 diametr + bo‘shliq</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3">Eshik balandligi</td>
+                  <td class="py-2 pr-3">200–220</td>
+                  <td class="py-2 text-slate-500">Bosh tegmasin</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3">Koridor kengligi</td>
+                  <td class="py-2 pr-3">200–300</td>
+                  <td class="py-2 text-slate-500">2 o‘yinchi o‘tsin</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-3">Kichik xona</td>
+                  <td class="py-2 pr-3">400×400 – 800×800</td>
+                  <td class="py-2 text-slate-500">Task / yashirin</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-slate-400">Bu qat’iy emas — playtest bilan sozlang. Muhimi: “tor / keng” hissi.</p>
+        </div>
+      </section>
+
+      <!-- UNITS -->
+      <section id="units" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">1u</span>
+          Unreal unitlar
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>1 Unreal Unit ≈ 1 cm (default). 100 uu = 1 m. Player ~1.8 m balandlik (96 half-ish + radius hisobi — engine default mannequin masshtabi).</p>
+          <p class="text-slate-400">Grid snap: 10 (mayda), 50, 100 (xonalar). Orthographic Top view da reja chizing.</p>
+        </div>
+      </section>
+
+      <!-- TOOLS -->
+      <section id="tools" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">🛠</span>
+          Cube Static Mesh vs BSP / Geometry
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700 text-left text-slate-400">
+                  <th class="py-2 pr-3">Usul</th>
+                  <th class="py-2">Qachon</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Place Actors → Cube</td>
+                  <td class="py-2">Eng sodda; scale bilan devor. Kurs uchun yetarli.</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Modeling Mode / BSP</td>
+                  <td class="py-2">Bitta solid, boolean teshik. UE5 da Modeling tools.</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Modular kit</td>
+                  <td class="py-2">Keyinroq art; blockout uchun shart emas.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-slate-400">
+            Bugun: <strong class="text-white">Engine Cube</strong> + Scale. Collision default BlockAll odatda OK.
+          </p>
+        </div>
+      </section>
+
+      <!-- LAYOUT CONCEPT -->
+      <section id="layout-concept" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">🗺</span>
+          4–5 xona — boshlang‘ich g‘oya
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5 space-y-3">
+          <pre class="flow text-cyan-300/90">          [Cafeteria / Meeting]
+                 |
+    [Corridor]--+--[Corridor]
+       |                 |
+  [Electrical]      [Medbay / Storage]
+       |
+  [Reactor / Engine]   (ixtiyoriy 5)</pre>
+          <p class="text-sm text-slate-500">Nomlar Among Us uslubi — Betray Builder o‘z nomlarini keyin beradi. Muhimi: markaz + yon xonalar + bog‘lovchi yo‘lak.</p>
+          <p class="text-sm text-slate-400">Bugun aniq nom shart emas — “Room_A, Room_B, Hall_1”.</p>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BP_Player + GameMode ishlaydi</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Movement (WASD, jump) Stage 2 dan</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Stage 3 milestone (ixtiyoriy, lekin Player tayyor)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">MAP_BetrayBuilder yaratish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10–15 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">1.1</span>
+            <span class="text-sm font-medium text-white">Level</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p><span class="ui-label">Content/BetrayBuilder/Maps/</span></p>
+            <p>New Level → Basic yoki Empty Open World emas, oddiy. Saqlash: <span class="ui-label font-mono">MAP_BetrayBuilder</span>.</p>
+            <p>World Settings → GameMode Override = BP_GameMode (yoki default pawn BP_Player).</p>
+            <p class="text-slate-400">Default floor plane bo‘lsa — o‘zingizning polingiz bilan almashtirasiz yoki scale qilasiz.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="grid" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Grid va snap</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5–10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Viewport pastida Grid Snap: 10 yoki 50. Rotation snap 90°.</p>
+          <p>Top orthographic (Alt+J yoki viewport menyusi) — reja chizish uchun.</p>
+          <p class="text-slate-400">Ctrl + drag: grid bo‘ylab siljish. Scale mode (R) da ham snap.</p>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="floor" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Pol</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">3.1</span>
+            <span class="text-sm font-medium text-white">Bir yoki bir nechta plita</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Place Actors → Shapes → Cube. Scale Z juda past (0.1–0.2), X/Y katta (masalan 20×20 scale = 2000×2000 unit agar base 100).</p>
+            <p class="text-slate-400">Engine Cube default 100×100×100. Scale 30, 30, 0.2 → keng pol.</p>
+            <p>Yoki bir nechta pol bo‘lagi — xona chegaralarini keyinroq ko‘rasiz.</p>
+            <p><strong class="text-white">Collision:</strong> Block. Player tushib ketmasin.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="walls" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Devorlar</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 40–60 daqiqa</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.1</span>
+              <span class="text-sm font-medium text-white">Tashqi quti</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>4 ta uzun Cube — shimol/janub/sharq/g‘arb. Balandlik scale Z ≈ 2.5–3 (250–300 unit).</p>
+              <p>Qalinlik: scale 0.2–0.5 (20–50 unit) — juda yupqa bo‘lmasin (camera clip).</p>
+              <p>Burchaklar tutashsin (bo‘shliq bo‘lmasin — Player tashqariga chiqmasin).</p>
+            </div>
+          </div>
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.2</span>
+              <span class="text-sm font-medium text-white">Ichki bo‘linmalar</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Xonalarni ajratuvchi devorlar. Keyin proyom kesasiz (yoki devorni ikki qismga bo‘lib orasini ochasiz).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="doors-openings" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Proyomlar (eshik o‘rni)</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–30 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Bugun <strong class="text-white">BP_Door qo‘ymang</strong> — faqat bo‘shliq.</p>
+          <p>Usul: bitta uzun devorni ikkita qisqa qilib, orasida 150 unit bo‘shliq qoldiring.</p>
+          <p>Yoki Modeling Mode da boolean — agar tanish bo‘lsa.</p>
+          <p class="text-slate-400">Proyom kengligi ≥ 120. Balandlik shiftgacha ochiq yoki lintel (yuqori to‘sin) qo‘ying.</p>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="rooms" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">4–5 xona ajratish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 30–45 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Markaziy zal + 2–3 yon xona + bitta “texnik” xona. Har biriga Outliner folder yoki prefix.</p>
+          <p>Xona o‘lchami turlicha: kattaroq meeting, kichikroq electrical — o‘qish / yashirish farqi.</p>
+          <p class="text-slate-500">Mukammal plan shart emas — ertaga qayta chizasiz.</p>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="playtest" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BP_Player bilan sinash</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–40 daqiqa (takroriy)</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Play → barcha xonalarni aylanib chiqing.</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Proyomdan o‘tish qulaymi?</li>
+            <li>Koridor “bo‘g‘uvchi”mi yoki bo‘shmi?</li>
+            <li>Shiftga bosh tegadimi?</li>
+            <li>Tashqariga chiqib ketish mumkinmi? (teshik)</li>
+          </ul>
+          <p class="text-slate-400">Noto‘g‘ri joy — Editor’ga qaytib scale/move. 3–4 iteratsiya normal.</p>
+        </div>
+      </section>
+
+      <!-- STEP 8 -->
+      <section id="checklist-geo" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">8</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Geometriya checklist</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">MAP_BetrayBuilder saqlangan</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Pol + tashqi devorlar yopiq</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">4–5 ichki zona</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Proyomlar o‘tiladigan</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Devor balandligi ≥ ~200</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Player yurib “mantiqiy” his</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Material/dekor qo‘yilmagan (onagli)</span></label>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — qog‘oz plan</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-3">
+          <p>Top view screenshot yoki qo‘lda chizilgan reja.</p>
+          <p>Xonalarni nomlang, oqimni strelka bilan. Ertaga solishtirasiz — nima o‘zgardi.</p>
+        </div>
+      </section>
+
+      <!-- AVOID -->
+      <section id="avoid" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm">!</span>
+          Nima qilmaslik
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Material va lighting polish</p>
+            <p class="text-slate-400 mt-1">Vaqt yeydi; o‘lcham hali o‘zgaradi.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">To‘liq BP_Door / Light joylash</p>
+            <p class="text-slate-400 mt-1">Ertaga xona rejasi; bugun proyom.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Gigant open world</p>
+            <p class="text-slate-400 mt-1">4–5 xona yetarli start.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Troubleshooting</h2>
+        <div class="rounded-xl border border-red-500/20 overflow-hidden">
+          <div class="p-5 space-y-3 text-sm text-slate-300">
+            <p><strong class="text-white">Player pol orqali tushadi:</strong> Collision; pol scale Z juda kichik emasmi; Complex as Simple.</p>
+            <p><strong class="text-white">Devor orqali o‘tadi:</strong> Collision yo‘q yoki NoCollision.</p>
+            <p><strong class="text-white">Juda tor:</strong> scale oshiring; playtest qayta.</p>
+            <p><strong class="text-white">Z-fighting (yaltiroq):</strong> bir xil tekislikda ikki mesh — biroz ajrating.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">FAQ</h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">BSP hali kerakmi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              UE5 da kamroq ishlatiladi; Cube + Modeling yetarli. Istasangiz Geometry script.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Nechta xona majburiy?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              4–5 maqsad. 3 ta ham start uchun OK; keyin qo‘shasiz.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Shift shartmi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Blockout uchun ixtiyoriy; ochiq “osmon” ham OK. Keyin shift qo‘yasiz.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Lug‘at</h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Blockout / Greybox</td><td class="py-2.5 px-4 text-slate-400">Sodda geometriya bilan level skeleti</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Proyom</td><td class="py-2.5 px-4 text-slate-400">Eshik o‘rni (bo‘shliq)</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Snap</td><td class="py-2.5 px-4 text-slate-400">Gridga yopishish</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Choke point</td><td class="py-2.5 px-4 text-slate-400">Tor o‘tish — oqim nazorati</td></tr>
+              <tr><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Playtest</td><td class="py-2.5 px-4 text-slate-400">O‘yinchi sifatida sinash</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ MAP_BetrayBuilder blockout</li>
+            <li>✓ Masshtab Player bilan tekshirildi</li>
+            <li>✓ 4–5 zona + proyomlar</li>
+            <li>✓ Art yo‘q — ongli ravishda</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">Content/BetrayBuilder/Maps/MAP_BetrayBuilder</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4">
+            <p class="text-slate-400"><strong class="text-white">Ertaga:</strong> xonalarni aniqroq nomlash, oqim, ehtimol Door o‘rnatish boshlanishi.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="prep23" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Keyingi kunga</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-400 space-y-2">
+          <p>Top view screenshot saqlang.</p>
+          <p>Qaysi xona “asosiy” ekanini o‘ylab qo‘ying.</p>
+        </div>
+      </section>
+
+      
+      <section id="depth-1" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Iteratsiya</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Blockout bir marta chizilmaydi. 1-versiya tor koridor, 2-versiya kengaytirish — normal. Har playtest dan keyin bitta o‘zgarish qiling, hammasini birga emas.</p>
+          <p class="text-slate-500">Bu eslatma Stage 4 davomida qayta o‘qiladi — greybox intizomi.</p>
+        </div>
+      </section>
+
+
+      <section id="depth-2" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Sightline</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Uzoq koridor — kimdir uzoqdan ko‘rinadi. Qisqa burchaklar — yashirish. Social deduction da ikkalasi ham kerak: ochiq meeting, yashirin electrical.</p>
+          <p class="text-slate-500">Bu eslatma Stage 4 davomida qayta o‘qiladi — greybox intizomi.</p>
+        </div>
+      </section>
+
+
+      <section id="depth-3" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Verticality</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Bugun asosan 2D plan. Zinapoya/shift keyin. Hozir bitta qavat — masshtab osonroq.</p>
+          <p class="text-slate-500">Bu eslatma Stage 4 davomida qayta o‘qiladi — greybox intizomi.</p>
+        </div>
+      </section>
+
+
+      <section id="depth-4" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Module size</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>100 unit grid da o‘ylang: xona 8×8 grid, koridor 3 grid keng. Keyin modular kitga o‘tish oson.</p>
+          <p class="text-slate-500">Bu eslatma Stage 4 davomida qayta o‘qiladi — greybox intizomi.</p>
+        </div>
+      </section>
+
+
+      <section id="depth-5" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Naming</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Wall_Ext_N, Wall_Int_A1, Floor_RoomA — Outliner filter. Keyin light/door joylashda topasiz.</p>
+          <p class="text-slate-500">Bu eslatma Stage 4 davomida qayta o‘qiladi — greybox intizomi.</p>
+        </div>
+      </section>
+
+
+      <section id="depth-6" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Player camera</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Third person SpringArm 300 — burchakda kamera devorga tiqilishi mumkin. Koridor biroz kengroq yordam beradi.</p>
+          <p class="text-slate-500">Bu eslatma Stage 4 davomida qayta o‘qiladi — greybox intizomi.</p>
+        </div>
+      </section>
+
+
+      <section id="depth-7" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Reference</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Among Us Skeld, Ship, Polus — xarita screenshot. Nusxa ko‘chirmang; “nechta xona, qanday bog‘lanish” o‘rganing.</p>
+          <p class="text-slate-500">Bu eslatma Stage 4 davomida qayta o‘qiladi — greybox intizomi.</p>
+        </div>
+      </section>
+
+
+      <section id="depth-8" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Time box</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Bugun 4 soatdan oshmasin. Perfect plan yo‘q — ertaga tuzatasiz.</p>
+          <p class="text-slate-500">Bu eslatma Stage 4 davomida qayta o‘qiladi — greybox intizomi.</p>
+        </div>
+      </section>
+
+
+      <section id="more-9" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 9</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-10" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 10</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-11" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 11</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-12" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 12</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-13" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 13</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-14" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 14</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-15" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 15</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-16" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 16</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-17" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 17</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-18" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 18</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-19" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 19</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-20" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 20</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-21" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 21</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-22" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 22</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-23" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 23</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+
+      <section id="more-24" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Blockout eslatma 24</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Greybox da muhim narsa “go‘zal” emas, balki o‘lchanadigan: qadamlar soni xonadan xonaga, eshikdan o‘tish vaqti, ikki o‘yinchi yonma-yon sig‘adimi.</p>
+          <p>BP_Player Capsule — eng yaxshi o‘lchov asbobi. Har qanday “bu yer tor” hissi playtest da chiqadi.</p>
+          <p>Devor qalinligi kamera va bullet (keyin) uchun ham muhim; 1 unit yupqa mesh clip qiladi.</p>
+          <p>MAP_InteractionTest ni o‘chirmang — u Stage 3 regression. MAP_BetrayBuilder — yangi uy.</p>
+        </div>
+      </section>
+
+      
+      <section id="fin-25" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 25</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-26" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 26</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-27" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 27</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-28" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 28</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-29" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 29</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-30" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 30</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-31" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 31</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-32" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 32</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-33" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 33</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-34" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 34</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-35" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 35</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-36" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 36</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-37" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 37</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-38" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 38</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+
+      <section id="fin-39" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yakuniy yozuv 39</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Blockout — loyihaning “suyak”. Stage 3 interaction suyak ustiga mushak; Stage 4 bo‘shliqni beradi.</p>
+          <p>Har safar material qo‘yishdan oldin: playtest. Aks holda chiroyli lekin o‘ynamaydigan xarita chiqadi.</p>
+          <p>Proyom kengligi: capsule diametri ~84, shuning uchun 120 minimal qulay; 150–180 qulay.</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-21.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 21
+        </a>
+        <div class="text-xs text-slate-600">Kun 22 / 90 · Stage 4</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 23 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

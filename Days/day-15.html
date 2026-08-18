@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 15 — Line Trace | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow, .tree {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <!-- TOP BAR -->
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 3 · Interaction System</div>
+          <div class="font-semibold text-sm truncate">Kun 15 — Line Trace</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~3–4 soat · chuqur dars</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <!-- SIDE TOC -->
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#stage3" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Stage 3 ga kirish</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun Line Trace?</a>
+        <a href="#nazariya" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nazariya chuqur</a>
+        <a href="#hit-result" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Hit Result maydonlari</a>
+        <a href="#channels" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Trace Channel</a>
+        <a href="#start-end" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Start / End tanlash</a>
+        <a href="#arxitektura" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Qayerga yozamiz?</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">To‘liq sxema</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. Variable’lar</a>
+        <a href="#camera" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Kamera Start/End</a>
+        <a href="#trace" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Line Trace By Channel</a>
+        <a href="#break" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Break Hit + Focus</a>
+        <a href="#debug" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Draw Debug Line</a>
+        <a href="#print" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Print Actor nomi</a>
+        <a href="#ignore" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. Self’ni ignore</a>
+        <a href="#performance" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">8. Tick va performance</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">9. Test ssenariylar</a>
+        <a href="#troubleshooting" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">10. Troubleshooting</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
+        <a href="#bonus" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bonus / kengaytirish</a>
+        <a href="#worked" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Ishlagan misol</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#glossary" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Lug‘at</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <!-- HERO -->
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+          Stage 3 · Kun 15 · Interaction System boshlanishi
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Line Trace</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Interaction System’ning yuragi: har freym kameradan chiziq chiqarib, o‘yinchi <strong class="text-slate-200">nimaga qarab turganini</strong> aniqlaysiz. Eshik, tugma, item — hammasi shu “ko‘z” orqali topiladi.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <p class="text-slate-300 leading-relaxed">Kun oxirida sizda quyidagilar bo‘lishi kerak:</p>
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Kameradan <strong class="text-white">Line Trace</strong> (masofa ~300 unit)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">CurrentFocusedActor</code> — hozir nishonga olingan Actor (yoki null)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">bHasFocus</code> yoki Hit? boolean — qulay Branch uchun</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <strong class="text-white">Draw Debug Line</strong> — editor’da ko‘rinadigan chiziq</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Print orqali Hit Actor nomi (debug)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> O‘zingizni (Self) ignore qilish</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Interface Message / OnInteract chaqirish (Kun 16), UI prompt “Press E” (Keyinchalik), multiplayer replication. Faqat “ko‘rish” qatlami.</p>
+          </div>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima uchun bu kun uzun?</strong> Stage 3 dagi barcha interact (eshik, generator, ovoz, saboteur) shu trace natijasiga tayanadi. Bu yerda chalkashlik keyin 20 kunni “tuzatish”ga aylantiradi. Shuning uchun Start/End, Channel, Hit, Debug — hammasi batafsil.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STAGE 3 INTRO -->
+      <section id="stage3" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">3</span>
+          Stage 3 ga kirish — Interaction System
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Stage 1: Blueprint tili. Stage 2: yuradigan o‘yinchi. Stage 3: o‘yinchi <strong class="text-white">dunyoga ta’sir qiladi</strong>.
+          </p>
+          <p>Oddiy zanjir (keyingi kunlar):</p>
+          <pre class="flow text-cyan-300/90 bg-black/40 rounded-lg p-4 border border-slate-800">Line Trace (bugun)
+    → qaysi Actor “focus”?
+Interface (Kun 16)
+    → shu Actor Interact qila oladimi?
+IA_Interact / E (Kun 6 dan)
+    → OnInteract Message
+Eshik / tugma / item
+    → o‘z mantig‘i (ochilish, olish…)</pre>
+          <p class="text-slate-400">
+            Agar trace noto‘g‘ri bo‘lsa — E hech narsaga tegmaydi yoki devorga “interact” qiladi. Shuning uchun avval faqat aniqlash.
+          </p>
+          <p>
+            <strong class="text-white">Taxminiy Stage 3 yo‘nalishi:</strong> Trace → Interface → Interactables (Door, Button) → feedback. Bu kun faqat birinchi bo‘g‘in.
+          </p>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun aynan Line Trace?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>Boshqa usullar ham bor — lekin third-person / “qaragan narsaga E” uchun ray eng to‘g‘ri:</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700 text-left text-slate-400">
+                  <th class="py-2 pr-3">Usul</th>
+                  <th class="py-2 pr-3">Yaxshi</th>
+                  <th class="py-2">Yomon / qachon</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-medium text-cyan-300">Line Trace</td>
+                  <td class="py-2 pr-3">Aniq nishon, masofa, devor orqasini kesadi</td>
+                  <td class="py-2 text-slate-500">Har tick cost (kichik)</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-medium">Sphere Overlap</td>
+                  <td class="py-2 pr-3">Yaqin atrofdagi hammasi</td>
+                  <td class="py-2 text-slate-500">“Qaragan” emas, “yonida”</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-medium">Get All + masofa</td>
+                  <td class="py-2 pr-3">Oddiy</td>
+                  <td class="py-2 text-slate-500">Qimmat, noaniq</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-3 font-medium">Trigger volume</td>
+                  <td class="py-2 pr-3">Eshik oldi zonasi</td>
+                  <td class="py-2 text-slate-500">Har obyektga volume</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-slate-400">
+            Among Us uslubidagi “yaqin task” ba’zan overlap bilan qilinadi. Betray Builder’da siz kamera nishonini xohlaysiz — Line Trace.
+          </p>
+        </div>
+      </section>
+
+      <!-- NAZARIYA -->
+      <section id="nazariya" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📖</span>
+          Nazariya — ray nima qiladi?
+        </h2>
+        <div class="space-y-4 text-sm text-slate-300 leading-relaxed">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3">
+            <p>
+              <strong class="text-white">Line Trace</strong> (raycast): fazoda nuqtadan (<em>Start</em>) ikkinchi nuqtaga (<em>End</em>) math chiziq. Engine shu chiziq yo‘lida birinchi “to‘siq”ni qidiradi (collision sozlamalariga qarab).
+            </p>
+            <p>
+              Topilsa → <strong class="text-white">blocking hit</strong> (yoki siz sozlagan javob). Topilmasa → hit yo‘q, Focus = none.
+            </p>
+            <pre class="flow text-cyan-300/90 bg-black/40 rounded-lg p-4 border border-slate-800 mt-2">Start  ●━━━━━━━━━━━━━━━━●  End
+              │
+              └── birinchi urilgan sirt = Hit
+                  Hit Actor, Hit Location, Distance…</pre>
+            <p>
+              <strong class="text-white">Line Trace By Channel</strong> — eng ko‘p ishlatiladigan variant. “Visibility” yoki “Camera” channel bo‘yicha: bu channel’da block qiluvchi obyektlar “ko‘rinadi”.
+            </p>
+            <p>
+              Boshqa variantlar (bilib qo‘ying, bugun majburiy emas):
+            </p>
+            <ul class="list-disc list-inside text-slate-400 space-y-1">
+              <li><span class="ui-label">Line Trace By Object Type</span> — faqat ma’lum object type (WorldStatic, Pawn…)</li>
+              <li><span class="ui-label">Line Trace By Profile</span> — collision profile nomi</li>
+              <li><span class="ui-label">Sphere Trace</span> — qalin “truba”, kichik tugmalarni osonroq ushlaydi</li>
+              <li><span class="ui-label">Multi Line Trace</span> — bir nechta hit (devor orqasidagini ham)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- HIT RESULT -->
+      <section id="hit-result" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">击</span>
+          Hit Result — ichida nima bor?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            <span class="ui-label">Break Hit Result</span> node’i struct’ni ochadi. Eng muhimlari:
+          </p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700 text-left text-slate-400">
+                  <th class="py-2 pr-3">Maydon</th>
+                  <th class="py-2">Ma’no</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Blocking Hit</td>
+                  <td class="py-2">Umulan hit bormi? (bool)</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Hit Actor</td>
+                  <td class="py-2">Urilgan Actor reference</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Hit Component</td>
+                  <td class="py-2">Qaysi component (Mesh, Collision…)</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Location / Impact Point</td>
+                  <td class="py-2">Dunyo koordinatasida nuqta</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Normal</td>
+                  <td class="py-2">Sirt normali (qaytarish, decal)</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Distance</td>
+                  <td class="py-2">Start’dan hit’gacha masofa</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Phys Material</td>
+                  <td class="py-2">Keyinroq footstep / impact</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-slate-400 mt-2">
+            Bugun asosan: <strong class="text-white">Blocking Hit?</strong> + <strong class="text-white">Hit Actor</strong>. Qolganlari keyin (masalan interact nuqtasida VFX).
+          </p>
+        </div>
+      </section>
+
+      <!-- CHANNELS -->
+      <section id="channels" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">📡</span>
+          Trace Channel — Visibility va boshqalar
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Har bir collision object “qaysi channel’da block / overlap / ignore” deb sozlanadi. Trace ham channel tanlaydi: “shu channel’da block qilganlar menga hit”.
+          </p>
+          <ul class="space-y-2">
+            <li><span class="ui-label">Visibility</span> — odatiy tanlov: ko‘rinadigan world geometry va ko‘p mesh’lar</li>
+            <li><span class="ui-label">Camera</span> — ba’zan SpringArm o‘zi ishlatadi; interact uchun ham ishlashi mumkin</li>
+            <li>Custom channel (keyinroq) — faqat “Interactable” object’lar</li>
+          </ul>
+          <p class="text-slate-400">
+            Agar eshikning collision’i Visibility’da <strong>Ignore</strong> bo‘lsa — trace uni “ko‘rmaydi”. BP_TestObject / Static Mesh default odatda block qiladi. Muammo bo‘lsa: Component → Collision → Trace Responses → Visibility = Block.
+          </p>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Pawn / Character:</strong> Boshqa o‘yinchiga trace tegishi yoki tegmasligi — design qarori. Hozircha default qoldiring; keyin “o‘yinchiga interact yo‘q” deb ignore list’ga qo‘shish mumkin.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- START END -->
+      <section id="start-end" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">📍</span>
+          Start va End — qayerdan qayerga?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p><strong class="text-white">Tavsiya (third person):</strong></p>
+          <ul class="list-disc list-inside space-y-2 text-slate-400">
+            <li><strong class="text-slate-200">Start</strong> = Camera world location (Get Camera Location yoki Camera component Get World Location)</li>
+            <li><strong class="text-slate-200">End</strong> = Start + (Camera Forward Vector × TraceDistance)</li>
+          </ul>
+          <p>
+            Nima uchun kamera, character og‘zi emas? Chunki o‘yinchi <em>ekranda</em> nima ko‘rsa, shunga E bosadi. Crosshair markazi ≈ kamera forward.
+          </p>
+          <p>
+            <strong class="text-white">TraceDistance = 300</strong> — Kun 8 capsule / interakt masofasi bilan mos. Juda uzun (2000) — devor orqasidagi eshikni “ushlab” qo‘yishi mumkin (agar multi-hit emas, birinchi hit devor bo‘ladi). Juda qisqa (100) — yaqin eshik ham yetmaydi.
+          </p>
+          <pre class="flow text-cyan-300/90 bg-black/40 rounded-lg p-4 border border-slate-800">CameraLoc = Get Camera Location
+Forward   = Get Camera Forward Vector   // unit vector
+End       = CameraLoc + (Forward * TraceDistance)</pre>
+          <p class="text-slate-400">
+            Alternative: Player view point (Get Player View Point) — Controller dan Location + Rotation birga. Ikkalasi ham to‘g‘ri; Camera component aniqroq “sizning” SpringArm kamerangiz.
+          </p>
+        </div>
+      </section>
+
+      <!-- ARXITEKTURA -->
+      <section id="arxitektura" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">🏗</span>
+          Qayerga yozamiz — BP_Player yoki Component?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p><strong class="text-white">Usul A — to‘g‘ridan BP_Player Event Graph</strong> (bugun tavsiya)</p>
+          <p class="text-slate-400">Tez, o‘rganish oson, hamma narsa bir joyda. Stage 3 boshida yetarli.</p>
+          <p><strong class="text-white">Usul B — BPC_Interaction (Actor Component)</strong></p>
+          <p class="text-slate-400">
+            Keyinroq toza arxitektura: trace + focus + interact chaqiruv component’da; Character faqat input uzatadi.
+            Agar hozir component qilsangiz — yaxshi, lekin majburiy emas. Kurs structure’da ixtiyoriy deb yozilgan.
+          </p>
+          <p>
+            Bugun: <strong class="text-white">BP_Player</strong> ichida yozamiz. Keyin refactor qilish mumkin — mantiq o‘zgarmaydi, faqat joyi.
+          </p>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          To‘liq mantiq sxemasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">Event Tick
+  │
+  ├─ Get Camera Location          → Start
+  ├─ Get Camera Forward Vector
+  │     × TraceDistance (300)
+  │     + Start                   → End
+  │
+  ├─ Line Trace By Channel
+  │     Start, End
+  │     Channel: Visibility
+  │     Actors to Ignore: Self (array)
+  │     Draw Debug: for duration (debug)
+  │
+  ├─ Branch (Return Value / Blocking Hit?)
+  │     True:
+  │       Break Hit Result → Hit Actor
+  │       Set CurrentFocusedActor = Hit Actor
+  │       Set bHasFocus = true
+  │       (optional) Print Get Display Name
+  │     False:
+  │       Set CurrentFocusedActor = None
+  │       Set bHasFocus = false
+  │
+  └─ (Challenge) Debug line color by bHasFocus</pre>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Milestone 2: BP_Player yuradi, kamera ishlaydi</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> SpringArm + Camera component</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Levelda kamida 1–2 ta Static Mesh / BP_TestObject (nishon uchun)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Tick enabled (stamina/camera dan)</li>
+          </ul>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3 mt-2">
+            <p class="text-sm text-blue-200/90">Test uchun MAP_PlayerTest yoki oddiy levelga bir nechta Cube qo‘ying — turli masofada.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Variable’larni yaratish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10–15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.1</span>
+              <span class="text-sm font-medium text-white">CurrentFocusedActor</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>BP_Player → My Blueprint → Variables → +</p>
+              <ul class="space-y-1">
+                <li>Name: <span class="ui-label font-mono">CurrentFocusedActor</span></li>
+                <li>Type: <span class="ui-label">Object Reference</span> → <span class="ui-label">Actor</span> (yoki soft Object)</li>
+                <li>Default: None</li>
+                <li>Category: <span class="ui-label">Interaction</span></li>
+              </ul>
+              <p class="text-slate-400">Bu har tick yangilanadi: “hozir nishondagi Actor”.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.2</span>
+              <span class="text-sm font-medium text-white">TraceDistance va bHasFocus</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <ul class="space-y-2">
+                <li><span class="ui-label font-mono">TraceDistance</span> — Float — default <strong>300</strong> — Category Interaction|Tuning — Instance Editable</li>
+                <li><span class="ui-label font-mono">bHasFocus</span> — Boolean — default false — “hit bormi?” tezkor Branch</li>
+                <li><span class="ui-label font-mono">bDrawInteractionDebug</span> — Boolean — default <strong>true</strong> (dev) — keyin false</li>
+              </ul>
+              <p>Compile. Category “Interaction” Key 16 da Interface bilan birga to‘ladi.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="camera" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Kamera Start va End hisoblash</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–25 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.1</span>
+              <span class="text-sm font-medium text-white">Event Tick boshi</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Mavjud Tick (stamina, camera Z) dan <strong class="text-white">keyin yoki oldin</strong> alohida “Interaction Trace” bloki qo‘shing. Izoh (Comment box): <span class="ui-label">// Interaction Line Trace</span></p>
+              <p>Chalkashmaslik uchun Comment ichiga yig‘ing — Keyin o‘qish oson.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.2</span>
+              <span class="text-sm font-medium text-white">Start = Camera location</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><strong>Usul 1:</strong> Components’dan Camera’ni graph’ga tashlang → <span class="ui-label">Get World Location</span></p>
+              <p><strong>Usul 2:</strong> <span class="ui-label">Get Player Camera Manager</span> → Get Camera Location</p>
+              <p><strong>Usul 3:</strong> <span class="ui-label">Get Actor Eyes View Point</span> (Pawn) — Location + Rotation chiqadi</p>
+              <p class="text-slate-400">Third person uchun Usul 1 yoki 2 aniqroq “ekran markazi”.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.3</span>
+              <span class="text-sm font-medium text-white">End = Start + Forward × Distance</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <ol class="list-decimal list-inside space-y-2">
+                <li>Camera → <span class="ui-label">Get Forward Vector</span> (World)</li>
+                <li>Forward × TraceDistance (<span class="ui-label">vector * float</span>)</li>
+                <li>Start + natija (<span class="ui-label">vector + vector</span>) = End</li>
+              </ol>
+              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Xato:</strong> Actor Forward ishlatish — tana boshqa tomonga, kamera boshqa tomonga (third person). Har doim <strong>kamera</strong> forward.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="trace" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Line Trace By Channel</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.1</span>
+              <span class="text-sm font-medium text-white">Node qo‘shish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>O‘ng sichqoncha → <span class="ui-label">Line Trace By Channel</span></p>
+              <p>Pinlar:</p>
+              <ul class="list-disc list-inside space-y-1 text-slate-400">
+                <li>Start → kamera location</li>
+                <li>End → hisoblangan End</li>
+                <li>Trace Channel → <strong class="text-white">Visibility</strong></li>
+                <li>Trace Complex — odatda false (simple collision yetarli, tezroq)</li>
+                <li>Actors to Ignore — keyingi qadam</li>
+                <li>Draw Debug Type — For Duration yoki None (debug flag bilan)</li>
+                <li>Ignore Self — ba’zi node’larda alohida bool (true qiling)</li>
+              </ul>
+              <p>Return Value (bool) = hit bormi. Out Hit = Hit Result struct.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.2</span>
+              <span class="text-sm font-medium text-white">Draw Debug Type (vaqtincha)</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Hozircha <span class="ui-label">For Duration</span>, Duration 0.1 yoki 0 — har frame chiziladi. Rang: yashil (keyin challenge).</p>
+              <p>Production’da None + faqat <span class="ui-label">bDrawInteractionDebug</span> true bo‘lganda alohida Draw Debug Line.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="break" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Break Hit Result va Focus saqlash</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.1</span>
+              <span class="text-sm font-medium text-white">Branch</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Line Trace Return Value → Branch Condition.</p>
+              <p><strong class="text-white">True:</strong></p>
+              <ol class="list-decimal list-inside space-y-1 text-slate-400">
+                <li>Out Hit → <span class="ui-label">Break Hit Result</span></li>
+                <li>Hit Actor → <span class="ui-label">Set CurrentFocusedActor</span></li>
+                <li>Set bHasFocus = true</li>
+              </ol>
+              <p><strong class="text-white">False:</strong></p>
+              <ol class="list-decimal list-inside space-y-1 text-slate-400">
+                <li>Set CurrentFocusedActor = None (Leave empty / clear)</li>
+                <li>Set bHasFocus = false</li>
+              </ol>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Muhim:</strong> Har tick False bo‘lganda None qiling. Aks holda eski eshik “focus”da qolib ketadi — E uzoqdan ishlaydi (bug).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="debug" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Draw Debug Line (tashqi, nazoratli)</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">5.1</span>
+            <span class="text-sm font-medium text-white">Alohida debug chizish</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Branch <span class="ui-label">bDrawInteractionDebug</span>:</p>
+            <p>True → <span class="ui-label">Draw Debug Line</span> (Start, End, Color, Thickness 1, Duration 0)</p>
+            <p>Yoki Hit Location’gacha chizing (qisqa chiziq aniqroq).</p>
+            <p class="text-slate-400">Line Trace ichidagi Draw Debug Type ni None qilib, faqat shu orqali boshqarish — toza.</p>
+            <p><strong class="text-white">Challenge tayyorgarligi:</strong> Color = bHasFocus ? Green : Red (Select Color / Branch ikki Draw).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="print" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Print Actor nomi (vaqtincha)</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">6.1</span>
+            <span class="text-sm font-medium text-white">Spam’siz print</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Har tick Print — ekran to‘ladi. Yaxshiroq:</p>
+            <ul class="list-disc list-inside space-y-1 text-slate-400">
+              <li>Faqat focus <strong>o‘zgarganda</strong> print (oldingi Focus ≠ yangi Focus)</li>
+              <li>Yoki 0.5 s Timer</li>
+              <li>Yoki faqat bDrawInteractionDebug && bHasFocus</li>
+            </ul>
+            <p>Hit Actor → <span class="ui-label">Get Display Name</span> → Print String.</p>
+            <p>Ishonch hosil qilgach — Print’ni o‘chiring yoki debug flag orqasiga yashiring.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="ignore" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Self va boshqa ignore</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">7.1</span>
+            <span class="text-sm font-medium text-white">Actors to Ignore</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Make Array → element Self (Get a reference to self).</p>
+            <p>Line Trace → Actors to Ignore piniga ulang.</p>
+            <p>Yoki node’da <span class="ui-label">Ignore Self</span> ✓.</p>
+            <p class="text-slate-400">
+              Aks holda third person da ray ba’zan o‘z capsule/mesh’iga uriladi — focus doimo o‘zingiz.
+            </p>
+            <p>Keyinroq: egar / held item ham ignore list’ga.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 8 -->
+      <section id="performance" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">8</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Tick va performance — bilib qo‘ying</h2>
+            <p class="text-sm text-slate-500">O‘qish · majburiy optimizatsiya emas</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Bitta Line Trace har frame — oddiy o‘yin uchun arzon. 100 o‘yinchi serverda har biri trace — boshqa suhbat (multiplayer’da odatda client prediction + server validate).
+          </p>
+          <p>
+            Keyinroq optimizatsiya variantlari:
+          </p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Har 2–3 frame’da bir (counter)</li>
+            <li>Faqat “interact mode” da trace</li>
+            <li>Masofa qisqaroq indoor</li>
+          </ul>
+          <p class="text-slate-500">Bugun har tick qoldiring — to‘g‘rilik muhimroq.</p>
+        </div>
+      </section>
+
+      <!-- STEP 9 TEST -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">9</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test ssenariylari</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–30 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm">
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Bo‘sh havoga qarab — debug chiziq bor, focus yo‘q (qizil / none)</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Cube / TestObject’ga qarab — chiziq uriladi, Print nomi to‘g‘ri</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Yuzni burish — focus yangi obyektga o‘tadi</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Orqaga yurib masofa > 300 — focus yo‘qoladi</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Devor orqasidagi obyekt — birinchi hit devor (to‘g‘ri)</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">O‘z oyog‘ingiz / capsule — focus self bo‘lmasligi</span></label>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">10</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Troubleshooting</h2>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-red-500/20 overflow-hidden">
+          <div class="bg-red-500/10 px-5 py-3 border-b border-red-500/20">
+            <span class="text-sm font-medium text-red-300">Muammo → tekshirish ro‘yxati</span>
+          </div>
+          <div class="p-5 space-y-5 text-sm text-slate-300">
+            <div>
+              <p class="font-medium text-white">Hech qachon hit yo‘q</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>End to‘g‘ri hisoblanganmi? (Draw Debug ko‘rinadimi?)</li>
+                <li>TraceDistance juda kichik emasmi?</li>
+                <li>Obyekt collision yoqilganmi? (No Collision bo‘lsa — ko‘rinmaydi)</li>
+                <li>Visibility channel Block?</li>
+                <li>Complex vs Simple — mesh’da simple collision bormi?</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Doimo o‘zingizga hit</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Ignore Self / Actors to Ignore Self</li>
+                <li>Start ni biroz forward’ga siljiting (kamera ichida mesh)</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Debug chiziq yo‘q</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Show → Developer → … yoki oddiygina Draw Debug ishlaydi PIE da</li>
+                <li>Duration 0 + har tick</li>
+                <li>bDrawInteractionDebug true</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Focus eski obyektda qolib ketadi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>False tarmoqda CurrentFocusedActor = None</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Chiziq noto‘g‘ri tomonga</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Camera Forward, not Actor Forward</li>
+                <li>Control rotation vs mesh orientation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — rangli debug</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-3">
+          <p>
+            Draw Debug Line rangini <code class="text-xs text-cyan-300">bHasFocus</code> ga bog‘lang:
+          </p>
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong class="text-emerald-400">Yashil</strong> — biror Actor nishonda</li>
+            <li><strong class="text-red-400">Qizil</strong> — bo‘sh / osmon / hit yo‘q</li>
+          </ul>
+          <p class="text-slate-400">Select node yoki ikki xil Draw Branch. Bu keyin “interactablemi?” tekshiruvi uchun ham foydali model (yashil = interface bor, sariq = oddiy mesh…).</p>
+        </div>
+      </section>
+
+      <!-- BONUS -->
+      <section id="bonus" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">★</span>
+          Bonus — ixtiyoriy chuqurlashtirish
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B1</span>
+            <strong class="text-white ml-2">Sphere Trace By Channel</strong>
+            <p class="mt-1 text-slate-400">Radius 10–20 — kichik tugmalarni osonroq “ushlash”. Line o‘rniga sinab ko‘ring.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B2</span>
+            <strong class="text-white ml-2">Focus changed event</strong>
+            <p class="mt-1 text-slate-400">Oldingi Actor ≠ yangi → Custom Event OnFocusChanged (NewActor). UI va outline shu yerda.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B3</span>
+            <strong class="text-white ml-2">BPC_Interaction component</strong>
+            <p class="mt-1 text-slate-400">Trace mantiqini component’ga ko‘chirish — Character toza qoladi. Kun 16 dan oldin yoki keyin.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B4</span>
+            <strong class="text-white ml-2">Distance check</strong>
+            <p class="mt-1 text-slate-400">Hit Distance > TraceDistance bo‘lmasligi kerak; lekin qo‘shimcha “interact faqat 200 ichida” qoidasi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- WORKED EXAMPLE -->
+      <section id="worked" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">1:1</span>
+          Ishlagan misol — node ketma-ketligi (qisqa checklist)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>Graph’da yuqoridan pastga taxminan shunday ko‘rinishi kerak (Comment ichida):</p>
+          <ol class="list-decimal list-inside space-y-2 text-slate-400">
+            <li>Event Tick</li>
+            <li>Get Camera (component) → Get World Location → promote yoki to‘g‘ridan Start</li>
+            <li>Same Camera → Get Forward Vector</li>
+            <li>Multiply (Forward, TraceDistance)</li>
+            <li>Add (Location, Multiply result) → End</li>
+            <li>Line Trace By Channel (Start, End, Visibility, Ignore Self)</li>
+            <li>Branch (Return Value)</li>
+            <li>True: Break Hit Result → Set CurrentFocusedActor, Set bHasFocus true</li>
+            <li>False: Clear CurrentFocusedActor, Set bHasFocus false</li>
+            <li>Optional: Branch bDrawInteractionDebug → Draw Debug Line</li>
+          </ol>
+          <p class="text-slate-500">Compile → PIE → Show Collision ixtiyoriy → nishonga qarang.</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">?</span>
+          Tez-tez so‘raladigan savollar
+        </h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden group">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Trace har frame — o‘yin sekinlashadimi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Bitta qisqa Line Trace odatda sezilmaydi. Minglab mesh yoki multiplayer da 60 client har biri murakkab multi-trace qilsa — boshqa masala. Hozirgi loyiha uchun xavfsiz.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Nima uchun eshik “ko‘rinmayapti”?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3 space-y-2">
+              <p>1) Collision preset: No Collision yoki Visibility Ignore.</p>
+              <p>2) Faqat Query overlap, Block yo‘q.</p>
+              <p>3) Trace Complex true, lekin mesh’da complex collision yo‘q.</p>
+              <p>4) Eshik boshqa Actor ichida, hit parent’ga tushyapti — Hit Actor’ni Print qilib qarang.</p>
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Crosshair markazi bilan trace mos kelmayapti</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              UI crosshair ekran markazi; kamera forward ham odatda markaz. Agar FOV yoki offset bo‘lsa, Deproject Screen to World ishlatiladi (murakkabroq). Hozircha camera forward yetarli.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">First person bo‘lsa nima o‘zgaradi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Start ko‘pincha camera yoki socket “face”. Mantiq bir xil. Bu loyiha third person — SpringArm orqasidagi camera.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Kun 5 dagi Interface bilan bog‘liqligi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Kun 5 da “qanday gaplashish” o‘rgandingiz. Bugun “kim bilan gaplashish kerakligini” topasiz. Ertaga ikkisini ulang: Focus Actor + Does Implement Interface + Message.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center text-sm">Aa</span>
+          Qisqa lug‘at
+        </h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Ray / Trace</td><td class="py-2.5 px-4 text-slate-400">Start–End oralig‘idagi tekshiruv</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Hit</td><td class="py-2.5 px-4 text-slate-400">Chiziq biror collision’ga urilgan holat</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Channel</td><td class="py-2.5 px-4 text-slate-400">Qaysi “qatlam”da block qidiriladi</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Focus</td><td class="py-2.5 px-4 text-slate-400">Hozirgi nishon Actor (bizning atamа)</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Ignore list</td><td class="py-2.5 px-4 text-slate-400">Trace hisobga olmasligi kerak bo‘lgan Actor’lar</td></tr>
+              <tr><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Simple collision</td><td class="py-2.5 px-4 text-slate-400">Mesh atrofidagi sodda shakl — tez trace</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>Bugun Interaction System’ning ko‘zi paydo bo‘ldi:</p>
+          <ul class="space-y-1.5">
+            <li>✓ Camera → Line Trace By Channel (Visibility)</li>
+            <li>✓ CurrentFocusedActor + bHasFocus</li>
+            <li>✓ Debug chiziq va (ixtiyoriy) rang</li>
+            <li>✓ Self ignore, Focus tozalash</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">BP_Player — Interaction variables + Tick trace</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4 space-y-2">
+            <p class="text-slate-400">
+              <strong class="text-white">Ertaga (Kun 16):</strong> BPI_Interact — focus’dagi Actor haqiqatan interactablemi? Interface Message bilan E bosilganda OnInteract.
+            </p>
+            <p class="text-slate-500">
+              Trace ishlamasa — ertaga E “jim”. Trace ishlasa — ertaga dunyo “javob bera” boshlaydi.
+            </p>
+          </div>
+          <div class="mt-4 rounded-lg border border-slate-700 bg-slate-950 p-4 space-y-2">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">O‘zingizga savol</p>
+            <p class="text-slate-400">Play paytida debug chiziq yashil bo‘lib, Print’da to‘g‘ri Actor nomi chiqadimi? Agar ha — Kun 15 yopildi. Agar yo‘q — Troubleshooting bo‘limiga qayting; ertaga Interface qo‘shish muammoni yashirmaydi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEXT PREP -->
+      <section id="prep16" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">16</span>
+          Kun 16 ga tayyorgarlik
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Ertaga kerak bo‘ladi:</p>
+          <ul class="list-disc list-inside space-y-1 text-slate-400">
+            <li>Ishlaydigan CurrentFocusedActor</li>
+            <li>Kun 5 dagi BPI tushunchasi (yoki yangidan BPI_Interact)</li>
+            <li>IA_Interact (E) — allaqachon IMC’da</li>
+          </ul>
+          <p class="text-slate-500">Ixtiyoriy uy vazifasi: Interaction papkasini yarating — ertaga BPI_Interact shu yerda yashaydi.</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-14.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 14
+        </a>
+        <div class="text-xs text-slate-600">Kun 15 / 90 · Stage 3</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 16 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 12 — Camera | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .prose h2 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.65;
+    }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 2 · Player & Movement</div>
+          <div class="font-semibold text-sm truncate">Kun 12 — Camera</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~2–2.5 soat</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-60 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-1">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun muhim</a>
+        <a href="#tushunchalar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Tushunchalar</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Mantiq sxemasi</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. IA_Look + IMC</a>
+        <a href="#pawn-rot" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Pawn / Control Rotation</a>
+        <a href="#look" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Yaw va Pitch input</a>
+        <a href="#spring" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. SpringArm sozlash</a>
+        <a href="#pitch-limit" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Pitch chegarasi</a>
+        <a href="#sensitivity" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Sensitivity</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. Test + troubleshooting</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>
+          Stage 2 · Kun 12 / 14
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Camera</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Sichqoncha bilan qarash (<code class="text-cyan-300 text-base">IA_Look</code>), SpringArm masofasi, lag va pitch chegarasi — to‘liq third-person kamera.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3">
+          <p class="text-slate-300 leading-relaxed">Kun oxirida:</p>
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Sichqoncha harakati kamerani / qarashni aylantiradi</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Yurish kamera qarab turgan tomonga bog‘liq (Kun 9 dagi Control Rotation endi “jonli”)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> SpringArm: Target Arm Length ≈ 300, Collision Test, ixtiyoriy Camera Lag</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Pitch yuqori/past chegaralangan — bosh aylanib ketmaydi</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Sensitivity sozlanadigan (variable)</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3 mt-2">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> First-person kamera, Camera Shake (Keyinchalik VFX/Feedback), murakkab lock-on. Faqat classic third-person look.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun bu kun muhim?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Kun 9 da yurish <strong class="text-white">Control Rotation</strong> ga bog‘langan edi, lekin sichqoncha hali rotation’ni o‘zgartirmagan bo‘lishi mumkin — o‘yinchi “bir tomonga qarab” qoladi yoki template default ishlaydi.
+          </p>
+          <p>
+            Betray Builder map’da o‘ynash, eshiklarni ko‘rish, boshqa o‘yinchilarni kuzatish — hammasi kameraga bog‘liq. SpringArm devorga tiqilganda kamerani yaqinlashtiradi (o‘yinchi mesh ichiga “kirib ketmasin”). Pitch limit siz uchib ketish yoki 360° aylanib ko‘ngil aynishini oldini oladi.
+          </p>
+          <p class="text-slate-400">
+            Bu kun Stage 2 ning “ko‘z” qismi: yurish + sprint + crouch + endi qarash = to‘liq harakatlanuvchi third-person o‘yinchi.
+          </p>
+        </div>
+      </section>
+
+      <!-- TUSHUNCHALAR -->
+      <section id="tushunchalar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📖</span>
+          Asosiy tushunchalar
+        </h2>
+        <div class="space-y-3">
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Spring Arm Component</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Character va Camera orasidagi “boom”. <span class="ui-label">Target Arm Length</span> — ideal masofa (masalan 300).
+              <span class="ui-label">Do Collision Test</span> yoqilsa, devor/shift orasida kamera avtomatik yaqinlashadi.
+              <span class="ui-label">Camera Lag</span> — kamera biroz “orqada qolib” ergashadi (silliq, cinematic).
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Use Pawn Control Rotation</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              SpringArm (yoki Camera) Player Controller’ning Control Rotation’iga bog‘lansin. Sichqoncha Control Rotation’ni o‘zgartiradi → arm + kamera aylanadi.
+              Mesh odatda <strong class="text-white">Use Control Rotation = false</strong> (yoki faqat Yaw) — character tanasi har doim kamera bilan 1:1 aylanmasligi mumkin; ko‘pincha Movement “orient rotation to movement” bilan tanani yurish tomonga buradi.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Add Controller Yaw / Pitch Input</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Controller rotation’ga qo‘shimcha burchak. Yaw = gorizontal (chap/o‘ng qarash), Pitch = vertikal (yuqori/past).
+              Mouse Y odatda teskari kerak bo‘ladi (Value.Y * −1) — “sichqoncha yuqoriga = tepaga qarash” yoki aksincha (invert option).
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">View Pitch Min / Max</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Player Controller (yoki Pawn) da pitch chegarasi. Masalan −60° … +60° yoki −70 … 70. Cheksiz pitch = kamera aylanib “ag‘dariladi”.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">IA_Look Axis2D</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Mouse X/Y delta. Enhanced Input da Mouse XY 2D axis sifatida map qilinadi. Sensitivity ba’zan IMC modifier’da, ba’zan Blueprint’da multiply.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          Mantiq sxemasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">IA_Look (Triggered) → Action Value (Vector2D)
+    │
+    ├─ Break Vector2D → X, Y
+    │
+    ├─ Add Controller Yaw Input   (X * MouseSensitivity)
+    └─ Add Controller Pitch Input (Y * MouseSensitivity * -1)
+
+SpringArm (Defaults)
+  Target Arm Length = 300
+  Use Pawn Control Rotation = true
+  Do Collision Test = true
+  Camera Lag (ixtiyoriy) Speed ≈ 10
+
+PlayerController / Pawn
+  View Pitch Min / Max = chegara</pre>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BP_Player: SpringArm + Camera (Kun 8)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Yurish Control Rotation asosida (Kun 9)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> IMC_BetrayBuilder BP_Player’da Add qilingan</li>
+          </ul>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3 mt-2">
+            <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Eslatma:</strong> PIE da sichqoncha “ushlanishi” uchun odatda Play bosilganda viewport focus kerak. Esc bilan chiqiladi. Cursor ko‘rinsa — Show Mouse Cursor o‘chirilganini tekshiring (Player Controller).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">IA_Look yaratish va IMC’ga bog‘lash</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.1</span>
+              <span class="text-sm font-medium text-white">Input Action</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Input papkasi → Input Action → <span class="ui-label font-mono">IA_Look</span></p>
+              <p>Value Type: <strong class="text-white">Axis2D (Vector2D)</strong></p>
+              <p>Save.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.2</span>
+              <span class="text-sm font-medium text-white">IMC — Mouse XY</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><span class="ui-label">IMC_BetrayBuilder</span> → yangi mapping:</p>
+              <ul class="space-y-2">
+                <li>Action: <span class="ui-label">IA_Look</span></li>
+                <li>Key: <span class="ui-label">Mouse XY 2D-Axis</span> (yoki Mouse X va Mouse Y alohida, Swizzle bilan Axis2D)</li>
+              </ul>
+              <p class="text-slate-400">UE5 da ko‘pincha bitta “Mouse XY 2D-Axis” mapping yetarli. Third Person template IMC’sida Look qanday yozilganini ochib nusxa ko‘rishingiz mumkin.</p>
+              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Modifiers:</strong> Ba’zan Negate Y shu yerda qo‘yiladi (invert look). Yoki Blueprint’da * −1 — ikkalasi ham ishlaydi; bir joyda qiling, ikkala joyda emas.</p>
+              </div>
+              <p>Save IMC.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="pawn-rot" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Pawn va SpringArm rotation sozlamalari</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10–15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.1</span>
+              <span class="text-sm font-medium text-white">BP_Player Class Defaults / Pawn</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>BP_Player root / Class Defaults da (Pawn bo‘limi):</p>
+              <ul class="space-y-1 text-slate-400">
+                <li><span class="ui-label">Use Controller Rotation Pitch</span> — odatda <strong class="text-white">false</strong> (tana tepaga-pastga burilmasin)</li>
+                <li><span class="ui-label">Use Controller Rotation Yaw</span> — ko‘pincha <strong class="text-white">false</strong> (third person: tana yurishga qaraydi)</li>
+                <li><span class="ui-label">Use Controller Rotation Roll</span> — false</li>
+              </ul>
+              <p>Character Movement:</p>
+              <ul class="space-y-1 text-slate-400">
+                <li><span class="ui-label">Orient Rotation to Movement</span> — <strong class="text-white">true</strong> (yurish yo‘nalishiga tana)</li>
+                <li>Rotation Rate — default yoki biroz oshirish mumkin</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.2</span>
+              <span class="text-sm font-medium text-white">SpringArm</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>SpringArm Details:</p>
+              <ul class="space-y-1">
+                <li><span class="ui-label">Use Pawn Control Rotation</span> = <strong class="text-white">true</strong> ← kamera controller’ga ergashadi</li>
+                <li>Inherit Pitch / Yaw / Roll — odatda default (Pitch+Yaw)</li>
+              </ul>
+              <p class="text-slate-400">Camera component: Use Pawn Control Rotation odatda false (arm allaqachon aylangan).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="look" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">IA_Look → Yaw va Pitch</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.1</span>
+              <span class="text-sm font-medium text-white">Event Graph</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>BP_Player → qidiruv <span class="ui-label">IA_Look</span> → Enhanced Input Action.</p>
+              <p><span class="ui-label">Triggered</span> (har frame delta keladi).</p>
+              <p>Action Value → <span class="ui-label">Break Vector2D</span> → X, Y.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.2</span>
+              <span class="text-sm font-medium text-white">Controller input</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-4 border border-slate-800">Triggered
+  → Add Controller Yaw Input   (Val = X * MouseSensitivity)
+  → Add Controller Pitch Input (Val = Y * MouseSensitivity * -1)</pre>
+              <p>MouseSensitivity — Float variable, default masalan <strong>1.0</strong> yoki <strong>0.5</strong> (sinab ko‘ring).</p>
+              <p><span class="ui-label">Add Controller Yaw Input</span> / <span class="ui-label">Pitch Input</span> — Pawn/Character node’lari, Target Self.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Invert Y:</strong> Agar sichqoncha yuqoriga surilganda kamera pastga qarasа — * −1 ni olib tashlang yoki qo‘shing. Bu shaxsiy preference.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="spring" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">SpringArm — masofa, collision, lag</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">4.1</span>
+            <span class="text-sm font-medium text-white">Tavsiya etilgan sozlamalar</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-slate-700 text-left text-slate-400">
+                    <th class="py-2 pr-4">Parametr</th>
+                    <th class="py-2 pr-4">Qiymat</th>
+                    <th class="py-2">Izoh</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-300">
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2.5 pr-4 font-mono text-xs text-cyan-300">Target Arm Length</td>
+                    <td class="py-2.5 pr-4">300</td>
+                    <td class="py-2.5 text-slate-500">Asosiy masofa</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2.5 pr-4 font-mono text-xs text-cyan-300">Do Collision Test</td>
+                    <td class="py-2.5 pr-4">✓</td>
+                    <td class="py-2.5 text-slate-500">Devorda yaqinlashish</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2.5 pr-4 font-mono text-xs text-cyan-300">Probe Size</td>
+                    <td class="py-2.5 pr-4">12</td>
+                    <td class="py-2.5 text-slate-500">Default OK</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2.5 pr-4 font-mono text-xs text-cyan-300">Enable Camera Lag</td>
+                    <td class="py-2.5 pr-4">ixtiyoriy ✓</td>
+                    <td class="py-2.5 text-slate-500">Silliq ergashish</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 pr-4 font-mono text-xs text-cyan-300">Camera Lag Speed</td>
+                    <td class="py-2.5 pr-4">10</td>
+                    <td class="py-2.5 text-slate-500">Katta = tezroq yetadi</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-slate-400 mt-2">Socket Offset / Target Offset — kamerani biroz yuqoriga (bosh orqasi) siljitish uchun Z musbat qiymat. Kun 11 crouch Z bilan mos kelishini kuzating.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="pitch-limit" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Pitch chegarasi</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10–15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">5.1</span>
+              <span class="text-sm font-medium text-white">Qayerda sozlanadi?</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><strong class="text-white">Variant A — Player Controller</strong></p>
+              <p>Agar maxsus <span class="ui-label">BP_PlayerController</span> bo‘lsa: Class Defaults → Camera / View Pitch Min & Max.</p>
+              <p>Hozircha default PlayerController ishlatsangiz — Project Settings yoki runtime da:</p>
+              <p class="text-slate-400">Get Player Controller → Cast → set View Pitch Min/Max (ba’zi versiyalarda Player Camera Manager).</p>
+              <p class="mt-2"><strong class="text-white">Variant B — BeginPlay da PlayerCameraManager</strong></p>
+              <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-4 border border-slate-800 mt-2">Get Player Camera Manager
+  → Set View Pitch Min (−60 yoki −70)
+  → Set View Pitch Max (60 yoki 70)</pre>
+              <p class="text-slate-400">Aniq node nomlari engine versiyasiga qarab farq qilishi mumkin: “Limit View Pitch”, Camera Manager properties.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Tekshirish:</strong> Sichqonchani uzoq yuqoriga/pastga torting — ma’lum burchakdan oshmasligi kerak.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="sensitivity" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Mouse sensitivity</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">6.1</span>
+            <span class="text-sm font-medium text-white">Variable</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p><span class="ui-label font-mono">MouseSensitivity</span> (Float), default <strong>1.0</strong>.</p>
+            <p>Yaw/Pitch inputda Action Value * MouseSensitivity.</p>
+            <p class="text-slate-400">Keyinroq Settings UI shu variable’ni (yoki Player Settings save) o‘zgartiradi. Hozir Details’dan Instance Editable qilib PIE da sinashingiz mumkin.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 7 TEST -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test va troubleshooting</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
+              <span class="text-sm font-medium text-white">Muvaffaqiyat mezonlari</span>
+            </div>
+            <div class="p-5 space-y-2 text-sm text-slate-300">
+              <ul class="space-y-2">
+                <li>✓ Sichqoncha — atrofga silliq qarash</li>
+                <li>✓ WASD kamera qarab turgan tomonga yuradi</li>
+                <li>✓ Devorga orqa bilan yuring — kamera yaqinlashadi (collision test)</li>
+                <li>✓ Pitch chegara ishlaydi</li>
+                <li>✓ First-person “ichkariga kirib ketish” yo‘q (arm length + collision)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-red-500/20 overflow-hidden">
+            <div class="bg-red-500/10 px-5 py-3 border-b border-red-500/20">
+              <span class="text-sm font-medium text-red-300">Muammo → yechim</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300">
+              <div>
+                <p class="font-medium text-white">Sichqoncha umuman ishlamaydi</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>IA_Look IMC’da Mouse XY ga bog‘langanmi?</li>
+                  <li>BP_Player’da Mapping Context?</li>
+                  <li>IA_Look event Triggered ulanganmi?</li>
+                  <li>PIE viewport focus (bir marta click)?</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-white">Kamera aylanadi, lekin character / yurish “eski” yo‘nalishda</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>Kun 9: Add Movement Input da Get Control Rotation ishlatilganmi?</li>
+                  <li>SpringArm Use Pawn Control Rotation = true?</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-white">Tana g‘alati aylanadi / mesh titraydi</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>Use Controller Rotation Yaw/Pitch ni false qiling</li>
+                  <li>Orient Rotation to Movement = true</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-white">Devorda kamera mesh ichiga kiradi</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>Do Collision Test ✓</li>
+                  <li>Probe Size biroz kattalashtiring</li>
+                  <li>Arm Length juda kichik emasligini tekshiring</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-white">Juda sezgir / sekin</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>MouseSensitivity ni 0.3 … 2.0 oralig‘ida sinang</li>
+                  <li>IMC da Mouse scaling modifier bormi?</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — Sprint da kamera masofasi</h2>
+            <p class="text-sm text-slate-500">Tezlik hissi</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-3">
+          <p>Sprint boshlanganda (IA_Sprint Started) Target Arm Length ni masalan <strong class="text-white">350–380</strong> qiling.</p>
+          <p>Sprint tugaganda (Completed) yana <strong class="text-white">300</strong> ga qaytaring.</p>
+          <p class="text-slate-400">
+            Yana yaxshiroq: Length ni ham FInterp To bilan silliq o‘zgartiring (Crouch kamerasidagi kabi) — keskin “zoom” bo‘lmasin.
+          </p>
+          <p class="text-slate-500">Bu kichik polish; keyinroq FOV sprint kick ham qo‘shilishi mumkin — hozircha faqat arm length.</p>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ <code class="text-xs text-cyan-300">IA_Look</code> + Mouse XY mapping</li>
+            <li>✓ Add Controller Yaw / Pitch + sensitivity</li>
+            <li>✓ SpringArm: length 300, collision, lag</li>
+            <li>✓ Pitch Min/Max</li>
+            <li>✓ Third-person look to‘liq ishlaydi</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4 space-y-1">
+            <code class="text-cyan-300 text-xs block">.../Input/IA_Look</code>
+            <code class="text-cyan-300 text-xs block">.../Characters/BP_Player</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4">
+            <p class="text-slate-400"><strong class="text-white">Ertaga (Kun 13):</strong> Movement polish — landing, air control, ixtiyoriy stamina yoki state tozalash. Keyin Kun 14 Milestone 2.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-11.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 11
+        </a>
+        <div class="text-xs text-slate-600">Kun 12 / 90</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 13 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-16"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>

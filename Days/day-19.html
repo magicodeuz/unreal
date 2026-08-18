@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 19 — Light Switch | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 3 · Interaction System</div>
+          <div class="font-semibold text-sm truncate">Kun 19 — Light Switch</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~3–4 soat · chuqur dars</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun Light?</a>
+        <a href="#visibility-vs-intensity" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Visibility vs Intensity</a>
+        <a href="#point-light" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Point Light asoslari</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">To‘liq sxema</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. BP_LightSwitch</a>
+        <a href="#components" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Mesh + Point Light</a>
+        <a href="#light-settings" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Light sozlamalari</a>
+        <a href="#bpi" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. BPI_Interact</a>
+        <a href="#vars" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. bIsOn holat</a>
+        <a href="#interact" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Interact toggle</a>
+        <a href="#text-can" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. Text + CanInteract</a>
+        <a href="#level" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">8. Level + qorong‘i xona</a>
+        <a href="#button-link" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">9. Button bilan bog‘lash</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">10. Test</a>
+        <a href="#troubleshooting" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">11. Troubleshooting</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge (rang)</a>
+        <a href="#day53" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Day 53 “Lights Off”</a>
+        <a href="#bonus" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bonus</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#mistakes" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Ko‘p xatolar</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+          Stage 3 · Kun 19 · Yorug‘lik boshqaruvi
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Light Switch</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          E → chiroq yoqiladi/o‘chadi. <strong class="text-slate-200">Set Visibility</strong> vs Intensity, Point Light, Sabotage “Lights Off” poydevori.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">BP_LightSwitch</code> — mesh + <strong class="text-white">Point Light</strong></li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> BPI_Interact: toggle light on/off</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <span class="ui-label">Set Visibility</span> (tavsiya) yoki Intensity</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">bIsOn</code> + matn “yoqish/o‘chirish”</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Qorong‘i xonada sezilarli farq</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> (Ixtiyoriy) Kun 18 Button → LightSwitch</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Ko‘p light array (faqat challenge keyin), dynamic GI murakkabligi, post-process qorong‘ulik. Bitta Point Light yetarli.</p>
+          </div>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Day 53 bog‘liqligi:</strong> Betrayer “Lights Off” — ko‘p light’ni o‘chirish. Bugun bitta switch pattern; keyin multi-target (Button Array uslubi).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun Light Switch?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Door — transform. Button — boshqa Actor. Light — <strong class="text-white">rendering / atmosphere</strong>. Uchala tip interactable “oilasi”ni to‘ldiradi.
+          </p>
+          <p>
+            Social deduction o‘yinlarda qorong‘ulik = axborot kamayishi, stalk, sabotage. Texnik jihatdan light component’ni runtime’da boshqarish — asosiy skill.
+          </p>
+          <p class="text-slate-400">
+            Xuddi Door kabi: Player o‘zgarmaydi. Yangi BP + BPI implement.
+          </p>
+        </div>
+      </section>
+
+      <!-- VISIBILITY VS INTENSITY -->
+      <section id="visibility-vs-intensity" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-sm">💡</span>
+          Set Visibility vs Set Intensity
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700 text-left text-slate-400">
+                  <th class="py-2 pr-3">Usul</th>
+                  <th class="py-2 pr-3">Nima qiladi</th>
+                  <th class="py-2">Qachon</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Set Visibility(false)</td>
+                  <td class="py-2 pr-3">Light “yo‘q” — odatda hisoblanmaydi</td>
+                  <td class="py-2 text-emerald-400/90">To‘liq o‘chirish (tavsiya)</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Set Intensity(0)</td>
+                  <td class="py-2 pr-3">Yorug‘lik 0, component hali bor</td>
+                  <td class="py-2 text-slate-500">Fade / dim / qisman</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Set Visibility + Intensity</td>
+                  <td class="py-2 pr-3">Yoqilganda intensity tiklash</td>
+                  <td class="py-2 text-slate-500">Dimdan keyin to‘liq</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-slate-400">
+            Kurs nazariyasi: <strong class="text-white">Visibility False = performance yaxshiroq</strong>. Intensity 0 ba’zan hali shadow/light cost saqlashi mumkin (engine versiyasiga qarab). Bugun Visibility toggle.
+          </p>
+          <p>
+            Silliq o‘chirish kerak bo‘lsa (keyinroq): Timeline Intensity 1→0, oxirida Visibility false.
+          </p>
+        </div>
+      </section>
+
+      <!-- POINT LIGHT -->
+      <section id="point-light" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">🔆</span>
+          Point Light — qisqa asoslar
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Nuqtadan barcha yo‘nalishga yorug‘lik. Asosiy parametrlar:</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li><span class="ui-label">Intensity</span> — qanchalik yorqin (candela / unit engine’ga bog‘liq)</li>
+            <li><span class="ui-label">Attenuation Radius</span> — ta’sir masofasi</li>
+            <li><span class="ui-label">Light Color</span> — RGB / temperature</li>
+            <li><span class="ui-label">Cast Shadows</span> — qimmatroq, chiroyli</li>
+            <li><span class="ui-label">Mobility</span> — Stationary / Movable (runtime o‘zgarish uchun Movable yoki Stationary+toggle)</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Mobility:</strong> Static light ba’zan runtime’da o‘chirishni cheklaydi. BP ichidagi Point Light odatda <strong>Movable</strong> yoki Stationary qiling — toggle ishlashi uchun.</p>
+          </div>
+          <p class="text-slate-400">Spot Light / Rect Light — keyinroq. Point eng oddiy.</p>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          To‘liq sxema
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">Event Interact
+  │
+  ├─ Branch (bIsOn?)
+  │     True  (hozir yonib turibdi → o‘chirish):
+  │       PointLight → Set Visibility (false)
+  │       Set bIsOn = false
+  │     False (o‘chiq → yoqish):
+  │       PointLight → Set Visibility (true)
+  │       Set bIsOn = true
+  │
+  // Yoki: Set Visibility (NOT bIsOn), keyin bIsOn = !bIsOn
+
+GetInteractionText:
+  bIsOn ? "Chiroqni o'chirish [E]" : "Chiroqni yoqish [E]"
+
+CanInteract:
+  true  // yoki cooldown
+
+BeginPlay:
+  PointLight Set Visibility (bIsOn)  // boshlang'ich holat</pre>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BPI_Interact + Player E zanjiri</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Door/Button ishlagan (pattern tanish)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Test level (qorong‘iroq joy yaxshi)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BP_LightSwitch yaratish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">1.1</span>
+            <span class="text-sm font-medium text-white">Actor</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p><span class="ui-label">Content/BetrayBuilder/Blueprints/Interaction/</span></p>
+            <p>Actor → <span class="ui-label font-mono">BP_LightSwitch</span></p>
+            <p>Nom “Switch” — interactable panel; light uning component’i. Ixtiyoriy: alohida BP_CeilingLight + Button reference (Kun 18 uslubi). Bugun hammasi bitta Actor’da — sodda.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="components" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Mesh + Point Light</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.1</span>
+              <span class="text-sm font-medium text-white">Switch mesh</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Kichik Cube/Plane — devordagi tugma. Collision Visibility Block.</p>
+            </div>
+          </div>
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.2</span>
+              <span class="text-sm font-medium text-white">Point Light Component</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Add Component → <span class="ui-label">Point Light</span></p>
+              <p>Relative Location: yuqoriga / xona markaziga (switch pastida, light yuqorida — yoki light alohida offset).</p>
+              <p>Agar light switch’dan uzoqda bo‘lishi kerak — child’ni siljiting yoki keyin alohida Actor + Button wiring.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="light-settings" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Light sozlamalari</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">3.1</span>
+            <span class="text-sm font-medium text-white">Tavsiya</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-slate-700 text-left text-slate-400">
+                    <th class="py-2 pr-3">Parametr</th>
+                    <th class="py-2 pr-3">Start</th>
+                    <th class="py-2">Izoh</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-300">
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Intensity</td>
+                    <td class="py-2 pr-3">3000–8000</td>
+                    <td class="py-2 text-slate-500">Xona o‘lchamiga qarab</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Attenuation Radius</td>
+                    <td class="py-2 pr-3">500–1500</td>
+                    <td class="py-2 text-slate-500">Qamrov</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Mobility</td>
+                    <td class="py-2 pr-3">Movable / Stationary</td>
+                    <td class="py-2 text-slate-500">Toggle ishlasin</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Cast Shadows</td>
+                    <td class="py-2 pr-3">ixtiyoriy</td>
+                    <td class="py-2 text-slate-500">Test uchun off ham OK</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-slate-400">Viewport’da light radius ko‘rinishini yoqing — qamrovni tushunasiz.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="bpi" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BPI_Interact</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">4.1</span>
+            <span class="text-sm font-medium text-white">Implement</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Class Settings → BPI_Interact → Compile.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="vars" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">bIsOn va boshlang‘ich holat</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">5.1</span>
+            <span class="text-sm font-medium text-white">Variable</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p><span class="ui-label font-mono">bIsOn</span> — Boolean — default <strong>true</strong> (xona yorug‘ boshlansin) yoki false (qorong‘i start — dramatik).</p>
+            <p>Instance Editable — levelda har switch boshqacha.</p>
+            <p><strong class="text-white">BeginPlay:</strong> Point Light → Set Visibility (bIsOn). State va component mos.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="interact" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Interact — toggle</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">6.1</span>
+            <span class="text-sm font-medium text-white">Ikki usul</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p><strong class="text-white">A — Branch aniq:</strong></p>
+            <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">Interact
+  → Branch bIsOn
+       True:
+         Set Visibility (Light, false)
+         Set bIsOn false
+       False:
+         Set Visibility (Light, true)
+         Set bIsOn true</pre>
+            <p><strong class="text-white">B — qisqa:</strong></p>
+            <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">Set bIsOn = NOT bIsOn
+Set Visibility (Light, bIsOn)</pre>
+            <p class="text-slate-400">Flip Flop ham ishlaydi, lekin bIsOn matn/UI uchun baribir kerak — Boolean saqlang.</p>
+            <p>Node: component reference graph’ga tashlang → <span class="ui-label">Set Visibility</span> (New Visibility, Propagate to Children ixtiyoriy).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="text-can" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">GetInteractionText + CanInteract</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">7.1</span>
+            <span class="text-sm font-medium text-white">Matn</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">GetInteractionText
+  → Branch bIsOn
+       True  → "Chiroqni o'chirish [E]"
+       False → "Chiroqni yoqish [E]"</pre>
+            <p>CanInteract → true (yoki doim).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 8 -->
+      <section id="level" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">8</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Level — qorong‘i xona</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">8.1</span>
+            <span class="text-sm font-medium text-white">Test muhiti</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Directional Light’ni pasaytiring yoki yopiq xona (shiftlar) — Point Light farqi ko‘rinsin.</p>
+            <p>BP_LightSwitch joylashtiring. Play → E → yorug‘lik yo‘qoladi/qaytadi.</p>
+            <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+              <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Sky Light kuchli bo‘lsa</strong> Point o‘chganda ham “qorong‘i” bo‘lmasligi mumkin. Test uchun Sky intensity past.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 9 -->
+      <section id="button-link" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">9</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Button → LightSwitch (ixtiyoriy)</h2>
+            <p class="text-sm text-slate-500">Kun 18 pattern takrori</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            BP_Button TargetDoor o‘rniga (yoki umumiy TargetActor) LightSwitch instance tanlang.
+          </p>
+          <p>
+            Button Interact → Message Interact → Light. Uzoqdan yorug‘lik boshqaruvi — sabotage panel prototipi.
+          </p>
+          <p class="text-slate-500">Majburiy emas; bog‘lash 2 daqiqada ishlashini ko‘rsatadi.</p>
+        </div>
+      </section>
+
+      <!-- STEP 10 TEST -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">10</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test ssenariylari</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">E → light o‘chadi (xona sezilarli qorong‘i)</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Yana E → yonadi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BeginPlay holati bIsOn bilan mos</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Player Cast yo‘q</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">(Ixtiyoriy) Button orqali ham ishlaydi</span></label>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">11</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Troubleshooting</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-red-500/20 overflow-hidden">
+          <div class="bg-red-500/10 px-5 py-3 border-b border-red-500/20">
+            <span class="text-sm font-medium text-red-300">Muammo → yechim</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300">
+            <div>
+              <p class="font-medium text-white">E ishlaydi, lekin yorug‘lik o‘zgarmaydi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>To‘g‘ri Light component’mi?</li>
+                <li>Set Visibility ulanganmi?</li>
+                <li>Intensity 0 emasmi (yoqilganda)?</li>
+                <li>Boshqa kuchli Sky/Directional bormi?</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Static light o‘zgarmaydi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Mobility → Movable yoki Stationary</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Focus switch’ga tushmaydi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Collision / Visibility Block</li>
+                <li>Mesh juda kichik — Box Collision kattalashtiring</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Holat matn teskari</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>bIsOn yangilash tartibi (avval visibility, keyin flag yoki aksincha — izchil)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — rang o‘zgarishi</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-3">
+          <p>Interact da Visibility bilan birga (yoki alohida) <span class="ui-label">Set Light Color</span>.</p>
+          <p>Masalan: har bosishda oq ↔ qizil, yoki bIsOn true bo‘lganda sariq, false da ko‘k (o‘chiqda visibility false bo‘lsa rang ko‘rinmaydi — shuning uchun rangni yoqilgan holda almashtirish yoki dim mode).</p>
+          <p class="text-slate-500">Yaxshi variant: ikki rejim — “normal oq” / “alarm qizil” (sabotage visual).</p>
+        </div>
+      </section>
+
+      <!-- DAY 53 -->
+      <section id="day53" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">53</span>
+          Day 53 “Lights Off” ga ko‘prik
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Kelajakda:</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Ko‘p BP_LightSwitch yoki BP_RoomLight</li>
+            <li>Sabotage panel: array of lights → har biriga “Force Off” (Interface kengaytmasi yoki maxsus funksiya)</li>
+            <li>Crew fix panel: Force On</li>
+          </ul>
+          <p class="text-slate-500">Bugun: bitta light, bitta toggle. API (bIsOn, Visibility) barqaror qolsin.</p>
+        </div>
+      </section>
+
+      <!-- BONUS -->
+      <section id="bonus" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">★</span>
+          Bonus
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B1</span>
+            <strong class="text-white ml-2">Intensity fade</strong>
+            <p class="mt-1 text-slate-400">Timeline 0.3 s Intensity → 0, Finished’da Visibility false.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B2</span>
+            <strong class="text-white ml-2">Emissive mesh</strong>
+            <p class="mt-1 text-slate-400">Switch mesh material emissive = bIsOn — vizual feedback.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B3</span>
+            <strong class="text-white ml-2">Alohida Light Actor</strong>
+            <p class="mt-1 text-slate-400">BP_RoomLight (faqat light + BPI) + BP_Switch (Target reference) — Kun 18 toza ajratish.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B4</span>
+            <strong class="text-white ml-2">Sound stub</strong>
+            <p class="mt-1 text-slate-400">Print “[SFX] Click” — audio stage’da almashtirish.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">?</span>
+          FAQ
+        </h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Nima uchun Point, Spot emas?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Point oddiy, xona to‘ldirish uchun qulay. Spot — yo‘nalishli (lampa). Keyin qo‘shasiz.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Lumen / GI o‘chganda sekin yangilanadi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Dynamic GI ba’zan kechikadi. Test uchun oddiy shading model yoki kichik xona. Production’da light channel / baked farq qilishi mumkin.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Ko‘p light performance?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Har dynamic light qimmat. Visibility off yordam beradi. Shadow o‘chirish ham.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- MISTAKES -->
+      <section id="mistakes" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm">!</span>
+          Ko‘p xatolar
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">1. Static Mobility + runtime toggle</p>
+            <p class="text-slate-400 mt-1">Ishlamasligi mumkin — Movable/Stationary.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">2. bIsOn’siz Flip Flop</p>
+            <p class="text-slate-400 mt-1">Matn va BeginPlay sinxroni yo‘qoladi.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">3. Faqat Intensity 0, Visibility unutilgan</p>
+            <p class="text-slate-400 mt-1">Kurs tavsiyasi: o‘chirishda Visibility.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">4. Yoritilgan open world’da test</p>
+            <p class="text-slate-400 mt-1">Farq ko‘rinmaydi — yopiq/qorong‘i joy.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center text-sm">Aa</span>
+          Lug‘at
+        </h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Point Light</td><td class="py-2.5 px-4 text-slate-400">Nuqta manba yorug‘lik</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Intensity</td><td class="py-2.5 px-4 text-slate-400">Yorqinlik kuchi</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Attenuation Radius</td><td class="py-2.5 px-4 text-slate-400">Ta’sir radiusi</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Set Visibility</td><td class="py-2.5 px-4 text-slate-400">Component ko‘rinishi / faolligi</td></tr>
+              <tr><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Mobility</td><td class="py-2.5 px-4 text-slate-400">Static / Stationary / Movable</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- COMPARE STACK -->
+      <section id="stack" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm">📦</span>
+          Interactable oilasi (hozir)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">BP_Door         → Rotation Timeline
+BP_Button       → Forward Message to target
+BP_LightSwitch  → Point Light Visibility
+BP_TestObject   → Print (o'quv)</pre>
+          <p class="text-sm text-slate-500 mt-3">Hammasi BPI_Interact. Player bitta zanjir.</p>
+        </div>
+      </section>
+
+      <!-- CHECKLIST -->
+      <section id="checklist" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">✓</span>
+          Yakuniy checklist
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BP_LightSwitch + Point Light</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Mobility to‘g‘ri</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BPI + bIsOn + Set Visibility toggle</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Text yoqish/o‘chirish</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Play’da sezilarli farq</span></label>
+        </div>
+      </section>
+
+      <!-- SEQUENCE -->
+      <section id="sequence" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↓</span>
+          Ketma-ketlik
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">Focus LightSwitch → E → Interact
+  → bIsOn true → Visibility false → bIsOn false
+  → xona qorong‘i
+E again
+  → Visibility true → bIsOn true
+  → yorug‘lik qaytadi</pre>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ BP_LightSwitch + Point Light</li>
+            <li>✓ Set Visibility toggle + bIsOn</li>
+            <li>✓ Interaction matn holatga bog‘liq</li>
+            <li>✓ Sabotage Lights Off uchun poydevor</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">Content/BetrayBuilder/Blueprints/Interaction/BP_LightSwitch</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4 space-y-2">
+            <p class="text-slate-400"><strong class="text-white">Stage 3:</strong> Door, Button, Light — uch xil interactable. Keyingi: boshqa usable yoki polish.</p>
+          </div>
+          <div class="mt-4 rounded-lg border border-slate-700 bg-slate-950 p-4">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">O‘zingizga savol</p>
+            <p class="text-slate-400">Nima uchun Intensity 0 o‘rniga Visibility afzal? (Performance / light hisobdan chiqarish.)</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="prep20" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">→</span>
+          Keyingi kunga
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-400 space-y-2">
+          <p>Light toggle ishlayotgan level snapshot saqlang.</p>
+          <p>Challenge rang qilgan bo‘lsangiz — alarm visual g‘oya tayyor.</p>
+        </div>
+      </section>
+
+      <section id="worked-nodes" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">1:1</span>
+          Node ro‘yxati (Interact)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm text-slate-300">
+          <ol class="list-decimal list-inside space-y-2 text-slate-400">
+            <li>Event Interact (BPI)</li>
+            <li>Get bIsOn → NOT → Set bIsOn (yoki Branch ikki yo‘l)</li>
+            <li>Point Light component reference</li>
+            <li>Set Visibility (New Visibility = bIsOn)</li>
+            <li>Optional Print / color challenge</li>
+          </ol>
+          <p class="text-slate-500 mt-3">BeginPlay: Set Visibility (bIsOn) — sync.</p>
+        </div>
+      </section>
+
+      <section id="design-rooms" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">🗺</span>
+          Xona dizayni — yorug‘lik
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p><strong class="text-white">1. Bitta asosiy Point</strong> — xona “egasi”; switch shu light’ni boshqaradi.</p>
+          <p><strong class="text-white">2. Ambient past</strong> — Sky/Directional past bo‘lmasa sabotage sezilmaydi.</p>
+          <p><strong class="text-white">3. Emergency light</strong> (keyin) — asosiy o‘chganda qizil kichik light yoqiladi.</p>
+          <p><strong class="text-white">4. Switch joyi</strong> — eshik yonida yoki koridor oxirida; o‘yinchi topishi mumkin.</p>
+        </div>
+      </section>
+
+      <section id="vs-door-button" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">⇄</span>
+          Door / Button / Light — solishtiruv
+        </h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-slate-700 text-left text-slate-400 bg-slate-900">
+                <th class="py-2 px-4">BP</th>
+                <th class="py-2 px-4">Asosiy effekt</th>
+                <th class="py-2 px-4">State</th>
+              </tr>
+            </thead>
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-4">Door</td>
+                <td class="py-2 px-4">Rotation</td>
+                <td class="py-2 px-4 text-slate-500">bIsOpen, bIsAnimating</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-4">Button</td>
+                <td class="py-2 px-4">Message boshqaga</td>
+                <td class="py-2 px-4 text-slate-500">TargetDoor ref</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-4">LightSwitch</td>
+                <td class="py-2 px-4">Visibility</td>
+                <td class="py-2 px-4 text-slate-500">bIsOn</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="quick-recap" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Tezkor xulosa</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <p>1. BP_LightSwitch + Point Light (Movable/Stationary).</p>
+          <p>2. BPI_Interact, bIsOn, BeginPlay sync.</p>
+          <p>3. Interact: Visibility toggle.</p>
+          <p>4. Matn: yoqish / o‘chirish.</p>
+          <p>5. Qorong‘i xonada test.</p>
+        </div>
+      </section>
+
+      <section id="closing" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Yopilish</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 leading-relaxed space-y-2">
+          <p>Agar bitta narsa qolsa: <strong class="text-white">o‘chirish = Set Visibility false</strong>, nafaqat Intensity 0.</p>
+          <p class="text-slate-500">Atmosphere endi o‘yinchi qo‘lida — Stage 3 boyidi.</p>
+        </div>
+      </section>
+
+      
+      <section id="debug-light" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-sm">🐛</span>
+          Debug maslahatlari
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <ul class="list-disc list-inside space-y-2 text-slate-400">
+            <li>Interact boshida Print bIsOn old/new</li>
+            <li>Show → Lighting complexity (ixtiyoriy) — light soni</li>
+            <li>Viewport light radius visualization</li>
+            <li>PIE da Sky Light intensity 0.1 qilib sinash</li>
+            <li>Is Light component Visible? Details runtime</li>
+          </ul>
+          <p class="text-slate-500">Ishlagach debug Print o‘chiring.</p>
+        </div>
+      </section>
+
+      <section id="anti-more" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm">✕</span>
+          Yana anti-patternlar
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Destroy Component o‘chirish uchun</p>
+            <p class="text-slate-400 mt-1">Qayta yoqib bo‘lmaydi oson. Visibility saqlang.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Har xona uchun Directional toggle</p>
+            <p class="text-slate-400 mt-1">Directional global; Point/Spot local sabotage uchun.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Player’da “if light switch” Cast</p>
+            <p class="text-slate-400 mt-1">BPI yetarli.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="multi-preview" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm">⛓</span>
+          Multi-light preview (o‘qish)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">// Kelajak (Day 53 uslubi) — bugun yozmang
+TargetLights: Array of Actor
+ForEach → Interact Message  // yoki ForceOff custom
+
+// Bugun:
+Bitta Point Light, bitta bIsOn
+</pre>
+          <p class="text-sm text-slate-500 mt-3">Array challenge Button’da bo‘lgani kabi — light’lar uchun ham ishlaydi.</p>
+        </div>
+      </section>
+
+      
+      <section id="final-note" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Yakuniy eslatma</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Stage 3 interactable ro‘yxati endi:</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>TestObject — o‘quv</li>
+            <li>Door — transform</li>
+            <li>Button — proxy</li>
+            <li>LightSwitch — rendering state</li>
+          </ul>
+          <p class="text-slate-400">Barchasi bir Player zanjiri orqali. Yangi tip qo‘shish = yangi BP + implement, Player ochilmaydi.</p>
+          <p class="text-slate-500">Bu — Interface darsining eng yaxshi isboti.</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-18.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 18
+        </a>
+        <div class="text-xs text-slate-600">Kun 19 / 90 · Stage 3</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 20 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

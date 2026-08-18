@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 4 — Events va Functions | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .prose h2 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.65;
+    }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 1 · Fundamentals</div>
+          <div class="font-semibold text-sm truncate">Kun 4 — Events va Functions</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">Taxminiy vaqt: 1.5–2 soat</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-56 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#tushunchalar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Asosiy tushunchalar</a>
+        <a href="#farq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Event vs Function</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bugungi mantiq</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. Custom Event</a>
+        <a href="#input-e" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. E tugmasi + chaqirish</a>
+        <a href="#function" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. GetDoubledValue</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Test qilish</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+          Stage 1 · Kun 4 / 7
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Events va Functions</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Custom Event va Function orqali kodni qayta ishlatiladigan qismlarga bo‘lishni o‘rganasiz. E tugmasi → OnActivate; GetDoubledValue funksiyasi.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3">
+          <p class="text-slate-300 leading-relaxed">Bugun siz:</p>
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <strong class="text-white">Custom Event</strong> <code class="text-xs text-cyan-300">OnActivate</code> yaratasiz</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <strong class="text-white">E</strong> klaviatura eventini qo‘shib, undan OnActivate’ni chaqirasiz</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> OnActivate ichida Print String chiqarasiz</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <strong class="text-white">Function</strong> <code class="text-xs text-cyan-300">GetDoubledValue</code> yozasiz — Integer kiradi, 2× qaytadi</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3 mt-4">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Enhanced Input System (Kun 6), boshqa Actor’lar bilan Cast/Interface (Kun 5). Faqat bitta Blueprint ichida Event va Function.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TUSHUNCHALAR -->
+      <section id="tushunchalar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📖</span>
+          Asosiy tushunchalar
+        </h2>
+        <div class="space-y-3">
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">BeginPlay</div>
+            <p class="text-sm text-slate-300 leading-relaxed">Actor Level’ga kirganda <strong>bir marta</strong> ishlaydi. Kecha ishlatgan edik.</p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Tick</div>
+            <p class="text-sm text-slate-300 leading-relaxed">Har freym (sekundiga ~60 marta) ishlaydi. Og‘ir hisoblashlar uchun ehtiyot bo‘ling — performance’ni yeydi. Bugun ishlatmaymiz, lekin bilib qo‘ying.</p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Custom Event</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              O‘zingiz yaratgan “signal”. Nom berasiz (masalan <code class="text-xs">OnActivate</code>), ichiga mantiq yozasiz, keyin istalgan joydan <strong>Call</strong> qilasiz. Bir mantiqni ko‘p joydan qayta ishlatish uchun qulay. Keyinchalik Interface va boshqa Actor’lar ham shu event’ni chaqirishi mumkin.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Function</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Qayta ishlatiladigan mantiq bloki. <strong>Input</strong> parametrlari bo‘lishi mumkin, <strong>Return Value</strong> qaytarishi mumkin. Event’dan farqi: odatda “biror narsa hisobla / qaytar” uchun; pure function’lar side-effect’siz bo‘lishi mumkin.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Input Event</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Klaviatura yoki sichqoncha tugmasi bosilganda/qo‘yib yuborilganda ishga tushadi. Bugun oddiy <strong>Keyboard Event: E</strong> ishlatamiz. Kun 6 da Enhanced Input (IA_Interact) ga o‘tamiz.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FARQ -->
+      <section id="farq" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">⚖️</span>
+          Custom Event vs Function
+        </h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-slate-700 text-left text-slate-400 bg-slate-900">
+                <th class="py-2.5 px-4 font-medium"></th>
+                <th class="py-2.5 px-4 font-medium">Custom Event</th>
+                <th class="py-2.5 px-4 font-medium">Function</th>
+              </tr>
+            </thead>
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800">
+                <td class="py-2.5 px-4 text-slate-500">Maqsad</td>
+                <td class="py-2.5 px-4">Signal / harakat (“faollashtir”)</td>
+                <td class="py-2.5 px-4">Hisoblash / qiymat qaytarish</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2.5 px-4 text-slate-500">Return</td>
+                <td class="py-2.5 px-4">Yo‘q (odatda)</td>
+                <td class="py-2.5 px-4">Bor (Return Value)</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2.5 px-4 text-slate-500">Qayerda</td>
+                <td class="py-2.5 px-4">Event Graph</td>
+                <td class="py-2.5 px-4">Alohida Function graph</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 text-slate-500">Misol</td>
+                <td class="py-2.5 px-4 font-mono text-xs text-cyan-300">OnActivate</td>
+                <td class="py-2.5 px-4 font-mono text-xs text-cyan-300">GetDoubledValue</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-slate-500 mt-3">Ikkalasi ham “qayta chaqiriladigan” blok. Amaliyotda: “nima bo‘ldi” → Event; “qancha / qanday qiymat” → Function.</p>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          Bugungi mantiq sxemasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5 space-y-4">
+          <div>
+            <p class="text-xs text-slate-500 mb-2">E bosilganda</p>
+            <pre class="flow text-cyan-300/90">Keyboard Event: E (Pressed)
+    │
+    ▼
+Call OnActivate  ──────────────────┐
+                                   │
+Custom Event: OnActivate  ◄────────┘
+    │
+    ▼
+Print String ("Obyekt faollashtirildi")</pre>
+          </div>
+          <div class="border-t border-slate-800 pt-4">
+            <p class="text-xs text-slate-500 mb-2">Function</p>
+            <pre class="flow text-cyan-300/90">GetDoubledValue (Input: Integer Value)
+    │
+    ▼
+Return Value = Value × 2</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+          <ul class="space-y-2 text-sm text-slate-300">
+            <li class="flex gap-3">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><code class="text-cyan-300 text-xs">BP_TestObject</code> ochiq, Event Graph ishlaydi (Kun 3)</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span>Level’da instance bor; Enable Input qilgan bo‘lsangiz — yaxshi (aks holda bugun ham kerak bo‘lishi mumkin)</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span>Challenge uchun: <code class="text-cyan-300 text-xs">ClickCount</code> Integer (Kun 3) — bo‘lmasa yangisini yaratasiz</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Custom Event: OnActivate</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.1</span>
+              <span class="text-sm font-medium text-white">BP_TestObject → Event Graph</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Content Browser’dan <span class="ui-label">BP_TestObject</span> ni oching → <span class="ui-label">Event Graph</span> tab.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.2</span>
+              <span class="text-sm font-medium text-white">Custom Event yaratish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Bo‘sh joyda <strong class="text-white">o‘ng sichqoncha</strong> → qidiruv: <span class="ui-label">Custom Event</span></p>
+              <p>Yoki: <span class="ui-label">Add Custom Event</span> / <span class="ui-label">Custom Event</span> ni tanlang.</p>
+              <p>Node paydo bo‘ladi. Details panelida (yoki node ustida) <span class="ui-label">Event Name</span> ni o‘zgartiring:</p>
+              <p><span class="ui-label font-mono">OnActivate</span></p>
+              <p><span class="ui-label">Enter</span>.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Ko‘rinishi:</strong> Qizil/to‘q rangli event node, o‘ngda bitta oq execution chiqishi. My Blueprint → Event Dispatchers / Graphs ro‘yxatida ham OnActivate ko‘rinishi mumkin.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.3</span>
+              <span class="text-sm font-medium text-white">OnActivate ichida Print String</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>OnActivate’ning oq pin’idan sim torting → <span class="ui-label">Print String</span></p>
+              <p>In String: <span class="ui-label font-mono">Obyekt faollashtirildi</span></p>
+              <p>Compile qiling (hali chaqirilmagan — keyingi qadamda chaqiramiz).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="input-e" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">E tugmasi → OnActivate chaqirish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.1</span>
+              <span class="text-sm font-medium text-white">Keyboard Event: E</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Event Graph’da o‘ng sichqoncha → qidiruv:</p>
+              <p><span class="ui-label">E</span> yoki <span class="ui-label">Keyboard Event</span> → ro‘yxatdan <strong class="text-white">E</strong> ni tanlang.</p>
+              <p>Ba’zi versiyalarda: <span class="ui-label">Input Key</span> → Key sifatida <span class="ui-label">E</span> tanlanadi.</p>
+              <p>Node’da <span class="ui-label">Pressed</span> / <span class="ui-label">Released</span> chiqishlari bo‘ladi. <strong class="text-white">Pressed</strong> dan foydalanamiz.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.2</span>
+              <span class="text-sm font-medium text-white">Call OnActivate</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>E → Pressed pin’idan sim torting → bo‘sh joyga tashlang.</p>
+              <p>Qidiruvga yozing: <span class="ui-label">OnActivate</span></p>
+              <p>Ro‘yxatda <span class="ui-label">OnActivate</span> (Call / Custom Event) chiqadi — tanlang.</p>
+              <p>Yoki: My Blueprint’da OnActivate’ni topib, graph’ga tashlang (Call varianti).</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima bo‘ladi:</strong> E bosilganda execution OnActivate event’iga o‘tadi, u yerda Print String ishlaydi. Keyinchalik OnActivate ichiga eshik ochish, item olish kabi mantiq qo‘yiladi — chaqiruv joyi (E yoki Interaction) o‘zgarmasligi mumkin.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.3</span>
+              <span class="text-sm font-medium text-white">Enable Input (agar kerak bo‘lsa)</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Agar Kun 3 da Enable Input qo‘ymagan bo‘lsangiz, E ishlamasligi mumkin.</p>
+              <p>BeginPlay zanjiriga qo‘shing:</p>
+              <ol class="list-decimal list-inside space-y-1 text-slate-400">
+                <li><span class="ui-label">Enable Input</span></li>
+                <li>Target: self</li>
+                <li>Player Controller: <span class="ui-label">Get Player Controller</span> (Player Index = 0)</li>
+              </ol>
+              <p>Compile + Save.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="function" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Function: GetDoubledValue</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.1</span>
+              <span class="text-sm font-medium text-white">Yangi Function yaratish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Chap past — <span class="ui-label">My Blueprint</span> paneli.</p>
+              <p><span class="ui-label">Functions</span> bo‘limi yonidagi <span class="ui-label">+</span> ni bosing.</p>
+              <p>Yangi function paydo bo‘ladi. Nom: <span class="ui-label font-mono">GetDoubledValue</span></p>
+              <p>Enter. Editor avtomatik shu function’ning graph’iga o‘tishi mumkin (yoki Functions ro‘yxatidan ikki marta bosing).</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.2</span>
+              <span class="text-sm font-medium text-white">Input parametr: Integer</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Function graph’ida chapda <span class="ui-label">Inputs</span> / Details.</p>
+              <p>GetDoubledValue tanlangan holda Details’da:</p>
+              <p><span class="ui-label">Inputs</span> → <span class="ui-label">+ </span> yangi input.</p>
+              <ul class="space-y-1 pl-1">
+                <li>Name: <span class="ui-label font-mono">Value</span> (yoki <span class="ui-label">InputValue</span>)</li>
+                <li>Type: <span class="ui-label">Integer</span></li>
+              </ul>
+              <p>Function entry node’ida endi yashil Integer pin ko‘rinadi.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.3</span>
+              <span class="text-sm font-medium text-white">Return Value: × 2</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Details → <span class="ui-label">Outputs</span> → <span class="ui-label">+</span></p>
+              <ul class="space-y-1 pl-1">
+                <li>Name: odatda <span class="ui-label">Return Value</span></li>
+                <li>Type: <span class="ui-label">Integer</span></li>
+              </ul>
+              <p>Graph’da o‘ng tomonda <span class="ui-label">Return Node</span> paydo bo‘ladi (yoki o‘zingiz qo‘shasiz: o‘ng sichqoncha → Return Node).</p>
+              <p>Mantiq:</p>
+              <ol class="list-decimal list-inside space-y-2">
+                <li>Entry’dagi <span class="ui-label">Value</span> pinidan sim torting.</li>
+                <li><span class="ui-label">integer * integer</span> (Multiply) qo‘shing — birinchi pin Value, ikkinchisiga <strong>2</strong> yozing.</li>
+                <li>Multiply natijasini Return Node’ning Return Value pin’iga ulang.</li>
+                <li>Entry’ning execution’ini Return’ning execution’iga ulang (function’larda ham oqim bor).</li>
+              </ol>
+              <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Tekshirish:</strong> Compile. Xato bo‘lmasa, function tayyor. Uni Event Graph’dan chaqirish mumkin.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.4</span>
+              <span class="text-sm font-medium text-white">(Ixtiyoriy) Function’ni sinab ko‘rish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Event Graph’ga qayting. BeginPlay yoki OnActivate yonida:</p>
+              <p><span class="ui-label">GetDoubledValue</span> ni chaqiring → Value = 5 → Return’ni Print String (To String) orqali chiqaring. Play da “10” ko‘rinishi kerak.</p>
+              <p>Asosiy test E + OnActivate; function challenge’da to‘liq ishlatiladi.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test qilish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5–10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
+            <span class="text-sm font-medium text-white">Play + E</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <ol class="list-decimal list-inside space-y-2">
+              <li>Level’ni Play qiling.</li>
+              <li><span class="ui-label">E</span> tugmasini bosing.</li>
+              <li>Ekranda <code class="text-cyan-300 text-xs">Obyekt faollashtirildi</code> chiqishi kerak.</li>
+            </ol>
+            <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
+              <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Muvaffaqiyat:</strong></p>
+              <ul class="mt-2 space-y-1 text-emerald-200/80">
+                <li>✓ Custom Event yaratish va chaqirish ishlaydi</li>
+                <li>✓ Function GetDoubledValue yozilgan va compile bo‘ladi</li>
+              </ul>
+            </div>
+            <div class="callout border-red-500/50 bg-red-500/5 rounded-r-lg p-3">
+              <p class="text-sm text-red-200/90"><strong class="text-red-400">E ishlamasa:</strong> Enable Input + Get Player Controller; Output Log’da xato bormi; E event Pressed’ga ulanganmi; OnActivate Call qilinganmi — tekshiring.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge</h2>
+            <p class="text-sm text-slate-500">OnActivate + ClickCount + GetDoubledValue</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>OnActivate ichida:</p>
+          <ol class="list-decimal list-inside space-y-2">
+            <li>Agar <code class="text-xs text-cyan-300">ClickCount</code> yo‘q bo‘lsa — Integer variable yarating (default 0).</li>
+            <li>OnActivate boshida ClickCount’ni 1 ga oshiring (Get → +1 → Set), xuddi Kun 3 challenge’dagi kabi.</li>
+            <li><span class="ui-label">GetDoubledValue</span> chaqiring — Value piniga <strong>hozirgi ClickCount</strong> (oshirilgandan keyin) ulang.</li>
+            <li>Return Value’ni <span class="ui-label">To String</span> qilib Print String’ga bering (yoki “Ikki baravar: ” + son).</li>
+          </ol>
+          <p class="text-slate-400">Har E bosilganda: ClickCount o‘sadi, ekranda uning 2 baravari chiqadi (1→2, 2→4, 3→6...).</p>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>Bugun siz:</p>
+          <ul class="space-y-1.5">
+            <li>✓ <strong class="text-white">Custom Event</strong> <code class="text-xs text-cyan-300">OnActivate</code> yaratdingiz va Print yozdingiz</li>
+            <li>✓ <strong class="text-white">E</strong> input orqali OnActivate’ni chaqirdingiz</li>
+            <li>✓ <strong class="text-white">Function</strong> <code class="text-xs text-cyan-300">GetDoubledValue</code> — input Integer, return ×2</li>
+            <li>✓ Event va Function farqini tushundingiz</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">Content/BetrayBuilder/Blueprints/BP_TestObject</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4">
+            <p class="text-slate-400"><strong class="text-white">Ertaga (Kun 5):</strong> Blueprint Communication — Cast va Blueprint Interface. Bir Actor boshqasining OnActivate’ini chaqirish; Interaction System poydevori.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-03.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 3
+        </a>
+        <div class="text-xs text-slate-600">Kun 4 / 90</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 5 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-16"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>

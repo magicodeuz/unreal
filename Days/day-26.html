@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 26 — Spawn Points | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 4 · Level &amp; Spaces</div>
+          <div class="font-semibold text-sm truncate">Kun 26 — Spawn Points</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~2.5–3.5 soat</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun spawn?</a>
+        <a href="#player-start" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Player Start nima?</a>
+        <a href="#gamemode" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">GameMode roli</a>
+        <a href="#choose" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Choose Player Start</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Blueprint sxema</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. Lobby’ga 4 Start</a>
+        <a href="#spacing" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Masofa</a>
+        <a href="#override" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. ChoosePlayerStart</a>
+        <a href="#random" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Random tanlash</a>
+        <a href="#world-settings" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. World Settings</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Play test</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge (fallback)</a>
+        <a href="#avoid" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima qilmaslik</a>
+        <a href="#troubleshooting" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Troubleshooting</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+          Stage 4 · Kun 26 · Multiplayer-ready spawn
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Spawn Points</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Lobby’da <strong class="text-slate-200">4+ Player Start</strong> + GameMode’da tasodifiy tanlash — ustma-ust spawn yo‘q.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Lobby: kamida <strong class="text-white">4 Player Start</strong></li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Bir-biridan yetarli masofa (capsule to‘qnashmasin)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">BP_GameMode</code>: Choose Player Start override</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Get All Actors of Class → Random index</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Qayta Play: turli nuqtalar</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Betrayer/Builder alohida spawn (Day 51 role). Faqat umumiy random.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun ko‘p Player Start?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Default: bitta Start — barcha o‘yinchilar bir nuqtada. Multiplayer’da “stack” va collision g‘alati.
+          </p>
+          <p>
+            Lobby — tabiiy yig‘ilish joyi (Kun 23). 4+ Start = 4 o‘yinchi sinovi uchun yetarli; keyin ko‘paytirasiz.
+          </p>
+        </div>
+      </section>
+
+      <!-- PLAYER START -->
+      <section id="player-start" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📍</span>
+          Player Start nima?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Engine Actor: <span class="ui-label">Player Start</span>. Transform = spawn joyi + yo‘nalish (arrow).
+          </p>
+          <p>
+            Place Actors → Basic → Player Start. Viewport’da bayroqcha / odam ikonkasi.
+          </p>
+          <p class="text-slate-400">
+            Tag / Player Start Tag keyinroq filter uchun (team). Bugun hammasi bir xil class.
+          </p>
+        </div>
+      </section>
+
+      <!-- GAMEMODE -->
+      <section id="gamemode" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">G</span>
+          BP_GameMode roli
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Day 8: Default Pawn = BP_Player. Spawn joyini tanlash ham GameMode vazifasi.
+          </p>
+          <p>
+            Funksiya: <span class="ui-label">Choose Player Start</span> (yoki FindPlayerStart / ChoosePlayerStart — versiyaga qarab). Override qilib o‘z logikangizni yozasiz.
+          </p>
+        </div>
+      </section>
+
+      <!-- CHOOSE -->
+      <section id="choose" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">🎲</span>
+          Choose Player Start — g‘oya
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Har yangi Pawn spawn bo‘lganda engine “qayer?” deb so‘raydi. Siz array’dan random qaytarasiz.
+          </p>
+          <p class="text-slate-400">
+            Murakkabroq (keyin): band nuqtalarni chiqarib tashlash, eng uzoq Start, team tag. Bugun: oddiy random.
+          </p>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">↗</span>
+          Blueprint sxema
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">Event Choose Player Start (Controller, …)
+  ↓
+Get All Actors of Class (Player Start)
+  ↓
+Array Length
+  ↓
+Random Integer in Range (0 … Length-1)
+  ↓
+Get (Array element at Index)
+  ↓
+Return Value = shu Player Start
+  (Parent chaqirmaslik / yoki fallback Parent)</pre>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4">Oldindan talab</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BP_GameMode + BP_Player</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> MAP_BetrayBuilder, Lobby xonasi</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Lobby’ga 4 Player Start</h2>
+            <p class="text-sm text-slate-500">15–20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Place Actors → Player Start × 4. Lobby polida, burchaklar yoki kvadrat grid.</p>
+          <p>Arrow yo‘nalishi: xona markaziga yoki eshik tomon — birinchi nazar.</p>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="spacing" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Masofa</h2>
+            <p class="text-sm text-slate-500">10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Kamida ~150–200 unit oralig‘i (capsule radius 42 × 2 + bo‘shliq). Ustma-ust = physics “portlash”.</p>
+          <p class="text-slate-400">Outliner: PS_Lobby_01 … 04.</p>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="override" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Choose Player Start override</h2>
+            <p class="text-sm text-slate-500">15–25 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>BP_GameMode oching → Functions / Override → <span class="ui-label">Choose Player Start</span> (yoki Find Player Start — docs).</p>
+          <p>Agar ro‘yxatda topilmasa: Class Settings / parent AGameModeBase funksiyalarini qidiring.</p>
+          <p class="text-slate-400">Return type: Actor (Player Start).</p>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="random" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Random tanlash mantiq</h2>
+            <p class="text-sm text-slate-500">20–30 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">Get All Actors of Class (PlayerStart)
+→ Length
+→ Max = Length - 1 (Branch Length > 0)
+→ Random Integer 0..Max
+→ Get copy from array
+→ Return
+
+Length == 0 → Parent Choose Player Start
+  yoki Get Actor of Class default</pre>
+          <p class="text-slate-400">Compile. Empty array crash oldini oling.</p>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="world-settings" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">World Settings</h2>
+            <p class="text-sm text-slate-500">5 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300">
+          <p>MAP_BetrayBuilder → World Settings → GameMode Override = BP_GameMode.</p>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Play test</h2>
+            <p class="text-sm text-slate-500">15–20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Play 5+ marta — turli joylar (statistika)</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Lobby ichida spawn</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Devor ichida emas</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Print Start name (debug ixtiyoriy)</span></label>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — Hallway fallback</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-2">
+          <p>Hallway’ga 2 Start qo‘ying. Tag: <code class="text-xs">Lobby</code> vs <code class="text-xs">Fallback</code>.</p>
+          <p>Avval Lobby tag’li array; bo‘sh bo‘lsa Fallback. Yoki 90% Lobby random.</p>
+          <p class="text-slate-500">Oddiy variant: barcha Start bir array — Hallway ham aralashsin.</p>
+        </div>
+      </section>
+
+      <!-- AVOID -->
+      <section id="avoid" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Nima qilmaslik</h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Role-based spawn</p>
+            <p class="text-slate-400 mt-1">Day 51.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Har xonaga Start</p>
+            <p class="text-slate-400 mt-1">Hozir Lobby markaziy yig‘ilish.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Troubleshooting</h2>
+        <div class="rounded-xl border border-red-500/20 p-5 space-y-3 text-sm text-slate-300">
+          <p><strong class="text-white">Doim bir joy:</strong> Override chaqirilmayapti? GameMode to‘g‘rimi? PIE default GM?</p>
+          <p><strong class="text-white">Null return:</strong> Array bo‘sh — levelda Player Start bormi?</p>
+          <p><strong class="text-white">Devor ichida:</strong> Start transform Z / collision.</p>
+          <p><strong class="text-white">Find vs Choose:</strong> Parent class hujjatiga qarang; ikkalasidan biri override qilinadi.</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">FAQ</h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Listen Server 2 o‘yinchi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">Har biri Choose chaqiriladi — turli random. Band filter keyin.</div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Player Start Emplaced?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">Default class yetarli. Custom subclass tag uchun ixtiyoriy.</div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Restart Player?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">O‘limdan keyin yana Choose ishlaydi — xuddi shu mantiq.</div>
+          </details>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Lug‘at</h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Player Start</td><td class="py-2.5 px-4 text-slate-400">Spawn nuqtasi Actor</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Choose Player Start</td><td class="py-2.5 px-4 text-slate-400">GM tanlov funksiyasi</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Get All Actors of Class</td><td class="py-2.5 px-4 text-slate-400">Leveldagi barcha turdoshlar</td></tr>
+              <tr><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Fallback</td><td class="py-2.5 px-4 text-slate-400">Asosiy ro‘yxat bo‘shsa zaxira</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CHECKLIST -->
+      <section id="checklist" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Yakuniy checklist</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">4+ Player Start Lobby</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Masofa OK</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">ChoosePlayerStart random</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">World Settings GM</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Qayta Play turlicha</span></label>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ Ko‘p nuqtali spawn</li>
+            <li>✓ Random ChoosePlayerStart</li>
+            <li>✓ Multiplayer poydevor</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">BP_GameMode + Lobby PlayerStarts</code>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="sp26-1" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 1</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-2" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 2</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-3" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 3</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-4" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 4</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-5" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 5</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-6" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 6</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-7" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 7</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-8" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 8</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-9" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 9</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-10" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 10</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-11" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 11</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-12" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 12</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-13" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 13</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-14" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 14</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-15" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 15</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-16" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 16</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-17" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 17</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-18" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 18</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-19" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 19</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-20" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 20</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-21" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 21</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-22" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 22</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-23" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 23</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-24" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 24</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-25" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 25</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-26" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 26</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-27" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 27</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-28" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 28</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-29" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 29</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-30" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 30</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-31" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 31</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-32" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 32</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-33" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 33</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-34" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 34</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-35" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 35</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-36" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 36</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-37" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 37</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-38" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 38</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+
+      <section id="sp26-39" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Spawn eslatma 39</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Random Integer har chaqiruvda yangi qiymat — lekin kichik sample da bir xil nuqta ketma-ket chiqishi mumkin. Bu normal; band-filter keyinroq.</p>
+          <p>Get All Actors of Class har spawn da ishlaydi — 4-8 Start uchun arzon. Yuzlab Start bo'lsa cache qiling.</p>
+          <p>Player Start rotation yaw — o'yinchi qaysi tomonga qaraydi. Lobby markaziga qaratsangiz birinchi sekund foydali.</p>
+          <p>PIE da "Selected Viewport" vs "New Editor Window" ba'zan boshqa GM ishlatadi — World Settings tekshiring.</p>
+          <p>Multiplayer listen server: host ham client ham Choose orqali spawn — bir xil mantiq.</p>
+        </div>
+      </section>
+
+      
+      <section id="sp26b-40" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 40</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+
+      <section id="sp26b-41" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 41</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+
+      <section id="sp26b-42" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 42</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+
+      <section id="sp26b-43" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 43</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+
+      <section id="sp26b-44" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 44</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+
+      <section id="sp26b-45" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 45</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+
+      <section id="sp26b-46" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 46</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+
+      <section id="sp26b-47" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 47</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+
+      <section id="sp26b-48" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 48</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+
+      <section id="sp26b-49" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 49</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+
+      <section id="sp26b-50" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 50</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+
+      <section id="sp26b-51" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Yana 51</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Spawn tizimi Stage 4 ni "o'ynaladigan sessiya" ga yaqinlashtiradi. Keyingi kunlar lighting/prop; spawn barqaror qolsin.</p>
+          <p>Challenge fallback Hallway — asosiy Lobby to'la yoki blocked bo'lsa zaxira (keyinroq Occupied check).</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-25.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 25
+        </a>
+        <div class="text-xs text-slate-600">Kun 26 / 90 · Stage 4</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 27 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

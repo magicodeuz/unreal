@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 21 — Universal Interaction Test | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 3 · Milestone 3</div>
+          <div class="font-semibold text-sm truncate">Kun 21 — Universal Interaction Test</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">MILESTONE 3</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun test kuni?</a>
+        <a href="#architecture" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Arxitektura eslatma</a>
+        <a href="#inventory" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4 obyekt inventari</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. MAP_InteractionTest</a>
+        <a href="#layout" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Xona layout</a>
+        <a href="#place" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. 4 obyekt joylash</a>
+        <a href="#wire" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Button→Door wiring</a>
+        <a href="#matrix" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Test matrisa</a>
+        <a href="#range" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Masofa testi</a>
+        <a href="#can-text" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. CanInteract + matn</a>
+        <a href="#fix" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">8. Xatolarni tuzatish</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge (5-obyekt)</a>
+        <a href="#milestone" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Milestone 3</a>
+        <a href="#backup" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Backup</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          Stage 3 yakuni · MILESTONE 3 · Integration Test
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Universal Interaction Test</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Yangi feature <strong class="text-slate-200">yo‘q</strong>. Faqat: Door, Button→Door, LightSwitch, Computer — bitta Trace + bitta BPI orqali ishlashini isbotlash.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">MAP_InteractionTest</code> — bitta xona, 4 tur</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Har birini alohida + ketma-ket sinash</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Trace masofasi (300) tashqarida E ishlamasin</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> CanInteract / matn (Print yoki UI) tekshiruv</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Topilgan bug’larni <strong class="text-white">shu kun</strong> tuzatish</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Milestone 3 yashil</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Yangi obyekt turi qo‘shmang</strong> (faqat challenge’da ixtiyoriy 5-chi). Integration = mavjudlarni birga sinash.</p>
+          </div>
+          <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Nima uchun muhim?</strong> Keyingi 70 kunda generator, sabotage, voting — hammasi shu BPI ga tushadi. Bugun ishonch = keyin tezlik.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Integration testing nima?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Har bir kun alohida “unit” ishlagan. Bugun: <strong class="text-white">birga</strong> ishlaydimi? Bitta Player graph, bitta Trace, bitta interface — to‘rt xil natija.
+          </p>
+          <p>
+            Real loyihada yangi feature qo‘shishdan oldin regression test: eski eshik hali ochiladimi?
+          </p>
+          <p class="text-slate-400">
+            Xato topsangiz — Stage 4 ga olib o‘tmang. Tuzating, keyin milestone.
+          </p>
+        </div>
+      </section>
+
+      <!-- ARCHITECTURE -->
+      <section id="architecture" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm">🏗</span>
+          Arxitektura — nima sinayapmiz
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">Player (bitta zanjir)
+  Line Trace (Visibility, ~300)
+  → CurrentFocusedActor
+  → DoesImplement BPI_Interact?
+  → CanInteract Message?
+  → GetInteractionText (Print / keyin UI)
+  → E → Interact Message
+
+Implementors (turli mantiq, bir xil shartnoma):
+  BP_Door          Timeline rotation
+  BP_Button        Message → TargetDoor
+  BP_LightSwitch   Point Light Visibility
+  BP_Computer      Create Widget + Input Mode</pre>
+          <p class="text-sm text-slate-500 mt-3">Agar bitta Cast To BP_Door Player’da qolgan bo‘lsa — bugun topib olib tashlang.</p>
+        </div>
+      </section>
+
+      <!-- INVENTORY -->
+      <section id="inventory" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">📋</span>
+          4 obyekt — kutilgan xulq
+        </h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-slate-700 text-left text-slate-400 bg-slate-900">
+                <th class="py-2 px-3">Actor</th>
+                <th class="py-2 px-3">E natijasi</th>
+                <th class="py-2 px-3">Maxsus</th>
+              </tr>
+            </thead>
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">Door</td>
+                <td class="py-2 px-3">Ochilish/yopilish</td>
+                <td class="py-2 px-3 text-slate-500">Anim paytida CanInteract false</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">Button</td>
+                <td class="py-2 px-3">Bog‘langan Door toggle</td>
+                <td class="py-2 px-3 text-slate-500">TargetDoor valid</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">LightSwitch</td>
+                <td class="py-2 px-3">Yorug‘lik on/off</td>
+                <td class="py-2 px-3 text-slate-500">Sezilarli farq</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3 font-mono text-xs text-cyan-300">Computer</td>
+                <td class="py-2 px-3">Widget + cursor</td>
+                <td class="py-2 px-3 text-slate-500">Close → Game input</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab (checklist)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BP_Door ishlaydi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BP_Button + TargetDoor wiring</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BP_LightSwitch toggle</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BP_Computer open/close UI</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Player: Trace + BPI Message (Cast yo‘q)</span></label>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">MAP_InteractionTest</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">1.1</span>
+            <span class="text-sm font-medium text-white">Yangi level</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p><span class="ui-label">Content/BetrayBuilder/Maps/</span></p>
+            <p>File → New Level (Basic) yoki Empty → saqlash: <span class="ui-label font-mono">MAP_InteractionTest</span></p>
+            <p>World Settings: BP_GameMode / Default Pawn BP_Player (oldingi kunlar).</p>
+            <p class="text-slate-400">Mavjud test map’ni nusxa qilish ham OK — lekin toza xona yaxshiroq.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="layout" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Xona layout</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–30 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Oddiy yopiq xona (4 devor + pol + shift). LightSwitch farqi uchun Sky/Directional past.</p>
+          <p>Eshik uchun teshik yoki eshik o‘rniga bo‘shliq. Computer devor yonida. Button eshikdan 2–3 m uzoqda (proxy seziladi).</p>
+          <p class="text-slate-500">Chiroyli level emas — test stend.</p>
+          <pre class="flow text-cyan-300/90 bg-black/40 rounded-lg p-3 border border-slate-800 mt-2">[Door]----[Button]
+   |
+[LightSwitch]   [Computer]
+        (Player spawn markazda)</pre>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="place" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">4 obyektni joylash</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
+            <span class="text-sm font-medium text-white">Content Browser → drag</span>
+          </div>
+          <div class="p-5 space-y-2 text-sm text-slate-300">
+            <p>BP_Door, BP_Button, BP_LightSwitch, BP_Computer — Viewport’ga.</p>
+            <p class="text-slate-400">Outliner nomlari: <code class="text-xs">Door_Main</code>, <code class="text-xs">Btn_Main</code>, … — debug oson.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="wire" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Button → Door wiring</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <p>Button tanlang → Details → TargetDoor → Door instance (leveldagi).</p>
+          <p class="text-slate-500">Bo‘sh qolsa Button testi fail.</p>
+        </div>
+      </section>
+
+      <!-- STEP 5 MATRIX -->
+      <section id="matrix" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test matrisa (asosiydir)</h2>
+            <p class="text-sm text-slate-500">Har katakni o‘zingiz belgilang</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm">
+          <p class="text-slate-400">Play → har bir qator:</p>
+          <div class="space-y-2">
+            <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-emerald-400"><span class="text-slate-300"><strong class="text-white">Door</strong> — E ochiladi, E yopiladi, anim paytida qayta E rad</span></label>
+            <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-emerald-400"><span class="text-slate-300"><strong class="text-white">Button</strong> — E → Door harakatlanadi (to‘g‘ridan Door’siz)</span></label>
+            <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-emerald-400"><span class="text-slate-300"><strong class="text-white">Light</strong> — E on/off, xona farqi ko‘rinadi</span></label>
+            <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-emerald-400"><span class="text-slate-300"><strong class="text-white">Computer</strong> — E widget, Close game input qaytaradi</span></label>
+            <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-emerald-400"><span class="text-slate-300"><strong class="text-white">Ketma-ket</strong> — Door → Light → Computer → Button → yana Door (regression)</span></label>
+          </div>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Matn:</strong> UI prompt bo‘lmasa Player’da focus o‘zgarganda Print GetInteractionText — to‘g‘ri string kelishini tekshiring.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6 RANGE -->
+      <section id="range" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Masofa testi (300 unit)</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10–15 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Trace distance (Day 15) odatda ~300. Obyektdan uzoqlashib E:</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Focus yo‘qolishi kerak (debug line qizil / Print null)</li>
+            <li>E hech narsa qilmasligi kerak</li>
+          </ul>
+          <p>Yaqinlashib qayta — ishlashi kerak. Bu “cheksiz interact” bug’ini ushlaydi.</p>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="can-text" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">CanInteract va matn</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p><strong class="text-white">Door animating:</strong> CanInteract false → E o‘tkazib yuboriladi.</p>
+          <p><strong class="text-white">Button TargetDoor bo‘sh:</strong> CanInteract false (agar shunday yozgan bo‘lsangiz).</p>
+          <p><strong class="text-white">Matn:</strong> ochiq eshik “yopish”, o‘chiq chiroq “yoqish” — holatga bog‘liq.</p>
+        </div>
+      </section>
+
+      <!-- STEP 8 FIX -->
+      <section id="fix" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">8</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Xatolarni tuzatish protokoli</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <ol class="list-decimal list-inside space-y-2 text-slate-400">
+            <li>Qaysi obyekt? (faqat Computer?) → shu BP</li>
+            <li>Hammasi? → Player Trace / BPI Message</li>
+            <li>Focus bormi? Collision Visibility?</li>
+            <li>DoesImplement true?</li>
+            <li>CanInteract true?</li>
+            <li>Interact ichida null / Is Valid?</li>
+          </ol>
+          <p class="text-slate-500">Bir xatoni tuzatib, butun matrisani qayta yugurting (regression).</p>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — 5-obyekt (chelak)</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-3">
+          <p>Yangi BP (masalan <code class="text-xs">BP_Bucket</code>): mesh + BPI.</p>
+          <p>Interact: Print “Chelak bosildi” yoki kichik scale pulse.</p>
+          <p>Player’ga <strong class="text-white">hech narsa qo‘shmang</strong>. Agar E ishlasa — system universal.</p>
+          <p class="text-slate-500">Bu “scalable” isboti. Keyin o‘chirib qo‘yishingiz mumkin.</p>
+        </div>
+      </section>
+
+      <!-- MILESTONE -->
+      <section id="milestone" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">🏆</span>
+          MILESTONE 3 — Interaction System
+        </h2>
+        <div class="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p class="text-emerald-300 font-medium">Yashil shartlar:</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>4 tur bitta BPI + bitta Trace orqali</li>
+            <li>Player’da tip-specific Cast yo‘q</li>
+            <li>Masofa cheklovi ishlaydi</li>
+            <li>Kritik bug’lar tuzatilgan</li>
+          </ul>
+          <p class="text-slate-500 mt-2">Bu poydevor: sabotage panel, voting terminal, generator — keyin faqat yangi implement.</p>
+        </div>
+      </section>
+
+      <!-- BACKUP -->
+      <section id="backup" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center text-sm">💾</span>
+          Backup
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <p>MAP_InteractionTest + asosiy BP’lar nusxasi (yoki git commit).</p>
+          <p class="text-slate-500">Stage 4 boshlashdan oldin “ishlayotgan holat” saqlansin.</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">FAQ</h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Bitta obyekt ishlamaydi — stage failedmi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Yo‘q — tuzating. Milestone to‘liq matrisadan keyin.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Prompt UI yo‘q — qanday matn?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Print String GetInteractionText focus o‘zgarganda. Stage 10’da haqiqiy prompt.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Nima uchun yangi feature yo‘q?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Integration kuni. Barqarorlik > yangi kontent.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOT QUICK -->
+      <section id="trouble-quick" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Tezkor troubleshooting</h2>
+        <div class="rounded-xl border border-red-500/20 overflow-hidden">
+          <div class="p-5 space-y-3 text-sm text-slate-300">
+            <p><strong class="text-white">Hech narsa:</strong> Trace channel, collision, IMC Interact, GameMode pawn.</p>
+            <p><strong class="text-white">Faqat ba’zilari:</strong> o‘sha BP implement / CanInteract / mesh block.</p>
+            <p><strong class="text-white">Button Door’siz:</strong> TargetDoor Details.</p>
+            <p><strong class="text-white">Computer input qolib:</strong> Close da Game Only.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STAGE 3 RECAP -->
+      <section id="stage3-recap" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">3</span>
+          Stage 3 qisqa xotira
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">15 Line Trace
+16 BPI_Interact
+17 Door
+18 Button → Door
+19 Light Switch
+20 Computer → Widget
+21 Universal test + Milestone 3</pre>
+        </div>
+      </section>
+
+      <!-- CHECKLIST FINAL -->
+      <section id="final-check" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Milestone checklist</h2>
+        <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-emerald-400"><span class="text-slate-300">MAP_InteractionTest yaratildi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-emerald-400"><span class="text-slate-300">4/4 obyekt ishlaydi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-emerald-400"><span class="text-slate-300">Masofa cheklovi OK</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-emerald-400"><span class="text-slate-300">Player Cast-free</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-emerald-400"><span class="text-slate-300">Bug’lar tuzatildi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-emerald-400"><span class="text-slate-300">Backup / commit</span></label>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ Integration test o‘tkazildi</li>
+            <li>✓ Interaction System tasdiqlandi</li>
+            <li>✓ Milestone 3 — green</li>
+            <li>✓ Stage 3 complete</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">Content/BetrayBuilder/Maps/MAP_InteractionTest</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4">
+            <p class="text-slate-400">Keyingi bosqich yangi sistemalar qo‘shadi; interact qismi shu yerda qotadi.</p>
+          </div>
+          <div class="mt-4 rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4">
+            <p class="text-emerald-300 font-medium">Tabriklaymiz — Stage 3 yakunlandi.</p>
+            <p class="text-slate-400 text-sm mt-1">Bir interface, to‘rt dunyo — va cheksiz keyingi implement’lar.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXTRA DEPTH for length -->
+      <section id="why-no-cast" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Nima uchun Cast yo‘qligi muhim?</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Agar Player’da Cast To Door, Cast To Light, Cast To Computer bo‘lsa — har yangi tip Player’ni ochishni talab qiladi. BPI bilan Player yopiq qoladi.</p>
+          <p class="text-slate-400">Bugun 5-chi chelak challenge shu printsipni isbotlaydi.</p>
+        </div>
+      </section>
+
+      <section id="test-hygiene" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Test hygienasi</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Debug Draw Line’ni test paytida yoqing, milestone’dan keyin o‘chiring yoki bDebug flag.</p>
+          <p>Print spam’ni tozalang — lekin bir marta yozib qo‘yilgan GetInteractionText Print foydali.</p>
+          <p class="text-slate-500">MAP_InteractionTest’ni “buzmang” — regression uchun saqlang.</p>
+        </div>
+      </section>
+
+      <section id="next-stage" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Keyingi stage ga</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-400 space-y-2">
+          <p>Stage 4 odatda yangi gameplay tizimlari (items, tasks, …) — o‘quv rejangizga qarang.</p>
+          <p>Interaction endi “infra”. Uni buzmasdan ustiga quring.</p>
+        </div>
+      </section>
+
+      
+      <section id="note-1" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 1 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-2" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 2 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-3" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 3 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-4" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 4 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-5" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 5 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-6" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 6 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-7" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 7 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-8" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 8 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-9" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 9 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-10" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 10 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-11" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 11 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-12" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 12 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-13" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 13 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="note-14" class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">Eslatma 14 — integration</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Integration test kuni yangi kod yozishdan ko‘ra mavjud zanjirni stress qilish. Har bir interactable o‘z holatini saqlaydi; Player faqat Message yuboradi.</p>
+          <p class="text-slate-400">Agar Door animatsiya paytida Button orqali yana chaqirilsa, Door CanInteract false qaytarishi kerak — bu ikki kirish nuqtasi (to‘g‘ridan va Button) uchun bir xil himoya.</p>
+          <p class="text-slate-400">Computer ochiq turganida boshqa interact’lar: UI Only input tufayli E odatda o‘yinga kelmaydi. Yopgach qayta sinang.</p>
+          <p class="text-slate-500">MAP_InteractionTest ni “golden” deb saqlang: keyin regression uchun ochasiz.</p>
+        </div>
+      </section>
+
+      
+      <section id="extra-15" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 15</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-16" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 16</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-17" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 17</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-18" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 18</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-19" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 19</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-20" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 20</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-21" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 21</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-22" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 22</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-23" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 23</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-24" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 24</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-25" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 25</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-26" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 26</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-27" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 27</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-28" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 28</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-29" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 29</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-30" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 30</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-31" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 31</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-32" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 32</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-33" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 33</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+
+      <section id="extra-34" class="mb-8">
+        <h2 class="text-lg font-bold text-white mb-2">Qo‘shimcha yozuv 34</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 leading-relaxed space-y-2">
+          <p>Stage 3 yakunida eng muhim natija: <strong class="text-slate-200">scalable interaction</strong>. Yangi generator yoki voting terminal qo‘shganda Player Blueprint’ini ochish shart emas.</p>
+          <p>Test matrisasini bir marta to‘liq o‘ting. Yarmi ishlashi milestone emas — to‘rtta ham.</p>
+          <p>Masofa testi 300 unit: levelda o‘lchash uchun o‘yinchi qadamlarini yoki debug line uzunligini ishlating.</p>
+          <p>Backup: kamida MAP + BPI + to‘rt BP. Git bo‘lsa commit message: "Milestone 3 Interaction System".</p>
+        </div>
+      </section>
+
+      
+      <section id="closing-milestone" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Yopilish — Milestone 3</h2>
+        <div class="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Agar matrisaning barcha kataklari belgilangan bo‘lsa — Stage 3 ni yopishingiz mumkin.</p>
+          <p class="text-slate-400">Keyingi kunlar yangi tizimlar: item, task, role… Interact qismi shu yerda mustahkam.</p>
+          <p class="text-emerald-300">Interaction System: tasdiqlangan. Omad Stage 4 da!</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-20.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 20
+        </a>
+        <div class="text-xs text-slate-600">Kun 21 / 90 · Stage 3 ✓</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Stage 4 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 11 — Crouch | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .prose h2, .prose h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow, .tree {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.65;
+    }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 2 · Player & Movement</div>
+          <div class="font-semibold text-sm truncate">Kun 11 — Crouch</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~2–2.5 soat</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-60 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-1">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun muhim</a>
+        <a href="#tushunchalar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Tushunchalar</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">To‘liq sxema</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. Movement sozlamalari</a>
+        <a href="#variable" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. IsCrouching</a>
+        <a href="#input" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. IA_Crouch ulash</a>
+        <a href="#camera" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Kamera silliq tushishi</a>
+        <a href="#sprint-block" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Sprint + Crouch cheklov</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Test + troubleshooting</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>
+          Stage 2 · Kun 11 / 14
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Crouch</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Egilib yurish: Capsule qisqaradi, tezlik pasayadi, kamera silliq pastga tushadi. Betray Builder’da vent / past eshik / yashirinish uchun asos.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <p class="text-slate-300 leading-relaxed">Bugun oxirida o‘yinchida quyidagilar bo‘lishi kerak:</p>
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <span class="ui-label">Left Ctrl</span> bosib turilganda Character <strong class="text-white">egiladi</strong> (Crouch)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Capsule balandligi avtomatik kamayadi — past joylardan o‘tish mumkin</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Yurish tezligi crouch paytida sekinroq</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Kamera <strong class="text-white">keskin sakramaydi</strong> — Interp / Timeline bilan silliq pastga</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Ctrl qo‘yib yuborilganda UnCrouch + kamera asl holatga</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">IsCrouching</code> state saqlanadi</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> (Challenge) Crouch paytida Sprint ishlamaydi</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Crouch skeletal animatsiyasi (Animation stage — ~Kun 80). Hozir faqat collision + kamera + speed. Mesh T-pose’da “cho‘kishi” shart emas.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun bu kun muhim?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Betray Builder social deduction / map exploration o‘yini. Past ventlar, stol osti, tor koridorlar — o‘yinchi egilmasa o‘tolmaydi. Shu bilan birga:
+          </p>
+          <ul class="space-y-2 list-disc list-inside text-slate-400">
+            <li><strong class="text-slate-200">Capsule</strong> o‘zgarmasa, “egilgan” ko‘rinsa ham collision to‘liq balandlikda qoladi — eshikdan o‘tmaydi.</li>
+            <li><strong class="text-slate-200">Kamera</strong> birdan pastga tushsa, o‘yinchi ko‘zi charchaydi / orientatsiya yo‘qoladi.</li>
+            <li><strong class="text-slate-200">Sprint + Crouch</strong> birga bo‘lsa, “egilib yugurish” g‘alati va keyinroq stamina/balance buziladi — shuning uchun challenge’da cheklaymiz.</li>
+          </ul>
+          <p>
+            UE Character Movement allaqachon <span class="ui-label">Crouch</span> / <span class="ui-label">UnCrouch</span> beradi — biz uni inputga ulaymiz va kamerani qo‘lda moslashtiramiz.
+          </p>
+        </div>
+      </section>
+
+      <!-- TUSHUNCHALAR -->
+      <section id="tushunchalar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📖</span>
+          Asosiy tushunchalar (batafsil)
+        </h2>
+        <div class="space-y-3">
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Crouch / UnCrouch (Character)</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Character class’dagi tayyor funksiyalar. Ichida: “Can Crouch?” tekshiruvi, Capsule half-height o‘zgarishi, Movement mode flag’lari.
+              Siz faqat chaqirasiz — capsule matematikasi UE ichida.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Crouched Half Height</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Character Movement Component parametri. Oddiy holda Half Height = <strong>96</strong> (to‘liq ~192). Egilganda masalan <strong>60</strong> — sezilarli pastroq, lekin “yassi” emas.
+              Juda kichik qiymat (20) Mesh va kamera bilan chalkashadi; 48–64 diapazon odatda qulay.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Nav Agent / Can Crouch</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Character Movement’da <span class="ui-label">Can Crouch</span> (yoki Nav Movement / crouch ruxsati) yoqilgan bo‘lishi kerak. Default ko‘pincha true; ishlamasa shu yerni tekshiring.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Max Walk Speed Crouched</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Egilganda alohida tezlik. Masalan 150–200. Crouch() chaqirilganda Movement shu qiymatga o‘tadi (sozlangan bo‘lsa). Yo‘qsa oddiy Max Walk Speed ishlashi mumkin — aniqroq uchun alohida maydonni to‘ldiring.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Kamera: nima uchun alohida?</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Capsule qisqarganda SpringArm/Camera avtomatik “bosh balandligi”ga tushmaydi. Relative Location Z ni o‘zgartirmasangiz, kamera yuqorida qoladi yoki g‘alati burchakda turadi.
+              Birdan Set Relative Location qilsangiz — keskin sakrash. Shuning uchun <strong class="text-white">FInterp To</strong> (Tick’da) yoki <strong class="text-white">Timeline</strong> (0→1 float) ishlatiladi.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">FInterp To vs Timeline</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              <strong class="text-white">FInterp To:</strong> har Tick joriy Z ni maqsad Z ga yaqinlashtiradi (Interp Speed). Oddiy, kam node.
+              <strong class="text-white">Timeline:</strong> aniq egri (curve) va vaqt (0.2–0.35 s). Ko‘proq nazorat, biroz ko‘proq sozlash.
+              Bugun ikkalasidan birini tanlang — ikkalasi ham to‘g‘ri.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          To‘liq mantiq sxemasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5 space-y-4">
+          <p class="text-xs text-slate-500">Input qismi</p>
+          <pre class="flow text-cyan-300/90">IA_Crouch (Started)
+    │
+    ├─ Crouch (Character)
+    ├─ Set IsCrouching = true
+    └─ Camera maqsad Z = CrouchCameraZ   (masalan 20 yoki -20 — sizning asl offset’ga qarab)
+
+IA_Crouch (Completed)
+    │
+    ├─ UnCrouch
+    ├─ Set IsCrouching = false
+    └─ Camera maqsad Z = StandingCameraZ  (asl qiymat, masalan 60)</pre>
+          <p class="text-xs text-slate-500 pt-2">Kamera silliqligi (misol: Tick + FInterp To)</p>
+          <pre class="flow text-cyan-300/90">Event Tick
+    │
+    ▼
+Get SpringArm (yoki Camera) Relative Location
+    │
+    ▼
+FInterp To (Current Z → TargetCameraZ, Delta Time, Interp Speed ~8–12)
+    │
+    ▼
+Set Relative Location (faqat Z yangilangan Vector)</pre>
+          <p class="text-sm text-slate-500">TargetCameraZ — alohida Float variable; Crouch/UnCrouch da yangilanadi. Tick faqat “silliq yetkazib beradi”.</p>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab (checklist)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BP_Player: WASD, Jump, Sprint ishlaydi (Kun 9–10)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> <code class="text-cyan-300 text-xs">IA_Crouch</code> + IMC’da Left Ctrl (Kun 6)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> SpringArm + Camera component bor (Kun 8)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Capsule Half Height ≈ 96 (standart)</li>
+          </ul>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3 mt-3">
+            <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Maslahat:</strong> Boshlashdan oldin SpringArm (yoki Camera) ning joriy <strong>Relative Location Z</strong> qiymatini yozib qo‘ying — bu sizin <code class="text-blue-300">StandingCameraZ</code> bo‘ladi. Keyin qaytarish oson.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Character Movement — Crouch sozlamalari</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10–15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.1</span>
+              <span class="text-sm font-medium text-white">Component’ni ochish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>BP_Player → Components → <span class="ui-label">Character Movement</span> tanlang.</p>
+              <p>Details panelida qidiruvga yozing: <span class="ui-label">Crouch</span> — barcha bog‘liq maydonlar filtrlanadi.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.2</span>
+              <span class="text-sm font-medium text-white">Tavsiya etilgan qiymatlar</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="border-b border-slate-700 text-left text-slate-400">
+                      <th class="py-2 pr-4">Parametr</th>
+                      <th class="py-2 pr-4">Qiymat</th>
+                      <th class="py-2">Izoh</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-slate-300">
+                    <tr class="border-b border-slate-800">
+                      <td class="py-2.5 pr-4 font-mono text-xs text-cyan-300">Can Crouch / Nav Can Crouch</td>
+                      <td class="py-2.5 pr-4">✓ true</td>
+                      <td class="py-2.5 text-slate-500">Ruxsat</td>
+                    </tr>
+                    <tr class="border-b border-slate-800">
+                      <td class="py-2.5 pr-4 font-mono text-xs text-cyan-300">Crouched Half Height</td>
+                      <td class="py-2.5 pr-4">60</td>
+                      <td class="py-2.5 text-slate-500">96 dan past</td>
+                    </tr>
+                    <tr>
+                      <td class="py-2.5 pr-4 font-mono text-xs text-cyan-300">Max Walk Speed Crouched</td>
+                      <td class="py-2.5 pr-4">180</td>
+                      <td class="py-2.5 text-slate-500">Yurishdan sekin</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="text-slate-400 mt-2">Agar “Max Walk Speed Crouched” topilmasa — Character Movement → Walking guruhida qidiring yoki umumiy Max Walk Speed crouch paytida qo‘lda Set qilasiz (keyinroq).</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Sinov:</strong> Crouched Half Height ni vaqtincha 40 qilib Viewport’da Capsule’ni ko‘ring (Show Collision). Keyin 60 ga qaytaring — o‘yin uchun muvozanatli.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="variable" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">IsCrouching va kamera maqsadlari</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">2.1</span>
+            <span class="text-sm font-medium text-white">Variables</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>My Blueprint → Variables. Quyidagilarni qo‘shing:</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-slate-700 text-left text-slate-400">
+                    <th class="py-2 pr-3">Nom</th>
+                    <th class="py-2 pr-3">Tip</th>
+                    <th class="py-2">Default / ma’no</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-300">
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">IsCrouching</td>
+                    <td class="py-2 pr-3">Boolean</td>
+                    <td class="py-2 text-slate-500">false</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">StandingCameraZ</td>
+                    <td class="py-2 pr-3">Float</td>
+                    <td class="py-2 text-slate-500">Asl SpringArm/Camera Z (masalan 60)</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">CrouchCameraZ</td>
+                    <td class="py-2 pr-3">Float</td>
+                    <td class="py-2 text-slate-500">Pastroq (masalan 20 yoki 0)</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">TargetCameraZ</td>
+                    <td class="py-2 pr-3">Float</td>
+                    <td class="py-2 text-slate-500">Joriy maqsad (Interp uchun)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="mt-3">BeginPlay’da:</p>
+            <ul class="list-disc list-inside space-y-1 text-slate-400">
+              <li>StandingCameraZ = SpringArm Get Relative Location → Z (yoki qo‘lda yozgan qiymat)</li>
+              <li>TargetCameraZ = StandingCameraZ</li>
+              <li>CrouchCameraZ ni Standing’dan ~30–50 pastroq qiling (sinab ko‘ring)</li>
+            </ul>
+            <p>Compile.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="input" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">IA_Crouch → Crouch / UnCrouch</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.1</span>
+              <span class="text-sm font-medium text-white">Event node</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Event Graph → <span class="ui-label">IA_Crouch</span> (Enhanced Input Action).</p>
+              <p>Kun 6 dagi Print bo‘lsa — o‘chiring yoki o‘rniga haqiqiy mantiq yozing.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.2</span>
+              <span class="text-sm font-medium text-white">Started</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-4 border border-slate-800">Started
+  → Crouch          // Character function, Target = Self
+  → Set IsCrouching = true
+  → Set TargetCameraZ = CrouchCameraZ</pre>
+              <p><span class="ui-label">Crouch</span> node qidiruvda “Crouch” — Character Movement / Pawn bo‘limida.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.3</span>
+              <span class="text-sm font-medium text-white">Completed</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-4 border border-slate-800">Completed
+  → UnCrouch
+  → Set IsCrouching = false
+  → Set TargetCameraZ = StandingCameraZ</pre>
+              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bosh ustida to‘siq:</strong> UnCrouch ba’zan “joy yetarli emas” deb bekor qilinadi (shift ustida). Bu normal. Keyinroq “crouch hold until clear” murakkabroq mantiq — bugun oddiy Completed yetarli.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 CAMERA -->
+      <section id="camera" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Kamera silliq pastga / yuqoriga</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 25–35 daqiqa · eng muhim qism</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.1</span>
+              <span class="text-sm font-medium text-white">Qaysi component?</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Odatda <strong class="text-white">SpringArm</strong> Relative Location Z o‘zgartiriladi (kamera uning child’i — birga tushadi).</p>
+              <p>Agar kamera to‘g‘ridan-to‘g‘ri Capsule’da bo‘lsa — Camera Relative Z.</p>
+              <p>Components’da SpringArm’ni tanlab, hozirgi Location Z ni StandingCameraZ bilan solishtiring.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.2</span>
+              <span class="text-sm font-medium text-white">Usul A — Event Tick + FInterp To (tavsiya, sodda)</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <ol class="list-decimal list-inside space-y-2">
+                <li>Event Tick (yoki agar Tick o‘chirilgan bo‘lsa — Primary Actor Tick yoqing).</li>
+                <li>SpringArm → <span class="ui-label">Get Relative Location</span> → Break Vector.</li>
+                <li><span class="ui-label">FInterp To</span>: Current = Z, Target = TargetCameraZ, Delta Time = Tick Delta, Interp Speed = <strong>10</strong> (sinab ko‘ring: 6 sekin, 15 tez).</li>
+                <li>Make Vector: X va Y eski, Z = Interp natijasi.</li>
+                <li>SpringArm → <span class="ui-label">Set Relative Location</span>.</li>
+              </ol>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima uchun Tick?</strong> TargetCameraZ Crouch/UnCrouch da bir marta o‘zgaradi; Tick har freym joriy joylashuvni maqsadga “tortadi”. Maqsadga yetganda deyarli to‘xtaydi (FInterp To yaqinlashadi).</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.3</span>
+              <span class="text-sm font-medium text-white">Usul B — Timeline (ixtiyoriy alternativ)</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>My Blueprint → Timeline asset (Add Timeline). Length 0.25 s. Float track 0→1.</p>
+              <p>Crouch Started → Timeline Play; Update da Lerp (StandingCameraZ, CrouchCameraZ, Alpha) → Set Relative Z.</p>
+              <p>UnCrouch → Timeline Reverse (yoki ikkinchi yo‘nalish).</p>
+              <p>Ko‘proq ish, lekin vaqt aniq. Birinchi marta Usul A yetarli.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.4</span>
+              <span class="text-sm font-medium text-white">Qiymatlarni tanlash</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Play qilib Ctrl bosing. Agar kamera:</p>
+              <ul class="space-y-1 text-slate-400">
+                <li><strong class="text-slate-200">Juda past</strong> — CrouchCameraZ ni biroz oshiring</li>
+                <li><strong class="text-slate-200">Deyarli o‘zgarmagan</strong> — farqni kattalashtiring (Standing 60 → Crouch 15)</li>
+                <li><strong class="text-slate-200">Sekin / kechikkan</strong> — Interp Speed ni 12–15 qiling</li>
+                <li><strong class="text-slate-200">Keskin</strong> — Speed ni pasaytiring yoki Timeline ishlating</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="sprint-block" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Sprint va Crouch birga ishlamasin (tayyorgarlik)</h2>
+            <p class="text-sm text-slate-500">Challenge asosi · 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">5.1</span>
+            <span class="text-sm font-medium text-white">G‘oya</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>IA_Sprint <span class="ui-label">Started</span> zanjirining boshida:</p>
+            <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-4 border border-slate-800">Started (Sprint)
+  → Branch (IsCrouching?)
+       ├─ True  → (hech narsa / Print "Can't sprint while crouching")
+       └─ False → Set Max Walk Speed 600, IsSprinting true</pre>
+            <p>Ixtiyoriy: Crouch Started da agar IsSprinting bo‘lsa — avval Sprint’ni o‘chiring (Speed 300, IsSprinting false), keyin Crouch.</p>
+            <p>Bu challenge’da to‘liq talab qilinadi; asosiy vazifa uchun kamida Sprint Started’da Branch qo‘ying.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6 TEST -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test va troubleshooting</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
+              <span class="text-sm font-medium text-white">Muvaffaqiyat mezonlari</span>
+            </div>
+            <div class="p-5 space-y-2 text-sm text-slate-300">
+              <ul class="space-y-2">
+                <li>✓ Ctrl hold → capsule pastroq (Show Collision bilan ko‘ring)</li>
+                <li>✓ Yurish sekinlashadi</li>
+                <li>✓ Kamera silliq pastga tushadi, qo‘yib yuborganda silliq qaytadi</li>
+                <li>✓ IsCrouching true/false to‘g‘ri (Print bilan tekshirish mumkin)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-red-500/20 overflow-hidden">
+            <div class="bg-red-500/10 px-5 py-3 border-b border-red-500/20">
+              <span class="text-sm font-medium text-red-300">Muammo → yechim</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300">
+              <div>
+                <p class="font-medium text-white">Crouch umuman ishlamaydi</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>Can Crouch = true?</li>
+                  <li>IA_Crouch → Started da Crouch node bormi?</li>
+                  <li>IMC’da Ctrl → IA_Crouch?</li>
+                  <li>BP_Player’da Mapping Context?</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-white">Capsule o‘zgarmaydi</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>Crouched Half Height Standing’dan farq qiladimi?</li>
+                  <li>Play paytida Show → Collision</li>
+                  <li>Boshqa Blueprint Capsule’ni qulflamayaptimi?</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-white">Kamera sakraydi yoki qimirlamaydi</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>TargetCameraZ Crouch/UnCrouch da yangilanadimi?</li>
+                  <li>Tick ishlayaptimi? (Actor Tick Enabled)</li>
+                  <li>To‘g‘ri component (SpringArm) ga Set Relative Location?</li>
+                  <li>X/Y ni noldan yozib yubormang — faqat Z ni Interp qiling</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-white">UnCrouch ishlamaydi (boshlab qoladi)</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>Bosh ustida ceiling / collision bormi?</li>
+                  <li>Completed pin ulanganmi (Triggered emas)?</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — Crouch vs Sprint</h2>
+            <p class="text-sm text-slate-500">Ikki state birga yashamasin</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-3">
+          <p><strong class="text-white">Talab:</strong></p>
+          <ol class="list-decimal list-inside space-y-2">
+            <li>IsCrouching == true bo‘lsa, IA_Sprint Started <strong>tezlikni oshirmasin</strong>.</li>
+            <li>(Qo‘shimcha) Sprint paytida Crouch bosilsa — avval sprintni to‘xtatib, keyin egiling <em>yoki</em> crouch’ni rad eting. Birini tanlang va izchil qiling.</li>
+          </ol>
+          <p class="text-slate-400">Bu keyingi stamina / movement state machine uchun yaxshi odat: bir vaqtda bitta “pose”.</p>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>Bugun siz:</p>
+          <ul class="space-y-1.5">
+            <li>✓ Crouched Half Height va crouch speed sozladingiz</li>
+            <li>✓ IA_Crouch → Crouch / UnCrouch + IsCrouching</li>
+            <li>✓ Kamera Z ni FInterp To (yoki Timeline) bilan silliq o‘zgartirdingiz</li>
+            <li>✓ Sprint bilan to‘qnashuvni Branch orqali chekladiniz (challenge)</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">Content/BetrayBuilder/Characters/BP_Player</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4 space-y-2">
+            <p class="text-slate-400"><strong class="text-white">Ertaga (Kun 12):</strong> IA_Look — sichqoncha bilan kamera / control rotation. Third person look to‘liq bo‘ladi.</p>
+            <p class="text-slate-500">Movement steki: Walk → Jump → Sprint → Crouch. Qolgani — ko‘rish va silliqlashtirish.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-10.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 10
+        </a>
+        <div class="text-xs text-slate-600">Kun 11 / 90</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 12 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-16"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>

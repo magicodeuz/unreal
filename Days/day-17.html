@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 17 — Door | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 3 · Interaction System</div>
+          <div class="font-semibold text-sm truncate">Kun 17 — Door</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~3.5–4.5 soat · chuqur dars</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun Door?</a>
+        <a href="#timeline-theory" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Timeline nazariyasi</a>
+        <a href="#pivot" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Pivot / menteşe</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">To‘liq sxema</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. BP_Door yaratish</a>
+        <a href="#mesh" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Mesh + Collision</a>
+        <a href="#bpi" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. BPI_Interact</a>
+        <a href="#vars" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Holat variable’lari</a>
+        <a href="#timeline" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Timeline sozlash</a>
+        <a href="#interact" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Interact mantiq</a>
+        <a href="#lerp" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. Lerp Rotator</a>
+        <a href="#text-can" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">8. Text + CanInteract</a>
+        <a href="#busy" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">9. Animatsiya paytida E</a>
+        <a href="#level" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">10. Levelga joylash</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">11. Test</a>
+        <a href="#troubleshooting" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">12. Troubleshooting</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
+        <a href="#bonus" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bonus</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#mistakes" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Ko‘p xatolar</a>
+        <a href="#timeline-deep" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Timeline detallar</a>
+        <a href="#rotation-math" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Rotatsiya</a>
+        <a href="#player-reminder" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Player eslatma</a>
+        <a href="#glossary" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Lug‘at</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+          Stage 3 · Kun 17 · Birinchi haqiqiy Interactable
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Door</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Trace + BPI endi <strong class="text-slate-200">gameplay</strong> beradi: E → eshik silliq ochiladi / yopiladi. Timeline, Lerp Rotator, holat matni.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">BP_Door</code> — Static Mesh + interaction collision</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> BPI_Interact to‘liq implement (Interact, Text, CanInteract)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Timeline 0.5 s: Yaw 0° ↔ 90° silliq</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">bIsOpen</code> / animatsiya bandligi</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> GetInteractionText: “Ochish” / “Yopish”</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Player kodiga <strong class="text-white">hech narsa qo‘shilmaydi</strong> — faqat Door</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Kalit / qulf (Day 33 Item), Audio asset (Print bilan belgilang), sliding door, double door. Bitta aylanuvchi panel yetarli.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun aynan Door?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Eshik — eng tushunarli interactable: ko‘rinadi, eshitiladi (keyin), map’ni bo‘ladi. Betray Builder’da xonalar, vent yo‘llari, meeting xonasi — hammasi eshik bilan bog‘liq.
+          </p>
+          <p>
+            Texnik jihatdan: <strong class="text-white">Timeline + Rotation</strong> keyin chest qopqog‘i, lever, hatch uchun ham ishlatiladi. Bir marta o‘rganasiz — qayta ishlatasiz.
+          </p>
+          <p class="text-slate-400">
+            Muhim dars: Player’da yangi Cast yozilmadi. BP_Door faqat BPI_Interact implement qildi — Kun 16 va’dasi ishladi.
+          </p>
+        </div>
+      </section>
+
+      <!-- TIMELINE THEORY -->
+      <section id="timeline-theory" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">⏱</span>
+          Timeline — nima va nima uchun?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>
+            <span class="ui-label">Timeline</span> — vaqt bo‘yicha float (yoki vector) qiymat chiqaradigan node. Length = 0.5 s bo‘lsa, Play bosilganda 0.5 soniya ichida track 0→1 (yoki sizning egri) yuradi.
+          </p>
+          <p>
+            Har <strong class="text-white">Update</strong> pinida joriy Alpha keladi → Lerp(ClosedRot, OpenRot, Alpha) → Set Actor Rotation. Natija: silliq ochilish.
+          </p>
+          <p>
+            <strong class="text-white">Nima uchun birdan Set Rotation emas?</strong> 0° dan 90° ga bir frame’da — “teleport”. O‘yinchi ko‘zi charchaydi, collision g‘alati. Timeline = vaqt.
+          </p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700 text-left text-slate-400">
+                  <th class="py-2 pr-3">Pin</th>
+                  <th class="py-2">Ma’no</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                <tr class="border-b border-slate-800"><td class="py-2 pr-3 font-mono text-xs text-cyan-300">Play</td><td class="py-2">0 dan Length gacha</td></tr>
+                <tr class="border-b border-slate-800"><td class="py-2 pr-3 font-mono text-xs text-cyan-300">Play from Start</td><td class="py-2">Qayta 0 dan</td></tr>
+                <tr class="border-b border-slate-800"><td class="py-2 pr-3 font-mono text-xs text-cyan-300">Reverse</td><td class="py-2">Orqaga (yopish)</td></tr>
+                <tr class="border-b border-slate-800"><td class="py-2 pr-3 font-mono text-xs text-cyan-300">Update</td><td class="py-2">Har frame track qiymati</td></tr>
+                <tr class="border-b border-slate-800"><td class="py-2 pr-3 font-mono text-xs text-cyan-300">Finished</td><td class="py-2">Animatsiya tugadi</td></tr>
+                <tr><td class="py-2 pr-3 font-mono text-xs text-cyan-300">New Track (Float)</td><td class="py-2">0→1 egri</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-slate-400">
+            Alternativ: Tick + FInterp To Rotation. Timeline ko‘pincha aniqroq “0.5 soniya ochil” uchun qulay.
+          </p>
+        </div>
+      </section>
+
+      <!-- PIVOT -->
+      <section id="pivot" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚓</span>
+          Pivot — eshik qayerdan aylanadi?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Actor Rotation o‘z <strong class="text-white">pivot / origin</strong> atrofida aylanadi. Agar mesh markazda bo‘lsa — eshik “o‘rtadan” ochiladi (g‘alati). Kerak: menteşe chetda.
+          </p>
+          <p><strong class="text-white">Yechimlar:</strong></p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Mesh’ni DCC da pivot’ni menteşega ko‘chirish (eng toza)</li>
+            <li>Scene component “Hinge” root — mesh offset child; rotation Hinge’da</li>
+            <li>Oddiy cube bilan: cube’ni root’dan siljitib, vizual menteşe root’da</li>
+          </ul>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Bugun:</strong> Engine default Cube yoki Door mesh. Agar markazdan aylansa — Static Mesh component’ni X yoki Y bo‘yicha siljiting (Relative Location), Root (DefaultSceneRoot) menteşe bo‘lib qolsin. Rotation Root yoki butun Actor’da.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          To‘liq sxema
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">Event Interact (BPI)
+  │
+  ├─ Branch (bIsAnimating?) → True: return
+  ├─ Branch (bIsOpen?)
+  │     False (yopiq → ochish):
+  │       Set bIsAnimating = true
+  │       Timeline Play (0→1)
+  │     True (ochiq → yopish):
+  │       Set bIsAnimating = true
+  │       Timeline Reverse (1→0)
+  │
+Timeline Update (Alpha 0..1)
+  │
+  ├─ Lerp (ClosedRotation, OpenRotation, Alpha)
+  └─ Set Actor Rotation (yoki Set Relative Rotation)
+
+Timeline Finished
+  │
+  ├─ Set bIsOpen = !bIsOpen   (yoki Play/Reverse ga qarab)
+  └─ Set bIsAnimating = false
+
+GetInteractionText:
+  Return bIsOpen ? "Eshikni yopish [E]" : "Eshikni ochish [E]"
+
+CanInteract:
+  Return !bIsAnimating   (anim paytida qayta bosish yo‘q)
+  // keyinroq: && !bIsLocked</pre>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Kun 15–16: Trace + E → Interact ishlaydi</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BPI_Interact asset barqaror</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Interaction papkasi bor</li>
+          </ul>
+          <p class="text-slate-500 mt-2">Player graph’iga bugun tegilmaydi (faqat Door yangi).</p>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BP_Door yaratish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">1.1</span>
+            <span class="text-sm font-medium text-white">Actor Blueprint</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p><span class="ui-label">Content/BetrayBuilder/Blueprints/Interaction/</span></p>
+            <p>Blueprint Class → Actor → <span class="ui-label font-mono">BP_Door</span></p>
+            <p>DefaultSceneRoot qolsin (menteşe uchun qulay).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="mesh" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Mesh va Collision</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–25 daqiqa</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.1</span>
+              <span class="text-sm font-medium text-white">Static Mesh</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Add Component → Static Mesh → masalan Engine Cube yoki Door mesh.</p>
+              <p>Scale: eshik proporsiyasi (masalan X 0.2, Y 1.2, Z 2.2) — ko‘z taxminan.</p>
+              <p><strong class="text-white">Offset:</strong> Relative Location Y (yoki X) = yarim kenglik — root menteşeda qolsin.</p>
+            </div>
+          </div>
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.2</span>
+              <span class="text-sm font-medium text-white">Collision — trace tegishi uchun</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Mesh Collision: Block Visibility (yoki Query + Physics).</p>
+              <p>Ixtiyoriy: Box Collision biroz kattaroq — “E zonasi” osonroq. Mesh o‘zi yetarli bo‘lsa Box shart emas.</p>
+              <p class="text-slate-400">Trace Visibility channel’da block qilmasa — E ishlamaydi (Kun 15).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="bpi" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BPI_Interact implement</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">3.1</span>
+            <span class="text-sm font-medium text-white">Class Settings</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Class Settings → Interfaces → Add → <span class="ui-label">BPI_Interact</span></p>
+            <p>Compile. Keyin Event Interact / funksiyalarni implement qilasiz.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="vars" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Holat variable’lari</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">4.1</span>
+            <span class="text-sm font-medium text-white">Ro‘yxat</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-slate-700 text-left text-slate-400">
+                    <th class="py-2 pr-3">Nom</th>
+                    <th class="py-2 pr-3">Tip</th>
+                    <th class="py-2">Default / izoh</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-300">
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">bIsOpen</td>
+                    <td class="py-2 pr-3">Bool</td>
+                    <td class="py-2 text-slate-500">false</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">bIsAnimating</td>
+                    <td class="py-2 pr-3">Bool</td>
+                    <td class="py-2 text-slate-500">false — anim paytida E blok</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">ClosedRotation</td>
+                    <td class="py-2 pr-3">Rotator</td>
+                    <td class="py-2 text-slate-500">0,0,0 (yoki BeginPlay Get)</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">OpenRotation</td>
+                    <td class="py-2 pr-3">Rotator</td>
+                    <td class="py-2 text-slate-500">0, 0, 90 (Yaw)</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">OpenAngle</td>
+                    <td class="py-2 pr-3">Float</td>
+                    <td class="py-2 text-slate-500">90 — Instance Editable</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-slate-400">BeginPlay: ClosedRotation = Get Actor Rotation; OpenRotation = Closed + (0,0,OpenAngle). Levelda eshik boshqa tomonga qarasa ham ishlaydi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="timeline" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Timeline sozlash</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–25 daqiqa</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">5.1</span>
+              <span class="text-sm font-medium text-white">Add Timeline</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>My Blueprint → Add → Timeline → nom: <span class="ui-label font-mono">TL_Door</span></p>
+              <p>Ochilganda: Length = <strong>0.5</strong> (soniya). Use Last Keyframe? default.</p>
+              <p>Track → Add Float Track → nom <span class="ui-label">Alpha</span>.</p>
+              <p>Ikki key: vaqt 0, qiymat 0; vaqt 0.5, qiymat 1. Egri: Linear yoki tashqi Ease.</p>
+              <p class="text-slate-400">AutoPlay = false. Replicated keyinroq.</p>
+            </div>
+          </div>
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">5.2</span>
+              <span class="text-sm font-medium text-white">Play vs Reverse</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Ochish: <span class="ui-label">Play</span> yoki Play from Start (Alpha 0→1).</p>
+              <p>Yopish: <span class="ui-label">Reverse</span> (1→0) — bitta Timeline yetarli.</p>
+              <p>Flip Flop o‘rniga bIsOpen bilan Play/Reverse tanlash aniqroq (animatsiya o‘rtasida holat chalkashmasin).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="interact" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Event Interact</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">6.1</span>
+            <span class="text-sm font-medium text-white">Zanjir</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">Event Interact
+  → Branch bIsAnimating → True: return
+  → Branch bIsOpen
+       False:
+         Set bIsAnimating true
+         TL_Door Play
+         (challenge) Print "Door opening..."
+       True:
+         Set bIsAnimating true
+         TL_Door Reverse
+         Print "Door closing..."</pre>
+            <p>Finished da bIsOpen ni yangilang va bIsAnimating = false.</p>
+            <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+              <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Finished mantiq:</strong> Play tugasa → bIsOpen = true. Reverse tugasa → bIsOpen = false. Yoki Timeline yo‘nalishini track qiling. Oddiy: Finished da <code class="text-xs">bIsOpen = !bIsOpen</code> — faqat to‘liq tugaganda chaqirilsa to‘g‘ri.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="lerp" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Update → Lerp Rotator → Set Rotation</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">7.1</span>
+            <span class="text-sm font-medium text-white">Node’lar</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>TL_Door <span class="ui-label">Update</span> → Alpha (float track).</p>
+            <p><span class="ui-label">Lerp (Rotator)</span>: A = ClosedRotation, B = OpenRotation, Alpha = track.</p>
+            <p><span class="ui-label">Set Actor Rotation</span> (yoki mesh Relative — agar faqat mesh aylansa).</p>
+            <p class="text-slate-400">RInterp To ham mumkin, lekin Timeline Alpha bilan Lerp — aniq 0.5 s.</p>
+            <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+              <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Yaw belgisi:</strong> +90 yoki −90 — eshik qaysi tomonga ochilishi. Levelda Instance Editable OpenAngle bilan sinang.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 8 -->
+      <section id="text-can" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">8</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">GetInteractionText va CanInteract</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">8.1</span>
+              <span class="text-sm font-medium text-white">Text</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">GetInteractionText
+  → Branch bIsOpen
+       True  → "Eshikni yopish [E]"
+       False → "Eshikni ochish [E]"
+  → Return</pre>
+              <p>Animatsiya paytida ham matn holatga qarab qolishi mumkin; yoki “…” qaytarish.</p>
+            </div>
+          </div>
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">8.2</span>
+              <span class="text-sm font-medium text-white">CanInteract</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Return <span class="ui-label">NOT bIsAnimating</span> (va keyinroq NOT bIsLocked).</p>
+              <p>Player allaqachon CanInteract Branch qiladi — anim paytida E jim.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 9 -->
+      <section id="busy" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">9</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Animatsiya paytida spam E</h2>
+            <p class="text-sm text-slate-500">Muhim polish</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            O‘yinchi animatsiya o‘rtasida 10 marta E bossа — Play/Reverse chalkashadi, eshik “titraydi”.
+          </p>
+          <p>
+            <strong class="text-white">bIsAnimating</strong> + CanInteract + Interact boshida Branch — uch qavat himoya.
+          </p>
+          <p class="text-slate-400">
+            Finished da flag o‘chadi. Timeline o‘rtasida to‘xtatib qayta yo‘naltirish (advanced) — bugun shart emas.
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 10 -->
+      <section id="level" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">10</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Levelga joylash</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">10.1</span>
+            <span class="text-sm font-medium text-white">MAP yoki PlayerTest</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>BP_Door’ni devor teshigiga qo‘ying. Menteşe tomoni to‘g‘ri qarasin.</p>
+            <p>Play: yaqinlashib qarang — debug chiziq yashil, E — ochilish.</p>
+            <p>Ikkinchi Door nusxasi — ochilish yo‘nalishi (OpenAngle −90) Instance Editable bilan.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 11 TEST -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">11</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test ssenariylari</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">E → silliq ochilish ~0.5 s</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Yana E → silliq yopilish</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Anim o‘rtasida E → rad etiladi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Menteşe chetda (markazdan aylanmaydi)</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Player’da yangi Cast yo‘q</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Ikkinchi eshik ham ishlaydi</span></label>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">12</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Troubleshooting</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-red-500/20 overflow-hidden">
+          <div class="bg-red-500/10 px-5 py-3 border-b border-red-500/20">
+            <span class="text-sm font-medium text-red-300">Muammo → yechim</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300">
+            <div>
+              <p class="font-medium text-white">E ishlamaydi (Print ham yo‘q)</p>
+              <p class="text-slate-400">Trace focus Door’mi? BPI implement? CanInteract true? Collision Visibility?</p>
+            </div>
+            <div>
+              <p class="font-medium text-white">Birdan sakrab ochiladi</p>
+              <p class="text-slate-400">Update’da Lerp ulanganmi? Timeline Length 0 emasmi? Finished’da faqat Set qilib yubormang.</p>
+            </div>
+            <div>
+              <p class="font-medium text-white">Noto‘g‘ri o‘q atrofida aylanadi</p>
+              <p class="text-slate-400">Yaw vs Pitch; OpenRotation qaysi o‘q; mesh orientation.</p>
+            </div>
+            <div>
+              <p class="font-medium text-white">Markazdan ochiladi</p>
+              <p class="text-slate-400">Pivot / mesh offset (yuqoridagi menteşe bo‘limi).</p>
+            </div>
+            <div>
+              <p class="font-medium text-white">Bir marta ochiladi, yopilmaydi</p>
+              <p class="text-slate-400">bIsOpen Finished’da yangilanmayapti; Reverse chaqirilmayapti; bIsAnimating true qolib ketgan.</p>
+            </div>
+            <div>
+              <p class="font-medium text-white">Collision ochilgach tiqilib qoladi</p>
+              <p class="text-slate-400">Mesh collision aylanganda player’ni itaradi — normal. Kerak bo‘lsa anim paytida collision sozlash (keyinroq).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — “Audio stub”</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-2">
+          <p>Ochish/yopish boshida Print: <code class="text-xs">"[SFX] Door open"</code> / <code class="text-xs">"[SFX] Door close"</code>.</p>
+          <p class="text-slate-500">Kun 71 Audio da shu Print o‘rniga Play Sound. Joyi tayyor bo‘lsin.</p>
+        </div>
+      </section>
+
+      <!-- BONUS -->
+      <section id="bonus" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">★</span>
+          Bonus
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B1</span>
+            <strong class="text-white ml-2">Ease curve</strong>
+            <p class="mt-1 text-slate-400">Timeline track’ni Ease In/Out qiling — mexanikroq his.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B2</span>
+            <strong class="text-white ml-2">Auto-close Timer</strong>
+            <p class="mt-1 text-slate-400">Ochilgach 3 s → avtomatik yopish (Finished + Set Timer).</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B3</span>
+            <strong class="text-white ml-2">Faqat mesh rotation</strong>
+            <p class="mt-1 text-slate-400">Root qimirlamasin; DoorMesh Relative Rotation Lerp — collision root’da qolishi mumkin.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B4</span>
+            <strong class="text-white ml-2">bStartsOpen</strong>
+            <p class="mt-1 text-slate-400">BeginPlay’da agar true — darhol OpenRotation va bIsOpen true.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">?</span>
+          FAQ
+        </h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Timeline vs Animation Blueprint?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Skeletal eshik / personaj — AnimBP. Oddiy Static Mesh panel — Timeline yetarli va engil.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Flip Flop ishlatsam bo‘ladimi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Ha, lekin anim o‘rtasida Flip Flop holati bIsOpen bilan mos kelmasligi mumkin. bIsOpen + Play/Reverse xavfsizroq.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Sliding door?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Xuddi shu Timeline, Lerp Location. Bugun rotation; keyin nusxa ko‘chirib Location qilasiz.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Nima uchun Player o‘zgarmadi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              BPI_Interact Message allaqachon Focus’dagi har qanday implement’ga ishlaydi. Door yangi implement — Player umumiy.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- MISTAKES -->
+      <section id="mistakes" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm">!</span>
+          Ko‘p uchraydigan xatolar
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">1. Timeline’ni Event Graph’da “Play” qilib, Update’ni ulamaslik</p>
+            <p class="text-slate-400 mt-1">Alpha ishlamaydi — eshik qimirlamaydi yoki Finished’da sakraydi.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">2. ClosedRotation’ni BeginPlay’da saqlamaslik</p>
+            <p class="text-slate-400 mt-1">Levelda aylantirilgan eshik noto‘g‘ri “0” ga qaytadi.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">3. bIsAnimating’ni Finished’da false qilmaslik</p>
+            <p class="text-slate-400 mt-1">Eshik abadiy “band”.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">4. Player’ga Cast To BP_Door qo‘shish</p>
+            <p class="text-slate-400 mt-1">Stage 3 maqsadini buzadi. Kerak emas.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- WORKED CHECKLIST -->
+      <section id="checklist" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">✓</span>
+          Yakuniy checklist
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BP_Door + mesh + pivot</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BPI_Interact implement</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">TL_Door 0.5 s, Alpha 0→1</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Update → Lerp → Set Rotation</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">bIsOpen / bIsAnimating</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Text ochish/yopish</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Play test muvaffaqiyatli</span></label>
+        </div>
+      </section>
+
+      <!-- DEEP TIMELINE -->
+      <section id="timeline-deep" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">⏱</span>
+          Timeline — qo‘shimcha detallar
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p><strong class="text-white">Length tanlash</strong></p>
+          <p class="text-slate-400">0.3 s — o‘yin / arcade. 0.5 s — muvozanat. 1.0 s — og‘ir eshik his. Betray Builder uchun 0.4–0.6 oralig‘i yaxshi.</p>
+          <p><strong class="text-white">Key interpolation</strong></p>
+          <p class="text-slate-400">Linear: doimiy tezlik. Auto/Cubic: boshida sekin, o‘rtada tez. Eshik uchun biroz Ease Out “yopilib qolish” hissini beradi.</p>
+          <p><strong class="text-white">Play from Start vs Play</strong></p>
+          <p class="text-slate-400">Play from Start har doim 0 dan. Agar animatsiya o‘rtasida to‘xtatib qayta ochish kerak bo‘lsa — murakkabroq. Oddiy toggle uchun: yopiqdan Play from Start, ochiqdan Reverse.</p>
+          <p><strong class="text-white">Finished ishonchliligi</strong></p>
+          <p class="text-slate-400">Timeline to‘liq tugaganda Finished chiqadi. Agar Stop chaqirsangiz — Finished kelmasligi mumkin; bIsAnimating ni Stop da ham tozalang.</p>
+        </div>
+      </section>
+
+      <!-- ROTATION MATH -->
+      <section id="rotation-math" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">📐</span>
+          Rotatsiya — qisqa matematika
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Unreal Rotator: Pitch (Y), Yaw (Z), Roll (X) — gradus.</p>
+          <p>Eshik odatda <strong class="text-white">Yaw</strong> (vertikal o‘q atrofida). Lerp Rotator ichida engine qisqa yo‘lni tanlashi mumkin; 0→90 xavfsiz. 0→270 o‘rniga −90 afzal.</p>
+          <p class="text-slate-400">BeginPlay da Closed = GetActorRotation(); Open = Closed + MakeRotator(0, 0, OpenAngle). Bu levelda eshik allaqachon 45° bo‘lsa ham “yopiq” holatni saqlaydi.</p>
+        </div>
+      </section>
+
+      <!-- PLAYER REMINDER -->
+      <section id="player-reminder" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">P</span>
+          Player tomoni — nima allaqachon bor?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Kun 16 oxirida Player’da taxminan:</p>
+          <pre class="flow text-cyan-300/90 bg-black/40 rounded-lg p-3 border border-slate-800">IA_Interact Started
+  → bHasFocus?
+  → Does Implement BPI_Interact?
+  → CanInteract Message?
+  → Interact Message (Instigator = Self)</pre>
+          <p class="text-slate-400">BP_Door shu zanjirga “tushadi”. Hech qanday yangi node Player’da shart emas. Agar E ishlamasa — 90% Door implement / collision / focus, 10% Player.</p>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center text-sm">Aa</span>
+          Lug‘at
+        </h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Timeline</td><td class="py-2.5 px-4 text-slate-400">Vaqt bo‘yicha qiymat track’i</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Lerp</td><td class="py-2.5 px-4 text-slate-400">A va B orasida Alpha bo‘yicha aralash</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Yaw</td><td class="py-2.5 px-4 text-slate-400">Gorizontal burilish (eshik menteşasi)</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Pivot</td><td class="py-2.5 px-4 text-slate-400">Aylanish markazi</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">bIsAnimating</td><td class="py-2.5 px-4 text-slate-400">Anim band — qayta E blok</td></tr>
+              <tr><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Reverse</td><td class="py-2.5 px-4 text-slate-400">Timeline’ni orqaga o‘ynatish</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ Birinchi haqiqiy interactable: <code class="text-xs text-cyan-300">BP_Door</code></li>
+            <li>✓ Timeline + Lerp Rotator silliq ochilish</li>
+            <li>✓ Holat, matn, anim bandligi</li>
+            <li>✓ Player o‘zgarmagan — Interface ishladi</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">Content/BetrayBuilder/Blueprints/Interaction/BP_Door</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4 space-y-2">
+            <p class="text-slate-400"><strong class="text-white">Keyingi:</strong> odatda Button, lever yoki boshqa usable — xuddi shu BPI, boshqa mantiq.</p>
+            <p class="text-slate-500">Trace (15) + Interface (16) + Door (17) = o‘ynaladigan interact prototipi.</p>
+          </div>
+          <div class="mt-4 rounded-lg border border-slate-700 bg-slate-950 p-4">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">O‘zingizga savol</p>
+            <p class="text-slate-400">Yangi BP_Button uchun Player’ga kod yozasizmi? Javob: yo‘q — faqat yangi BP + BPI implement.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="prep18" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">→</span>
+          Keyingi kunga
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-400 space-y-2">
+          <p>Door ishlayotgan backup (Duplicate BP_Door_Day17) foydali.</p>
+          <p>Timeline bilan ishlash endi “oddiy vosita” — chest, gate, hatch uchun tayyor.</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-16.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 16
+        </a>
+        <div class="text-xs text-slate-600">Kun 17 / 90 · Stage 3</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 18 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>

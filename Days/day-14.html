@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 14 — PLAYER TEST · Milestone 2 | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .prose h2 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.65;
+    }
+    input[type="checkbox"] {
+      accent-color: #22d3ee;
+    }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 2 · FINAL</div>
+          <div class="font-semibold text-sm truncate">Kun 14 — PLAYER TEST</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Milestone 2</span>
+        <a href="#playtest" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Playtest →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-60 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-1">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#integration" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Integration test nima?</a>
+        <a href="#hafta" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Hafta xotirasi</a>
+        <a href="#qoidalar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bugungi qoidalar</a>
+        <a href="#map" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. MAP_PlayerTest</a>
+        <a href="#preflight" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Pre-flight checklist</a>
+        <a href="#playtest" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Playtest ssenariylar</a>
+        <a href="#combo" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Kombinatsiyalar</a>
+        <a href="#bugs" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Tipik buglar</a>
+        <a href="#milestone" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Milestone 2 checklist</a>
+        <a href="#backup" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Backup</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
+        <a href="#stage3" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Stage 3 preview</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Yakun</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <!-- HERO -->
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          Stage 2 · Kun 14 / 14 · MILESTONE 2
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">PLAYER TEST</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Yangi feature yo‘q. Butun Stage 2 — Walk, Run, Jump, Crouch, Camera, Stamina — <strong class="text-slate-200">birga</strong> ishlashini tekshirasiz. Bu loyihaning ikkinchi katta milestone’i: <em>Playable Player</em>.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3">
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Maxsus test level: <code class="text-xs text-cyan-300">MAP_PlayerTest</code></li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Har bir harakat alohida + kombinatsiyada sinash</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Topilgan xatolarni <strong class="text-white">shu kun ichida</strong> tuzatish</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Milestone 2 checklist’ni to‘ldirish</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> BP_Player backup nusxasi</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3 mt-2">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Qat’iy qoida:</strong> Yangi mexanika qo‘shmang (dash, slide, wall-run…). Faqat mavjud tizimni barqaror qiling. “Yana bitta feature” — Milestone’ni buzadi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTEGRATION -->
+      <section id="integration" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">🔗</span>
+          Integration test nima?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Kun 9–13 da har bir qism <em>alohida</em> ishlagan: sprint ishlaydi, crouch ishlaydi, stamina ishlaydi.
+            Real o‘yinda ular <strong class="text-white">bir vaqtda</strong> ishlaydi: egilib yurganda Shift, sakrab tushganda kamera, stamina 0 da Shift hali bosiliq…
+          </p>
+          <p>
+            Integration test shu “birga” holatni qidiradi. Studio’larda bu bosqich ko‘pincha “does it feel like a game yet?” savoliga javob beradi.
+          </p>
+          <p class="text-slate-400">
+            Sizning mezoningiz: 10–15 daqiqa uzluksiz yurib, hech qanday “buzilish” (tezlik qolib ketishi, kamera devorda qotishi, crouch’dan chiqolmaslik) sezilmasin.
+          </p>
+        </div>
+      </section>
+
+      <!-- HAFTA -->
+      <section id="hafta" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📚</span>
+          Stage 2 — nima yig‘ildi?
+        </h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-slate-700 text-left text-slate-400 bg-slate-900">
+                <th class="py-2.5 px-4">Kun</th>
+                <th class="py-2.5 px-4">Mavzu</th>
+                <th class="py-2.5 px-4">Bugun tekshiriladi</th>
+              </tr>
+            </thead>
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-4 text-violet-400 font-medium">8</td>
+                <td class="py-2 px-4">BP_Player, Capsule, Mesh, GameMode</td>
+                <td class="py-2 px-4 text-slate-500">Spawn, gravitatsiya</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-4 text-violet-400 font-medium">9</td>
+                <td class="py-2 px-4">WASD + Jump</td>
+                <td class="py-2 px-4 text-slate-500">Yurish, sakrash</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-4 text-violet-400 font-medium">10</td>
+                <td class="py-2 px-4">Sprint</td>
+                <td class="py-2 px-4 text-slate-500">Shift hold tezlik</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-4 text-violet-400 font-medium">11</td>
+                <td class="py-2 px-4">Crouch + kamera Z</td>
+                <td class="py-2 px-4 text-slate-500">Egilish, past joy</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2 px-4 text-violet-400 font-medium">12</td>
+                <td class="py-2 px-4">IA_Look, SpringArm</td>
+                <td class="py-2 px-4 text-slate-500">Sichqoncha, collision</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-4 text-violet-400 font-medium">13</td>
+                <td class="py-2 px-4">Stamina / Health state</td>
+                <td class="py-2 px-4 text-slate-500">Tugash, regen, force stop</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- QOIDALAR -->
+      <section id="qoidalar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm">⛔</span>
+          Bugungi ish qoidalari
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm space-y-2 text-slate-300">
+          <p class="flex gap-2"><span class="text-red-400">✗</span> Yangi Input Action / yangi ability</p>
+          <p class="flex gap-2"><span class="text-red-400">✗</span> UI widget (stamina bar) — keyinroq</p>
+          <p class="flex gap-2"><span class="text-red-400">✗</span> Multiplayer / replication</p>
+          <p class="flex gap-2"><span class="text-emerald-400">✓</span> Bug topish va tuzatish</p>
+          <p class="flex gap-2"><span class="text-emerald-400">✓</span> Rate / sensitivity / arm length kabi <em>tuning</em></p>
+          <p class="flex gap-2"><span class="text-emerald-400">✓</span> Test map va backup</p>
+        </div>
+      </section>
+
+      <!-- MAP -->
+      <section id="map" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">MAP_PlayerTest yaratish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 30–45 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.1</span>
+              <span class="text-sm font-medium text-white">Level</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>File → New Level → Empty yoki Basic (yoki mavjud ochiq level’ni Save As).</p>
+              <p>Saqlash: <span class="ui-label">Content/BetrayBuilder/Maps/MAP_PlayerTest</span></p>
+              <p>World Settings → GameMode Override = <span class="ui-label">BP_GameMode</span> (Default Pawn = BP_Player).</p>
+              <p>Player Start qo‘ying (yoki mavjudini joylashtiring).</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.2</span>
+              <span class="text-sm font-medium text-white">Blockout — nima bo‘lishi kerak?</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Chiroyli level emas — <strong class="text-white">sinov poligoni</strong>. Geometry (Box/Cube) yoki BSP bilan:</p>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="border-b border-slate-700 text-left text-slate-400">
+                      <th class="py-2 pr-3">Zona</th>
+                      <th class="py-2 pr-3">Nima uchun</th>
+                      <th class="py-2">Taxminiy o‘lcham</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-slate-300">
+                    <tr class="border-b border-slate-800">
+                      <td class="py-2 pr-3 font-medium text-white">Keng maydon</td>
+                      <td class="py-2 pr-3 text-slate-500">Walk / Sprint / kamera</td>
+                      <td class="py-2 text-slate-500">20×20 m+</td>
+                    </tr>
+                    <tr class="border-b border-slate-800">
+                      <td class="py-2 pr-3 font-medium text-white">Platformalar</td>
+                      <td class="py-2 pr-3 text-slate-500">Jump balandligi</td>
+                      <td class="py-2 text-slate-500">Z +50, +100, +150</td>
+                    </tr>
+                    <tr class="border-b border-slate-800">
+                      <td class="py-2 pr-3 font-medium text-white">Tor koridor</td>
+                      <td class="py-2 pr-3 text-slate-500">Capsule kengligi</td>
+                      <td class="py-2 text-slate-500">Eni ~100–120</td>
+                    </tr>
+                    <tr class="border-b border-slate-800">
+                      <td class="py-2 pr-3 font-medium text-white">Past tunnel / “vent”</td>
+                      <td class="py-2 pr-3 text-slate-500">Crouch majburiy</td>
+                      <td class="py-2 text-slate-500">Balandlik ~120–140</td>
+                    </tr>
+                    <tr>
+                      <td class="py-2 pr-3 font-medium text-white">Devor burchaklari</td>
+                      <td class="py-2 pr-3 text-slate-500">SpringArm collision</td>
+                      <td class="py-2 text-slate-500">Tor burchak, L-shakl</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3 mt-2">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Capsule eslatma:</strong> Radius 42 → diametr ~84. Tor koridor 90 dan kichik bo‘lsa tiqilib qolishi mumkin. Past tunnel: crouch half-height 60 → to‘liq balandlik ~120 — tunnel shundan biroz balandroq bo‘lsin.</p>
+              </div>
+              <p>Yorug‘lik: Directional Light + Sky Atmosphere yoki oddiy Point Light — ko‘rinish yetarli bo‘lsin.</p>
+              <p>Level saqlang. Play dan oldin Build (agar lighting kerak) — mobil test uchun unbuilt ham ishlashi mumkin.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PREFLIGHT -->
+      <section id="preflight" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Pre-flight — Play dan oldin</h2>
+            <p class="text-sm text-slate-500">5 daqiqa · qog‘ozdagi checklist</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm">
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">World Settings → BP_GameMode</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Player Start levelda</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">BP_Player compile xatosiz (yashil)</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">IMC_BetrayBuilder BeginPlay’da Add qilinadi</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Debug Print’lar o‘chirilgan (yoki faqat keraklisi)</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Stamina default 100 (BeginPlay)</span></label>
+        </div>
+      </section>
+
+      <!-- PLAYTEST -->
+      <section id="playtest" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Playtest ssenariylari</h2>
+            <p class="text-sm text-slate-500">Har birini ketma-ket bajaring · belgilang</p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-xs font-mono text-cyan-400">A</span>
+              <span class="font-semibold text-white">Asosiy harakat</span>
+            </div>
+            <div class="space-y-2 text-sm">
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">WASD — 4 yo‘nalish, diagonal silliq</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Sichqoncha — atrofga qarash, pitch chegara</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Yurish kamera qarab turgan tomonga</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Space — sakrash, yerga tushish, platformaga chiqish</span></label>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-xs font-mono text-cyan-400">B</span>
+              <span class="font-semibold text-white">Sprint + Stamina</span>
+            </div>
+            <div class="space-y-2 text-sm">
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Shift hold — sezilarli tezroq</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Uzoq sprint — stamina tugaydi, tezlik 300 ga tushadi</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Shift hali bosiliq — ghost sprint yo‘q</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Kutish — stamina tiklanadi; qayta Shift ishlaydi</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Stamina pastida yangi sprint MinStamina eshigiga rioya qiladi</span></label>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-xs font-mono text-cyan-400">C</span>
+              <span class="font-semibold text-white">Crouch</span>
+            </div>
+            <div class="space-y-2 text-sm">
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Ctrl — egilish, capsule past (Show Collision)</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Kamera silliq pastga / yuqoriga</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Past tunnel’dan faqat crouch bilan o‘tish</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">UnCrouch to‘siq ostida — xavfsiz xatti-harakat (qolib ketmaslik)</span></label>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-xs font-mono text-cyan-400">D</span>
+              <span class="font-semibold text-white">Kamera / muhit</span>
+            </div>
+            <div class="space-y-2 text-sm">
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Devorga orqa bilan — kamera yaqinlashadi, mesh ichiga kirib ketmaydi</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Tor burchakda aylanish — qabul qilinadigan</span></label>
+              <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Sensitivity o‘yin uchun qulay (sozlang)</span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMBO -->
+      <section id="combo" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Kombinatsiya testlari (muhim)</h2>
+            <p class="text-sm text-slate-500">Aynan shu yerda integration bug chiqadi</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300">
+          <div class="space-y-2">
+            <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span><strong class="text-white">Crouch + Sprint:</strong> bir vaqtda sprint yoqilmasin</span></label>
+            <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span><strong class="text-white">Sprint + Jump:</strong> havoda sprint flag / speed mantiqiy (yoki air control default)</span></label>
+            <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span><strong class="text-white">Sprint → stamina 0 → darhol crouch:</strong> egilish ishlaydi</span></label>
+            <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span><strong class="text-white">Look + sprint + diagonal:</strong> yo‘nalish chalkashmaydi</span></label>
+            <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span><strong class="text-white">Crouch kamerasi + look:</strong> pitch/yaw egilgan holda ham ishlaydi</span></label>
+          </div>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90">Har bir “yo‘q” uchun qisqa yozib qo‘ying: nima bo‘ldi, qachon. Tuzatishdan keyin qayta shu qatorni belgilang.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- BUGS -->
+      <section id="bugs" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Tipik Stage 2 buglar va yo‘nalish</h2>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-red-500/20 overflow-hidden">
+          <div class="bg-red-500/10 px-5 py-3 border-b border-red-500/20">
+            <span class="text-sm font-medium text-red-300">Alomat → qayerga qarang</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300">
+            <div>
+              <p class="font-medium text-white">Tezlik 600 da qolib ketadi</p>
+              <p class="text-slate-400">ForceStopSprint chaqirilmayapti; Completed ishlamayapti; boshqa joy Speed qayta yozadi.</p>
+            </div>
+            <div>
+              <p class="font-medium text-white">Crouch’dan chiqolmayman</p>
+              <p class="text-slate-400">Ceiling collision; UnCrouch Completed ulanmagan; IsCrouching true qolib ketgan.</p>
+            </div>
+            <div>
+              <p class="font-medium text-white">Kamera mesh ichida</p>
+              <p class="text-slate-400">Do Collision Test; Probe Size; Arm Length; Socket Offset.</p>
+            </div>
+            <div>
+              <p class="font-medium text-white">Yurish “oldinga” emas, dunyo o‘qiga</p>
+              <p class="text-slate-400">Add Movement Input da Control Rotation Forward/Right; IA_Look Control Rotation yangilayaptimi?</p>
+            </div>
+            <div>
+              <p class="font-medium text-white">Stamina FPS ga bog‘liq</p>
+              <p class="text-slate-400">DeltaTime ishlatilmagan — faqat fixed −1.</p>
+            </div>
+            <div>
+              <p class="font-medium text-white">Input umuman yo‘q</p>
+              <p class="text-slate-400">Mapping Context; GameMode Pawn; PIE focus.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MILESTONE CHECKLIST -->
+      <section id="milestone" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Milestone 2 — Playable Player
+        </h2>
+        <p class="text-sm text-slate-400 mb-4">Hammasiga belgi qo‘ya olsangiz — Stage 2 yopildi.</p>
+        <div class="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-5 space-y-3 text-sm">
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">BP_Player spawn bo‘ladi, Mesh ko‘rinadi</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Walk + Look + Jump ishonchli</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Sprint hold + stamina limit + force stop</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Crouch + silliq kamera + past joydan o‘tish</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">Crouch va Sprint birga “buzilmaydi”</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">SpringArm collision qabul qilinadigan</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">MAP_PlayerTest saqlangan</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1"><span class="text-slate-300">10 daqiqa uzluksiz play — kritik crash/softlock yo‘q</span></label>
+        </div>
+      </section>
+
+      <!-- BACKUP -->
+      <section id="backup" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">💾</span>
+          Backup (majburiy odat)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p><strong class="text-white">Variant A — Asset nusxa</strong></p>
+          <p>Content Browser: <span class="ui-label">BP_Player</span> → Duplicate → <span class="ui-label font-mono">BP_Player_Day14_Backup</span></p>
+          <p class="text-slate-500">GameMode hali asosiy BP_Player’ga qarasin. Backup faqat “muzlatilgan” nusxa.</p>
+          <p class="mt-3"><strong class="text-white">Variant B — Project / zip</strong></p>
+          <p>Butun project papkasini zip yoki Git commit: <code class="text-xs text-cyan-300">milestone-2-playable-player</code></p>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-blue-200/90">Stage 3 da Interaction yozganda Character buzilsa — Day14 backup’ga qaytish bir soatni tejaydi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge</h2>
+            <p class="text-sm text-slate-500">Backup + qisqa jurnal</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-2">
+          <p>1) <code class="text-xs text-cyan-300">BP_Player_Day14_Backup</code> yarating.</p>
+          <p>2) 5–10 qatorlik matn (notepad yoki project ichida README): bugungi playtestda nima yaxshi, nima hali “g‘alati” (sensitivity, stamina rate…). Stage 3 ga o‘tishdan oldin o‘zingizga eslatma.</p>
+        </div>
+      </section>
+
+      <!-- STAGE 3 -->
+      <section id="stage3" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm">→</span>
+          Keyingi: Stage 3 — Interaction
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Endi sizda <strong class="text-white">yuradigan, ko‘radigan, charchaydigan</strong> o‘yinchi bor. Keyingi bosqich:</p>
+          <ul class="list-disc list-inside space-y-1 text-slate-400">
+            <li>Line Trace / “nima qarshida?”</li>
+            <li>BPI_Interact — eshik, tugma, item</li>
+            <li>E (IA_Interact) endi haqiqiy interact</li>
+            <li>Prompt UI keyinroq</li>
+          </ul>
+          <p class="text-slate-500">Dam oling. Milestone 2 — haqiqiy o‘yin hisining boshi.</p>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <div class="rounded-xl border border-emerald-500/40 bg-gradient-to-br from-emerald-500/10 to-transparent p-6 space-y-4">
+          <p class="text-2xl font-bold text-white">MILESTONE 2 — Playable Player ✓</p>
+          <p class="text-slate-300 leading-relaxed">
+            Stage 1 da Blueprint asoslari. Stage 2 da — boshqariladigan Character: yurish, yugurish, sakrash, egilish, qarash, stamina.
+            Bu Betray Builder’ning birinchi “o‘ynab ko‘rish mumkin” holati.
+          </p>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="px-2 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Walk</span>
+            <span class="px-2 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Sprint</span>
+            <span class="px-2 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Jump</span>
+            <span class="px-2 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Crouch</span>
+            <span class="px-2 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Look</span>
+            <span class="px-2 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Stamina</span>
+          </div>
+          <p class="text-slate-500 text-sm pt-2">Tabriklaymiz. Backup oling, keyin Stage 3.</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-13.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 13
+        </a>
+        <div class="text-xs text-slate-600">Kun 14 / 90 · Stage 2 ✓</div>
+        <span class="text-sm text-emerald-500/80 font-medium">Milestone 2</span>
+      </div>
+
+      <div class="h-16"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>

@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 3 — Blueprint asoslari | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .prose h2 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .tree, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.65;
+    }
+    .pin-exec { color: #e0e0e0; }
+    .pin-bool { color: #ef5350; }
+    .pin-int { color: #66bb6a; }
+    .pin-float { color: #66bb6a; }
+    .pin-string { color: #ab47bc; }
+    .pin-white { color: #f5f5f5; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 1 · Fundamentals</div>
+          <div class="font-semibold text-sm truncate">Kun 3 — Blueprint asoslari</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">Taxminiy vaqt: 1.5–2 soat</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-56 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#tushunchalar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Asosiy tushunchalar</a>
+        <a href="#pinlar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Pin turlari</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bugungi mantiq</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. Event Graph ochish</a>
+        <a href="#beginplay" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. BeginPlay + Print</a>
+        <a href="#variable" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Boolean variable</a>
+        <a href="#input" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Input + Branch</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Test qilish</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <!-- HERO -->
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+          Stage 1 · Kun 3 / 7
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Blueprint asoslari</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Event Graph, node, pin, execution flow va o‘zgaruvchilar — birinchi marta qo‘lda ishlaydigan mantiq yozasiz.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3">
+          <p class="text-slate-300 leading-relaxed">Bugun siz:</p>
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <strong class="text-white">Event Graph</strong> ni ochib, unda ishlashni o‘rganasiz</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <strong class="text-white">BeginPlay</strong> → <strong class="text-white">Print String</strong> zanjirini ulang</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <strong class="text-white">Boolean variable</strong> yaratasiz</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Sichqoncha bosilganda <strong class="text-white">Branch</strong> orqali turli xabar chiqarasiz</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Node, execution pin va data pin farqini amalda ko‘rasiz</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3 mt-4">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Custom Event, Function yaratish, Cast — bular keyingi kunlar. Faqat asosiy node’lar bilan ishlang.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TUSHUNCHALAR -->
+      <section id="tushunchalar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📖</span>
+          Asosiy tushunchalar
+        </h2>
+        <div class="space-y-3">
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Event Graph</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Blueprint’ning vizual dasturlash maydoni. Bu yerda node’larni joylashtirib, ularni simlar bilan bog‘laysiz. “Kod” o‘rniga grafik.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Node</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Bitta amal yoki funksiya. Masalan: <em>Print String</em> (ekranga matn chiqaradi), <em>Branch</em> (shart tekshiradi), <em>Set</em> (variable’ga qiymat yozadi). Har node’ning kirish/chiqish pin’lari bor.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Execution pin (oq / oq strelka)</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Qaysi node <strong>keyin</strong> ishga tushishini bildiradi. Chapdagi oq uchburchak — “menga kel”, o‘ngdagi — “keyingisiga o‘t”. Execution oqimi chapdan o‘ngga ketadi.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Data pin (rangli)</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Qiymatlarni bir node’dan ikkinchisiga uzatadi. Rang tipga bog‘liq: Boolean qizil, Integer/Float yashil, String binafsha, Object ko‘k va h.k. Faqat bir xil tipdagi pin’lar ulanadi.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Variable</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Qiymat saqlaydigan nomli konteyner. Asosiy turlar:
+            </p>
+            <ul class="mt-2 space-y-1 text-sm text-slate-400">
+              <li><span class="text-red-400 font-mono text-xs">Boolean</span> — true / false</li>
+              <li><span class="text-green-400 font-mono text-xs">Integer</span> — butun son (0, 1, −5, 100)</li>
+              <li><span class="text-green-400 font-mono text-xs">Float</span> — kasr son (0.5, 3.14)</li>
+              <li><span class="text-purple-400 font-mono text-xs">String</span> — matn (“Salom”)</li>
+            </ul>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">BeginPlay</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Actor dunyoga (Level’ga) kirganda <strong>bir marta</strong> ishga tushadigan event. “O‘yin boshlandi, men paydo bo‘ldim” signali.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Branch</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Shartli ajratish. Condition (Boolean) true bo‘lsa — True chiqishidan, false bo‘lsa — False chiqishidan davom etadi. Dasturlashdagi <code class="text-xs text-slate-400">if / else</code> ga o‘xshaydi.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PINLAR -->
+      <section id="pinlar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">🔌</span>
+          Pin ranglari (eslab qoling)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 overflow-hidden">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-slate-700 text-left text-slate-400 bg-slate-900">
+                <th class="py-2.5 px-4 font-medium">Rang</th>
+                <th class="py-2.5 px-4 font-medium">Tip</th>
+                <th class="py-2.5 px-4 font-medium">Misol</th>
+              </tr>
+            </thead>
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800">
+                <td class="py-2.5 px-4"><span class="inline-block w-3 h-3 rounded-full bg-white mr-2"></span> Oq</td>
+                <td class="py-2.5 px-4">Execution</td>
+                <td class="py-2.5 px-4 text-slate-500">Oqim yo‘nalishi</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2.5 px-4"><span class="inline-block w-3 h-3 rounded-full bg-red-500 mr-2"></span> Qizil</td>
+                <td class="py-2.5 px-4">Boolean</td>
+                <td class="py-2.5 px-4 text-slate-500">true / false</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2.5 px-4"><span class="inline-block w-3 h-3 rounded-full bg-green-500 mr-2"></span> Yashil</td>
+                <td class="py-2.5 px-4">Integer / Float</td>
+                <td class="py-2.5 px-4 text-slate-500">42, 3.14</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2.5 px-4"><span class="inline-block w-3 h-3 rounded-full bg-purple-500 mr-2"></span> Binafsha</td>
+                <td class="py-2.5 px-4">String</td>
+                <td class="py-2.5 px-4 text-slate-500">"Salom"</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4"><span class="inline-block w-3 h-3 rounded-full bg-blue-500 mr-2"></span> Ko‘k</td>
+                <td class="py-2.5 px-4">Object / Actor</td>
+                <td class="py-2.5 px-4 text-slate-500">Reference</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          Bugungi mantiq sxemasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5 space-y-4">
+          <div>
+            <p class="text-xs text-slate-500 mb-2">1-qism — Level ochilganda</p>
+            <pre class="flow text-cyan-300/90">BeginPlay
+    │  (execution)
+    ▼
+Print String ("Salom, BetrayBuilder!")</pre>
+          </div>
+          <div class="border-t border-slate-800 pt-4">
+            <p class="text-xs text-slate-500 mb-2">2-qism — Sichqoncha bosilganda</p>
+            <pre class="flow text-cyan-300/90">Left Mouse Button (Pressed)
+    │
+    ▼
+Set IsPressed = true
+    │
+    ▼
+Branch (IsPressed?)
+    ├─ True  → Print String ("Bosildi")
+    └─ False → Print String ("Bosilmadi")</pre>
+          </div>
+          <p class="text-sm text-slate-500">Aslida Pressed’da odatda true, Released’da false qo‘yamiz — lekin bugun asosiy g‘oyani tushunish uchun soddalashtiramiz.</p>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+          <ul class="space-y-2 text-sm text-slate-300">
+            <li class="flex gap-3">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span>Kun 2 bajarilgan: <code class="text-cyan-300 text-xs">BP_TestObject</code> mavjud (Mesh + Collision)</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span>Level’da kamida bitta <code class="text-cyan-300 text-xs">BP_TestObject</code> instance joylashtirilgan</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== STEP 1 ===================== -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Event Graph’ni ochish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 3–5 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.1</span>
+              <span class="text-sm font-medium text-white">BP_TestObject’ni oching</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Content Browser’da <span class="ui-label">Content/BetrayBuilder/Blueprints/BP_TestObject</span> ni toping.</p>
+              <p><strong class="text-white">Ikki marta bosing</strong> — Blueprint Editor ochiladi.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.2</span>
+              <span class="text-sm font-medium text-white">Event Graph tab’iga o‘ting</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Blueprint Editor yuqorisida (yoki o‘rtada) tab’lar bor:</p>
+              <ul class="space-y-1.5 pl-1">
+                <li><span class="ui-label">Viewport</span> — 3D ko‘rinish (Kun 2 da ishlatgan edik)</li>
+                <li><span class="ui-label">Event Graph</span> ← <strong class="text-white">mana shuni bosing</strong></li>
+                <li>Construction Script, va boshqalar</li>
+              </ul>
+              <p>Event Graph ochilganda katta to‘r (grid) maydoni chiqadi. Ba’zan allaqachon <span class="ui-label">Event BeginPlay</span> va <span class="ui-label">Event Tick</span> node’lari turgan bo‘ladi (template yoki default).</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Navigatsiya:</strong> O‘ng sichqoncha + sudrash — maydonni siljitish. Scroll — zoom. Bo‘sh joyda o‘ng sichqoncha — node qidiruv menyusi.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== STEP 2 ===================== -->
+      <section id="beginplay" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BeginPlay → Print String</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10–15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.1</span>
+              <span class="text-sm font-medium text-white">BeginPlay node’ini topish yoki yaratish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Agar Event Graph’da allaqachon <span class="ui-label">Event BeginPlay</span> bo‘lsa — undan foydalaning.</p>
+              <p>Yo‘q bo‘lsa:</p>
+              <ol class="list-decimal list-inside space-y-2">
+                <li>Bo‘sh joyda <strong class="text-white">o‘ng sichqoncha</strong> bosing.</li>
+                <li>Qidiruvga yozing: <span class="ui-label">BeginPlay</span></li>
+                <li><span class="ui-label">Event BeginPlay</span> ni tanlang.</li>
+              </ol>
+              <p>Qizil/to‘q sariq rangli event node paydo bo‘ladi. O‘ng tomonida bitta oq execution pin (chiqish) bor.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.2</span>
+              <span class="text-sm font-medium text-white">Print String node qo‘shish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><strong>Usul A (tavsiya):</strong> BeginPlay’ning o‘ngdagi <strong class="text-white">oq execution pin</strong>idan simni torting (chap sichqoncha bosib sudring) va bo‘sh joyga tashlang. Avtomatik qidiruv ochiladi.</p>
+              <p>Yozing: <span class="ui-label">Print String</span> → tanlang.</p>
+              <p><strong>Usul B:</strong> Bo‘sh joyda o‘ng sichqoncha → <span class="ui-label">Print String</span> qidirib qo‘shing, keyin BeginPlay execution’ini Print String’ning chapdagi execution pin’iga ulang.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Ulanish:</strong> Oq pin → oq pin. Agar sim qizil bo‘lib qolsa yoki ulanmasa — tip mos kelmayapti demak (execution’ni data pin’ga ulashga urinmang).</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.3</span>
+              <span class="text-sm font-medium text-white">Matnni o‘zgartirish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Print String node’ida <span class="ui-label">In String</span> maydoni bor (binafsha pin yoki to‘g‘ridan-to‘g‘ri matn qutisi).</p>
+              <p>Default odatda “Hello” yoki bo‘sh. Uni o‘chirib yozing:</p>
+              <p><span class="ui-label font-mono">Salom, BetrayBuilder!</span></p>
+              <p>Boshqa sozlamalar (Print to Screen, Text Color, Duration) hozircha default qolsin — ekranda ko‘rinishi uchun <span class="ui-label">Print to Screen</span> yoqilgan bo‘lishi kerak (odatda default yoqilgan).</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.4</span>
+              <span class="text-sm font-medium text-white">Compile + Save</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><span class="ui-label">Compile</span> bosing. Xato bo‘lmasa yashil belgi chiqadi.</p>
+              <p><span class="ui-label">Save</span> (Ctrl+S).</p>
+              <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Hozircha tekshirish:</strong> Keyinroq Play qilganda Level ochilishi bilan yuqori chapda (yoki ekranda) “Salom, BetrayBuilder!” chiqishi kerak. Hozir input qismini ham yozib, keyin birga test qilamiz.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== STEP 3 ===================== -->
+      <section id="variable" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Boolean variable yaratish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 5–10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.1</span>
+              <span class="text-sm font-medium text-white">My Blueprint panelidan variable qo‘shish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Blueprint Editor’ning <strong class="text-white">chap pastki</strong> qismida <span class="ui-label">My Blueprint</span> paneli bor.</p>
+              <p>Ichida <span class="ui-label">Variables</span> bo‘limini toping.</p>
+              <p>Yonidagi <span class="ui-label">+</span> tugmasini bosing (yoki Variables ustida o‘ng sichqoncha → Add Variable).</p>
+              <p>Yangi variable paydo bo‘ladi. Nomini o‘zgartiring: <span class="ui-label font-mono">IsPressed</span></p>
+              <p><span class="ui-label">Enter</span> bosing.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.2</span>
+              <span class="text-sm font-medium text-white">Tipni Boolean qilish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><span class="ui-label">IsPressed</span> tanlangan holatda o‘ngdagi <strong class="text-white">Details</strong> paneliga qarang.</p>
+              <p><span class="ui-label">Variable Type</span> — default odatda Boolean bo‘ladi. Agar boshqacha bo‘lsa:</p>
+              <p>Dropdown’ni oching → <span class="ui-label">Boolean</span> ni tanlang.</p>
+              <p>Default Value: <span class="ui-label">false</span> (bo‘sh / unchecked) qoldiring.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Compile eslatmasi:</strong> Variable qo‘shgach yoki tipini o‘zgartirgach <span class="ui-label">Compile</span> qiling — aks holda Event Graph’da Get/Set to‘g‘ri ishlamasligi mumkin.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== STEP 4 ===================== -->
+      <section id="input" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Input event + Branch</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–25 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.1</span>
+              <span class="text-sm font-medium text-white">Left Mouse Button event</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Event Graph’da bo‘sh joyda o‘ng sichqoncha → qidiruv:</p>
+              <p><span class="ui-label">Left Mouse Button</span></p>
+              <p>Yoki: <span class="ui-label">Mouse</span> → ro‘yxatdan <strong class="text-white">Left Mouse Button</strong> event’ini tanlang.</p>
+              <p>Node’da odatda ikkita execution chiqishi bo‘ladi:</p>
+              <ul class="space-y-1 pl-1">
+                <li><span class="ui-label">Pressed</span> — tugma bosilganda</li>
+                <li><span class="ui-label">Released</span> — qo‘yib yuborilganda</span></li>
+              </ul>
+              <p>Biz <strong class="text-white">Pressed</strong> dan foydalanamiz.</p>
+              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Eslatma:</strong> Bu input Actor’ga “Enable Input” va Player Controller bog‘langan bo‘lishi kerak. Test paytida ba’zan ishlamasligi mumkin — pastda yechim beriladi. Hozircha graph’ni to‘liq yozib chiqing.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.2</span>
+              <span class="text-sm font-medium text-white">Set IsPressed = true</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>My Blueprint → Variables → <span class="ui-label">IsPressed</span> ni Event Graph’ga <strong class="text-white">sudrab tashlang</strong>.</p>
+              <p>Menyu chiqadi: <span class="ui-label">Get</span> yoki <span class="ui-label">Set</span>.</p>
+              <p><strong class="text-white">Set</strong> ni tanlang.</p>
+              <p>Left Mouse Button → <span class="ui-label">Pressed</span> execution pin’ini Set IsPressed’ning chapdagi execution pin’iga ulang.</p>
+              <p>Set node’ida Boolean qiymat maydoni bor — <strong class="text-white">belgini qo‘ying</strong> (true).</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.3</span>
+              <span class="text-sm font-medium text-white">Branch qo‘shish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Set IsPressed’ning o‘ng execution pin’idan sim torting → bo‘sh joyga tashlang → yozing: <span class="ui-label">Branch</span></p>
+              <p>Yoki o‘ng sichqoncha → Branch.</p>
+              <p>Branch’da:</p>
+              <ul class="space-y-1.5 pl-1">
+                <li>Chapda: execution kirish + <span class="ui-label">Condition</span> (qizil Boolean pin)</li>
+                <li>O‘ngda: <span class="ui-label">True</span> va <span class="ui-label">False</span> execution chiqishlari</li>
+              </ul>
+              <p><strong class="text-white">Condition’ga IsPressed ulash:</strong></p>
+              <p>Yana IsPressed’ni graph’ga tashlang → bu safar <span class="ui-label">Get</span> ni tanlang.</p>
+              <p>Get IsPressed’ning qizil chiqish pin’ini Branch’ning <span class="ui-label">Condition</span> pin’iga ulang.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.4</span>
+              <span class="text-sm font-medium text-white">True / False ga Print String</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Branch → <span class="ui-label">True</span> pin’idan sim torting → <span class="ui-label">Print String</span></p>
+              <p>In String: <span class="ui-label font-mono">Bosildi</span></p>
+              <p>Branch → <span class="ui-label">False</span> pin’idan sim torting → yana <span class="ui-label">Print String</span></p>
+              <p>In String: <span class="ui-label font-mono">Bosilmadi</span></p>
+              <p>Pressed zanjirida biz IsPressed’ni true qilganimiz uchun odatda har doim “Bosildi” chiqadi. False tarmog‘i Released yoki boshqa mantiq uchun tayyor turadi — tushunish uchun ikkalasini ham yozib qo‘yamiz.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.5</span>
+              <span class="text-sm font-medium text-white">(Tavsiya) Released’da false qilish</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Left Mouse Button → <span class="ui-label">Released</span> dan:</p>
+              <p>Set IsPressed → qiymatni <strong class="text-white">false</strong> (belgisiz) qiling.</p>
+              <p>Bu “bosib turib / qo‘yib yuborish” holatini to‘g‘ri kuzatadi. Keyinroq Sprint, Interact kabi joylarda shu naqsh ishlatiladi.</p>
+              <p>Compile + Save.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== STEP 5 ===================== -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test qilish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
+              <span class="text-sm font-medium text-white">Play</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <ol class="list-decimal list-inside space-y-3">
+                <li>Level’ga qayting (BP_TestObject instance’i joylashgan).</li>
+                <li><span class="ui-label">Play</span> (yoki Alt+P) bosing.</li>
+                <li><strong class="text-white">Darhol</strong> ekranda (odatda yuqori chap) <code class="text-cyan-300 text-xs">Salom, BetrayBuilder!</code> chiqishi kerak — BeginPlay ishladi.</li>
+                <li>Chap sichqonchani bosing — <code class="text-cyan-300 text-xs">Bosildi</code> chiqishi kerak.</li>
+              </ol>
+              <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Muvaffaqiyat mezonlari:</strong></p>
+                <ul class="mt-2 space-y-1 text-emerald-200/80">
+                  <li>✓ Level ochilganda “Salom, BetrayBuilder!” ko‘rinadi</li>
+                  <li>✓ Sichqoncha bosilganda “Bosildi” chiqadi</li>
+                  <li>✓ Node, pin va execution flow tushunilgan</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
+              <span class="text-sm font-medium text-white">Agar sichqoncha ishlamasa</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Actor default holda input qabul qilmasligi mumkin. Ikki yechim:</p>
+              <p class="font-medium text-white">Yechim A — Enable Input (BeginPlay’da)</p>
+              <ol class="list-decimal list-inside space-y-1 text-slate-400">
+                <li>BeginPlay zanjiriga (Print String’dan oldin yoki keyin) <span class="ui-label">Enable Input</span> qo‘shing.</li>
+                <li>Target: Self (BP_TestObject).</li>
+                <li>Player Controller: <span class="ui-label">Get Player Controller</span> (index 0) ni ulang.</li>
+              </ol>
+              <p class="font-medium text-white mt-3">Yechim B — vaqtincha Player’da sinash</p>
+              <p class="text-slate-400">Input’ni Character Blueprint’da yozish osonroq (u allaqachon input oladi). Bugun o‘rganish uchun BP_TestObject yetarli; ishlamasa Enable Input qo‘shing.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Output Log:</strong> Print String ba’zan faqat Output Log’da ko‘rinadi. Window → Developer Tools → Output Log. Yoki Print String’da “Print to Screen” yoqilganiga ishonch hosil qiling.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — ClickCount</h2>
+            <p class="text-sm text-slate-500">Integer variable + hisoblash</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>Har bosishda sonni oshiring va chiqaring:</p>
+          <ol class="list-decimal list-inside space-y-2">
+            <li>Yangi variable: <span class="ui-label font-mono">ClickCount</span>, tip: <strong class="text-white">Integer</strong>, default 0.</li>
+            <li>Compile qiling.</li>
+            <li>Left Mouse Button → Pressed zanjirida (IsPressed Set’dan keyin yoki o‘rniga):</li>
+            <ul class="ml-6 mt-1 space-y-1 list-disc list-inside text-slate-400">
+              <li><span class="ui-label">Get ClickCount</span></li>
+              <li><span class="ui-label">Integer + Integer</span> (yoki Add) — Get natijasiga <strong>1</strong> qo‘shing</li>
+              <li><span class="ui-label">Set ClickCount</span> — yig‘indi ni yozing</li>
+              <li><span class="ui-label">Print String</span> — lekin sonni matn qilish kerak: <span class="ui-label">To String (Integer)</span> yoki Print String o‘rniga to‘g‘ridan-to‘g‘ri Format / Append ishlating</li>
+            </ul>
+            <li>Oddiy yo‘l: Set ClickCount’dan keyin Print String, In String’ga <span class="ui-label">Append</span> yoki <span class="ui-label">Format Text</span> orqali “Bosishlar: ” + ClickCount ulang. Yoki Get ClickCount → To String → Print String.</li>
+          </ol>
+          <p class="text-slate-400">Play qilib bir necha marta bosing — 1, 2, 3... o‘sishi kerak.</p>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>Bugun siz:</p>
+          <ul class="space-y-1.5">
+            <li>✓ <strong class="text-white">Event Graph</strong> da ishlashni boshladingiz</li>
+            <li>✓ <strong class="text-white">BeginPlay</strong> → <strong class="text-white">Print String</strong> ulang</li>
+            <li>✓ <strong class="text-white">Boolean variable</strong> (<code class="text-xs text-cyan-300">IsPressed</code>) yaratdingiz</li>
+            <li>✓ <strong class="text-white">Input event</strong> + <strong class="text-white">Set</strong> + <strong class="text-white">Branch</strong> + ikki xil Print yozdingiz</li>
+            <li>✓ Execution pin (oq) va Data pin (rangli) farqini ko‘rdingiz</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <p class="text-xs text-slate-500 mb-1">Ish joyi:</p>
+            <code class="text-cyan-300 text-xs">Content/BetrayBuilder/Blueprints/BP_TestObject</code> — Event Graph
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4">
+            <p class="text-slate-400"><strong class="text-white">Ertaga (Kun 4):</strong> Custom Event va Function — kodni qayta ishlatiladigan qismlarga bo‘lish. E tugmasi → OnActivate, GetDoubledValue funksiyasi.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-02.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 2
+        </a>
+        <div class="text-xs text-slate-600">Kun 3 / 90</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 4 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-16"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>

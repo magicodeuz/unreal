@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 13 — Player State | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .prose h2 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.65;
+    }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 2 · Player & Movement</div>
+          <div class="font-semibold text-sm truncate">Kun 13 — Player State</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~2–3 soat</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-60 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-1">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun / kelajak</a>
+        <a href="#tushunchalar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Tushunchalar</a>
+        <a href="#arxitektura" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">State arxitekturasi</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Stamina sxemasi</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. Variable'lar ro'yxati</a>
+        <a href="#flags" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Editable / Read Only</a>
+        <a href="#rates" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Decrease / Regen rate</a>
+        <a href="#tick" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Event Tick mantiq</a>
+        <a href="#force-stop" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Stamina 0 → stop sprint</a>
+        <a href="#sprint-gate" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Sprint faqat stamina bilan</a>
+        <a href="#clamp" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. Clamp va edge cases</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">8. Test + troubleshooting</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
+        <a href="#bonus" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bonus g'oyalar</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>
+          Stage 2 · Kun 13 / 14
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Player State</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Health, Stamina, IsSprinting, IsCrouching — bitta joyda. Sprint endi cheksiz emas: stamina tugasa, yugurish to‘xtaydi.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3">
+          <p class="text-slate-300 leading-relaxed">Kun oxirida BP_Player’da:</p>
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">Health</code> / <code class="text-xs text-cyan-300">MaxHealth</code> (hozircha faqat ma’lumot)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">Stamina</code> / <code class="text-xs text-cyan-300">MaxStamina</code> + kamayish/tiklanish</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Sprint paytida stamina <strong class="text-white">DeltaTime</strong> ga qarab kamayadi</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Sprint yo‘qida (yoki sekin) stamina tiklanadi, 0…Max orasida <strong class="text-white">Clamp</strong></li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Stamina ≤ 0 → majburiy sprint to‘xtashi (speed 300, IsSprinting false)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Yangi sprint faqat stamina > 0 (yoki minimal threshold) bo‘lsa</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Mavjud <code class="text-xs text-cyan-300">IsSprinting</code> / <code class="text-xs text-cyan-300">IsCrouching</code> shu “state to‘plami”ga mos tartibda</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3 mt-2">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Damage / heal gameplay, UI progress bar (Kun ~65), replication (Multiplayer stage). Health faqat “joy ajratilgan” variable.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun / keyingi bosqichlarga bog‘liqligi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Hozircha hamma narsa <strong class="text-white">BP_Player</strong> ichida. Bu ongli tanlov: Stage 2 da bitta Character, bitta o‘yinchi, multiplayer yo‘q.
+          </p>
+          <p>
+            Keyinroq (Multiplayer / Betrayal):
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-slate-400">
+            <li><strong class="text-slate-200">PlayerState</strong> (UE class) — ball, role, ba’zan health — serverda replicate</li>
+            <li>Yoki alohida <strong class="text-slate-200">ASC / attribute</strong> (murakkabroq)</li>
+            <li>Hozirgi variable nomlari va ma’nolari o‘sha tizimga ko‘chirishni osonlashtiradi</li>
+          </ul>
+          <p>
+            Stamina nima uchun kerak? Cheksiz sprint map balance’ni buzadi: doimo eng tez o‘yinchi, stalk / qochish ma’nosiz. Kichik resurs — qaror majburiyati.
+          </p>
+          <p class="text-slate-400">
+            Health bugun “bo‘sh joy”: saboteur damage, fall damage, gas — keyin keladi. Variable bo‘lmasa, keyin har joyga chigal qo‘shasiz.
+          </p>
+        </div>
+      </section>
+
+      <!-- TUSHUNCHALAR -->
+      <section id="tushunchalar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📖</span>
+          Asosiy tushunchalar
+        </h2>
+        <div class="space-y-3">
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Delta Time</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Bir freymdan ikkinchisiga o‘tgan vaqt (soniyada). Stamina o‘zgarishi:
+              <code class="text-xs text-slate-400">Stamina -= Rate * DeltaSeconds</code>.
+              Faqat “har tick −1” qilsangiz, FPS past bo‘lsa sekin, yuqori bo‘lsa tez kamayadi — noto‘g‘ri. <strong class="text-white">Har doim DeltaTime</strong>.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Clamp (Float)</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Qiymatni Min va Max orasiga “qisib” qo‘yadi. Stamina hech qachon 0 dan past yoki MaxStamina dan oshmasin.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Event Tick vs Timer</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              <strong class="text-white">Tick:</strong> har freym — silliq stamina, oddiy yozish. Kam cost (bir nechta float).
+              <strong class="text-white">Timer:</strong> masalan har 0.1 s — kamroq chaqiruv, lekin sekinroq yangilanish.
+              Bugun Tick yetarli va o‘rganish uchun qulay.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Instance Editable + Blueprint Read Only</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Details’da level designer ko‘radi (Editable), lekin boshqa Blueprint’dan Set qilish cheklanishi mumkin (Read Only) — “tashqi kod to‘g‘ridan-to‘g‘ri buzmasin, funksiya orqali o‘zgarsin”.
+              Hozir tartib uchun: asosiy state’larni kategoriyaga solib, keraklilarini Editable qiling.
+            </p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+            <div class="font-semibold text-cyan-400 mb-1">Force stop sprint</div>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Shift hali bosilib turishi mumkin, lekin stamina 0. IsSprinting false + Max Walk Speed 300. Aks holda o‘yinchi “ghost sprint” da qoladi.
+              Shift Completed kelganda ham xavfsiz: allaqachon to‘xtagan bo‘lsa, qayta 300 yozish zararsiz.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ARXITEKTURA -->
+      <section id="arxitektura" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">🏗</span>
+          State “xaritasi” (BP_Player ichida)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5 text-sm">
+          <pre class="flow text-cyan-300/90">[ Resources ]
+  Health, MaxHealth          — keyinroq damage
+  Stamina, MaxStamina        — sprint resursi
+  StaminaDecreaseRate        — masalan 25 / sek
+  StaminaRegenRate           — masalan 15 / sek
+  MinStaminaToSprint         — ixtiyoriy, masalan 5
+
+[ Movement flags ]
+  IsSprinting                — Kun 10
+  IsCrouching                — Kun 11
+
+[ Feel ]
+  MouseSensitivity           — Kun 12
+  WalkSpeed / SprintSpeed    — ixtiyoriy, magic number o‘rniga
+
+[ Camera targets ]
+  StandingCameraZ, CrouchCameraZ, TargetCameraZ  — Kun 11</pre>
+          <p class="text-slate-500 mt-3">My Blueprint da Category: “State | Resources”, “State | Movement” deb guruhlasangiz, topish oson.</p>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          Stamina asosiy sxema
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5 space-y-4">
+          <pre class="flow text-cyan-300/90">Event Tick (Delta Seconds)
+    │
+    ▼
+Branch (IsSprinting?)
+    ├─ True
+    │     Stamina = Stamina − (DecreaseRate × Delta)
+    │     Stamina = Clamp(Stamina, 0, MaxStamina)
+    │     Branch (Stamina ≤ 0)
+    │         → ForceStopSprint()
+    │              Set Max Walk Speed = WalkSpeed (300)
+    │              Set IsSprinting = false
+    │
+    └─ False
+          Stamina = Stamina + (RegenRate × Delta)
+          Stamina = Clamp(Stamina, 0, MaxStamina)
+
+// Sprint Started (yangilangan)
+Branch (IsCrouching?) → True: ignore
+Branch (Stamina > MinStaminaToSprint?) 
+    True → Speed 600, IsSprinting true
+    False → (ixtiyoriy Print "Too tired")</pre>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Sprint ishlaydi (Kun 10) — Started/Completed + IsSprinting</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Crouch flag bor (Kun 11) — challenge sprint block</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Event Tick ishlashi mumkin (Camera interp uchun allaqachon yoqilgan bo‘lishi mumkin)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Variable’lar ro‘yxati — qo‘shish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">1.1</span>
+            <span class="text-sm font-medium text-white">Yangi float’lar</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>BP_Player → My Blueprint → Variables. Quyidagilarni qo‘shing (mavjud IsSprinting / IsCrouching’ni saqlang):</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-slate-700 text-left text-slate-400">
+                    <th class="py-2 pr-3">Nom</th>
+                    <th class="py-2 pr-3">Tip</th>
+                    <th class="py-2 pr-3">Default</th>
+                    <th class="py-2">Category (ixtiyoriy)</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-300">
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Health</td>
+                    <td class="py-2 pr-3">Float</td>
+                    <td class="py-2 pr-3">100</td>
+                    <td class="py-2 text-slate-500">State|Resources</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">MaxHealth</td>
+                    <td class="py-2 pr-3">Float</td>
+                    <td class="py-2 pr-3">100</td>
+                    <td class="py-2 text-slate-500">State|Resources</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">Stamina</td>
+                    <td class="py-2 pr-3">Float</td>
+                    <td class="py-2 pr-3">100</td>
+                    <td class="py-2 text-slate-500">State|Resources</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">MaxStamina</td>
+                    <td class="py-2 pr-3">Float</td>
+                    <td class="py-2 pr-3">100</td>
+                    <td class="py-2 text-slate-500">State|Resources</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">StaminaDecreaseRate</td>
+                    <td class="py-2 pr-3">Float</td>
+                    <td class="py-2 pr-3">25</td>
+                    <td class="py-2 text-slate-500">State|Tuning</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">StaminaRegenRate</td>
+                    <td class="py-2 pr-3">Float</td>
+                    <td class="py-2 pr-3">15</td>
+                    <td class="py-2 text-slate-500">State|Tuning</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 pr-3 font-mono text-xs text-cyan-300">MinStaminaToSprint</td>
+                    <td class="py-2 pr-3">Float</td>
+                    <td class="py-2 pr-3">5</td>
+                    <td class="py-2 text-slate-500">State|Tuning</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-slate-400 mt-3">25 / sek → to‘liq 100 stamina ~4 soniyada tugaydi. 15 regen → ~6.7 s to‘liq tiklanish. Keyin balance qilasiz.</p>
+            <p>Ixtiyoriy: <span class="ui-label">WalkSpeed</span> = 300, <span class="ui-label">SprintSpeed</span> = 600 — magic number o‘rniga.</p>
+            <p>Compile.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="flags" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Instance Editable va tartib</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">2.1</span>
+            <span class="text-sm font-medium text-white">Details sozlamalari</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Har bir asosiy state variable uchun (tanlang → Details):</p>
+            <ul class="space-y-2 text-slate-400">
+              <li><span class="ui-label">Instance Editable</span> — levelda/PIE da ko‘rish va sinash uchun (ayniqsa Rate’lar)</li>
+              <li><span class="ui-label">Blueprint Read Only</span> — ixtiyoriy; “faqat shu BP ichida Set” siyosati uchun</li>
+              <li><span class="ui-label">Category</span> — State|Resources, State|Movement, State|Tuning</li>
+              <li><span class="ui-label">Tooltip</span> — qisqa izoh (masalan “Units per second while sprinting”)</li>
+            </ul>
+            <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+              <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima uchun?</strong> 3 oy keyin “stamina qayerda?” deb qidirmaslik. Multiplayer’da replicate qilinadigan maydonlarni ham shu yerdan tanlaysiz.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="rates" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Rate qiymatlarini his qilish</h2>
+            <p class="text-sm text-slate-500">O‘qib chiqing — keyin kod</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-3 leading-relaxed">
+          <p>
+            <strong class="text-white">DecreaseRate = 25</strong> → 100 / 25 = 4 soniya to‘liq sprint.
+            Map kichik bo‘lsa 4 s yetarli; katta bo‘lsa Rate’ni 15–20 ga tushiring.
+          </p>
+          <p>
+            <strong class="text-white">RegenRate = 15</strong> → to‘liq tiklanish ~6.7 s. Regen sprint’dan sekinroq bo‘lishi odatiy (yoki teng).
+          </p>
+          <p>
+            <strong class="text-white">MinStaminaToSprint = 5</strong> → 0 dan darhol qayta sprint yoqilmasin; biroz “nafas olish” majburiy.
+          </p>
+          <p class="text-slate-500">
+            Bu raqamlar final emas — playtest (Kun 14) da o‘zgartirasiz. Muhimi: formula DeltaTime bilan to‘g‘ri.
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="tick" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Event Tick — stamina yangilash</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 25–35 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.1</span>
+              <span class="text-sm font-medium text-white">Tick yoqilganmi?</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Class Defaults → Actor Tick → <span class="ui-label">Start with Tick Enabled</span> ✓</p>
+              <p>Event Graph’da <span class="ui-label">Event Tick</span> (Delta Seconds pin).</p>
+              <p class="text-slate-400">Agar Kun 11 kamera interp ham Tick’da bo‘lsa — bir xil Tick ichida ketma-ket yozing (avval stamina, keyin kamera yoki aksincha).</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.2</span>
+              <span class="text-sm font-medium text-white">Sprint true tarmog‘i</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <ol class="list-decimal list-inside space-y-2">
+                <li>Branch: <span class="ui-label">IsSprinting</span></li>
+                <li>True: <span class="ui-label">Stamina</span> − (<span class="ui-label">StaminaDecreaseRate</span> × <span class="ui-label">Delta Seconds</span>)</li>
+                <li>Natijani <span class="ui-label">Clamp</span> (Min 0, Max MaxStamina) → <span class="ui-label">Set Stamina</span></li>
+              </ol>
+              <p>Node’lar: Float − Float, Float * Float, Clamp Float.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.3</span>
+              <span class="text-sm font-medium text-white">Sprint false — regen</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>False tarmoq: Stamina + (RegenRate × Delta) → Clamp → Set Stamina.</p>
+              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Ixtiyoriy qoida:</strong> Faqat yerdа (Is Moving / not falling) regen. Hozircha oddiy: sprint yo‘q = regen. Keyinroq “harakatlanmasa tezroq regen” qo‘shish mumkin.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="force-stop" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Stamina ≤ 0 → majburiy to‘xtatish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">5.1</span>
+              <span class="text-sm font-medium text-white">Tick ichida tekshiruv</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Stamina kamaytirib Clamp qilgandan <strong class="text-white">keyin</strong>:</p>
+              <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-4 border border-slate-800">Branch (Stamina ≤ 0) AND (IsSprinting)
+  True →
+    Set Max Walk Speed (WalkSpeed / 300)
+    Set IsSprinting = false</pre>
+              <p>Yoki alohida Custom Event <span class="ui-label">ForceStopSprint</span> — Kun 4 dagi odat: bir joyda yig‘ib, Tick va boshqa joylardan chaqirish.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">5.2</span>
+              <span class="text-sm font-medium text-white">Nima uchun Custom Event yaxshi?</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>ForceStopSprint ichida:</p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li>Max Walk Speed = WalkSpeed</li>
+                <li>IsSprinting = false</li>
+                <li>(Challenge Kun 12) Arm Length qaytarish</li>
+                <li>Keyinroq: sprint VFX o‘chirish, sound stop</li>
+              </ul>
+              <p>Bitta o‘zgarish — bitta event. Tick faqat “Stamina 0 mi?” deb chaqiradi.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="sprint-gate" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Sprint Started — stamina eshigi</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">6.1</span>
+            <span class="text-sm font-medium text-white">Kun 10 mantiqini yangilash</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>IA_Sprint <span class="ui-label">Started</span> zanjiri endi:</p>
+            <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-4 border border-slate-800">Started
+  → Branch IsCrouching?  → True: return
+  → Branch (Stamina > MinStaminaToSprint)?
+       True:
+         Set Max Walk Speed = SprintSpeed (600)
+         Set IsSprinting = true
+       False:
+         (ixtiyoriy) Print "Not enough stamina"</pre>
+            <p><span class="ui-label">Completed</span> o‘zgarishi mumkin: ForceStopSprint chaqirish (yoki speed 300 + IsSprinting false) — Shift qo‘yilganda har doim to‘xtash.</p>
+            <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+              <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Edge case:</strong> Stamina 0 da Shift bosib tursa, regen boshlanadi (IsSprinting false). MinStaminaToSprint ga yetganda avtomatik qayta sprint <strong>yoqilmasin</strong> — faqat Shift’ni qayta bosganda (Started). Bu hold-to-sprint uchun tabiiy.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="clamp" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Clamp, BeginPlay, edge cases</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">7.1</span>
+            <span class="text-sm font-medium text-white">BeginPlay</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <ul class="list-disc list-inside space-y-1 text-slate-400">
+              <li>Stamina = MaxStamina</li>
+              <li>Health = MaxHealth</li>
+              <li>IsSprinting = false (xavfsizlik)</li>
+            </ul>
+            <p class="mt-2">Levelda Instance Editable orqali Stamina’ni 50 qilib test qilishingiz mumkin — BeginPlay qayta to‘ldirsa, test uchun BeginPlay’da overwrite’ni vaqtincha o‘chiring.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 8 TEST -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">8</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test va troubleshooting</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
+              <span class="text-sm font-medium text-white">Qanday sinash</span>
+            </div>
+            <div class="p-5 space-y-2 text-sm text-slate-300">
+              <ol class="list-decimal list-inside space-y-2">
+                <li>Shift + WASD — ~4 s yuguring; tezlik birdan 300 ga tushsin.</li>
+                <li>Shift hali bosiliq bo‘lsa ham — oddiy yurish (force stop).</li>
+                <li>Shift ni qo‘ying, kuting — stamina o‘ssin; qayta Shift — yana sprint (agar yetarli stamina).</li>
+                <li>Crouch + Shift — sprint yoqilmasin (oldingi qoida saqlansin).</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-red-500/20 overflow-hidden">
+            <div class="bg-red-500/10 px-5 py-3 border-b border-red-500/20">
+              <span class="text-sm font-medium text-red-300">Muammo → yechim</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300">
+              <div>
+                <p class="font-medium text-white">Stamina umuman kamaymaydi</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>IsSprinting haqiqatan true bo‘lyaptimi? (Print)</li>
+                  <li>Tick enabled?</li>
+                  <li>DecreaseRate × Delta ulanganmi (faqat −1 emas)?</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-white">Juda tez / juda sekin tugaydi</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>Rate’ni o‘zgartiring; FPS bilan bog‘liq emasligi uchun DeltaTime majburiy</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-white">0 da sprint davom etadi</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>ForceStopSprint chaqirilyaptimi?</li>
+                  <li>Max Walk Speed qayta 600 ga boshqa joydan yozilmayaptimi?</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-white">Stamina 100 dan oshib ketadi</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>Clamp Max = MaxStamina</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-white">Regen sprint paytida ham ishlaydi</p>
+                <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                  <li>Branch IsSprinting tarmoqlari aralashib ketmaganligini tekshiring</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — debug Print</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-3">
+          <p>Har Tick (yoki har 0.25 s Timer) Stamina ni Print String qiling (To String + “Stamina: ”).</p>
+          <p>Kamayish/tiklanish silliqligini ko‘ring. Keyin <strong class="text-white">majburiy o‘chiring</strong> — ekran spam final o‘yinda qolmasin.</p>
+          <p class="text-slate-500">Yaxshiroq alternativ: <span class="ui-label">Draw Debug String</span> yoki faqat Stamina 10 dan pastga tushganda Print.</p>
+        </div>
+      </section>
+
+      <!-- BONUS -->
+      <section id="bonus" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">★</span>
+          Bonus g‘oyalar (ixtiyoriy)
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B1</span>
+            <strong class="text-white ml-2">Regen delay</strong>
+            <p class="mt-1 text-slate-400">Sprint to‘xtagach 0.5–1 s kutib regen boshlash (oxirgi sprint vaqti variable + Tick da solishtirish).</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B2</span>
+            <strong class="text-white ml-2">Crouch ham stamina yeydi</strong>
+            <p class="mt-1 text-slate-400">Juda sekin (masalan 5/s) — “yashirinish ham charchatadi”. Balance uchun ehtiyot.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B3</span>
+            <strong class="text-white ml-2">GetStaminaPercent function</strong>
+            <p class="mt-1 text-slate-400">Return Stamina / MaxStamina — keyin UI Progress Bar uchun tayyor (Kun 65).</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B4</span>
+            <strong class="text-white ml-2">Health hali “o‘lik” kod emas</strong>
+            <p class="mt-1 text-slate-400">GetHealthPercent xuddi shu. Damage event’ni stub qilib qo‘yish mumkin (Print “Damage received”) — chaqirmasangiz ham bo‘ladi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ Health / Stamina resource variable’lari</li>
+            <li>✓ DeltaTime asosida decrease / regen + Clamp</li>
+            <li>✓ Stamina 0 → ForceStopSprint</li>
+            <li>✓ Sprint Started da stamina + crouch eshiklari</li>
+            <li>✓ State markazlashgan — UI va multiplayer uchun poydevor</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">Content/BetrayBuilder/Characters/BP_Player</code> — Variables
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4">
+            <p class="text-slate-400"><strong class="text-white">Ertaga (Kun 14):</strong> Milestone 2 — movement to‘liq playtest, checklist, backup. Stage 2 yakuni.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-12.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 12
+        </a>
+        <div class="text-xs text-slate-600">Kun 13 / 90</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 14 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-16"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 25 — Gameplay Routes | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 4 · Level &amp; Spaces</div>
+          <div class="font-semibold text-sm truncate">Kun 25 — Gameplay Routes</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~3–4 soat · flow design</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun route?</a>
+        <a href="#concepts" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Flow / Sightline / Choke</a>
+        <a href="#social" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Social deduction</a>
+        <a href="#graph" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xona grafigi</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. Joriy yo‘llarni xarita</a>
+        <a href="#alt-routes" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. 2+ muqobil yo‘l</a>
+        <a href="#chokepoint" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Chokepoint</a>
+        <a href="#timing" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Vaqt o‘lchash</a>
+        <a href="#sightlines" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Sightline tekshiruv</a>
+        <a href="#tweak" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Sozlash (qayta blockout emas)</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge (node diagram)</a>
+        <a href="#avoid" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima qilmaslik</a>
+        <a href="#troubleshooting" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Troubleshooting</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+          Stage 4 · Kun 25 · Flow design
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Gameplay Routes</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Xarita endi nafaqat xonalar — <strong class="text-slate-200">yo‘llar, ko‘rinish, tor joylar</strong>. Betrayer va Builder harakat mantiqi.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Kamida <strong class="text-white">2 muqobil yo‘l</strong> (A→B)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Kamida <strong class="text-white">1 chokepoint</strong> (masalan markaziy Hallway)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Player bilan vaqt: juda uzun / qisqa emas</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Sightline’larni ongli ko‘rib chiqish</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Faqat yo‘l sozlash — to‘liq qayta blockout emas</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Butun xaritani buzib qayta qurish. Kichik proyom, bitta devor siljish, bitta qo‘shimcha yo‘lak — yetarli.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun “route” kuni?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Xonalar chiroyli bo‘lishi mumkin, lekin agar Storage’ga faqat bitta yo‘l bo‘lsa — har doim “koridorda uchrashuv”. Bu ba’zan yaxshi (choke), ba’zan zerikarli.
+          </p>
+          <p>
+            Social deduction: <strong class="text-white">tanlov</strong> kerak. Betrayer yashirin yo‘l; crew qisqa yo‘l; ikkalasi ham xavf.
+          </p>
+        </div>
+      </section>
+
+      <!-- CONCEPTS -->
+      <section id="concepts" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📖</span>
+          Player flow · Sightlines · Chokepoints
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <div>
+            <p class="font-medium text-white">Player flow</p>
+            <p class="text-slate-400">O‘yinchi tabiiy ravishda qayerga boradi? Lobby → task xonalari → Utility. Yo‘llar shu oqimni qo‘llab-quvvatlasin.</p>
+          </div>
+          <div>
+            <p class="font-medium text-white">Sightline</p>
+            <p class="text-slate-400">Qayerdan kimni ko‘rish mumkin? Uzun to‘g‘ri Hallway = uzoqdan aniqlash. Burchak = yashirish. Window (Kun 24) sightline qo‘shadi.</p>
+          </div>
+          <div>
+            <p class="font-medium text-white">Chokepoint</p>
+            <p class="text-slate-400">Faqat bitta (yoki juda tor) o‘tish — uchrashish ehtimoli yuqori. Strategik, lekin xarita to‘liq choke bo‘lmasin.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOCIAL -->
+      <section id="social" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">🎭</span>
+          Betray Builder uchun muvozanat
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li><strong class="text-slate-200">Muqobil yo‘l</strong> — Betrayer “aylanib” o‘tadi</li>
+            <li><strong class="text-slate-200">Choke</strong> — guruh / guvoh uchrashuvi</li>
+            <li><strong class="text-slate-200">Utility uzoq</strong> — sabotage vaqti + xavf</li>
+            <li><strong class="text-slate-200">Lobby markaz</strong> — qayta to‘planish</li>
+          </ul>
+          <p class="text-slate-500">Ideal: 1 kuchli choke + 2–3 soft alternative.</p>
+        </div>
+      </section>
+
+      <!-- GRAPH -->
+      <section id="graph" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">🕸</span>
+          Xona grafigi (tushuncha)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">Nodes = xonalar
+Edges = eshik / proyom bog‘lanishlari
+
+Yaxshi: ko'p node 2+ edge (muqobil)
+Xavfli: faqat tree (bir yo'l orqaga)
+Choke: muhim edge faqat bitta
+
+Misol:
+  Storage — Hall — Office
+       \            /
+        Kitchen ----</pre>
+          <p class="text-sm text-slate-500 mt-3">Agar Storage faqat Hall orqali — bitta edge. Kitchen orqali ikkinchi edge qo‘shing.</p>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4">Oldindan talab</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> 8 xona + eshiklar (22–24)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BP_Player yurishi</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Joriy yo‘llarni xarita qilish</h2>
+            <p class="text-sm text-slate-500">20–30 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Qog‘oz yoki rasm: 8 node, strelkalar = eshiklar. Qaysi juftlikda faqat 1 yo‘l?</p>
+          <p class="text-slate-400">Masalan: Lobby→Utility, Office→Storage. Ro‘yxat qiling.</p>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="alt-routes" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Kamida 2 muqobil yo‘l</h2>
+            <p class="text-sm text-slate-500">30–45 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Aniq juftlik tanlang (masalan Hallway vs Kitchen orqali Storage).</p>
+          <p>Yo‘q bo‘lsa: bitta ichki proyom / eshik qo‘shing yoki devorni oching — <strong class="text-white">to‘liq qayta blockout emas</strong>.</p>
+          <p class="text-slate-400">Play: ikkala yo‘l bilan boring. Ikkalasi ham “ishlaydi”mi?</p>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="chokepoint" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Strategik chokepoint</h2>
+            <p class="text-sm text-slate-500">20–30 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Ko‘pincha markaziy Hallway yoki Lobby chiqishi. Torroq qiling yoki ataylab bitta asosiy o‘tish qoldiring.</p>
+          <p class="text-slate-400">Butun xarita bitta choke bo‘lmasin — faqat 1–2 “issiq nuqta”.</p>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="timing" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Vaqtni taxminiy o‘lchash</h2>
+            <p class="text-sm text-slate-500">20–30 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Lobby → Utility oddiy yurish (sprintsiz): sezilarli, lekin charchamasin (masalan 15–40 s oralig‘i — o‘zingiz his qiling).</p>
+          <p>Juda qisqa: sabotage “arzon”. Juda uzun: zerikish. Devor siljitish / qisqa yo‘l qo‘shish.</p>
+          <p class="text-slate-500">Aniq timer shart emas — hissiy “uzun/qisqa” yetarli.</p>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="sightlines" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Sightline tekshiruv</h2>
+            <p class="text-sm text-slate-500">15–25 daqiqa</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Uzun to‘g‘ri koridor: burchak yoki “S” shakl. Window orqali ko‘rinish: ongli (Security).</p>
+          <p class="text-slate-400">Maqsad: ba’zi joylar ochiq, ba’zilari yopiq — hammasi ochiq yoki hammasi yopiq bo‘lmasin.</p>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="tweak" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Sozlash — qayta blockout emas</h2>
+            <p class="text-sm text-slate-500">Qolgan vaqt</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>Ruxsat: proyom qo‘shish, bitta devorni siljitish, eshik qo‘shish, kichik alcove.</p>
+          <p>Taqiqlangan ruh: 8 xonani o‘chirib yangidan boshlash. Bugun optimizatsiya.</p>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — node diagram</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-2">
+          <p>Qog‘oz / Excalidraw / Miro: 8 xona node, bog‘lanishlar edge.</p>
+          <p>Chokepoint edge’ni qalin chizing. Muqobil yo‘llarni ranglang.</p>
+          <p class="text-slate-500">Bu hujjat keyingi balance uchun oltin.</p>
+        </div>
+      </section>
+
+      <!-- AVOID -->
+      <section id="avoid" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Nima qilmaslik</h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">To‘liq qayta blockout</p>
+            <p class="text-slate-400 mt-1">Vaqt yo‘qoladi; bugun route.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Labirint</p>
+            <p class="text-slate-400 mt-1">Muqobil ≠ chalkash.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">Faqat choke, muqobil yo‘q</p>
+            <p class="text-slate-400 mt-1">Betrayer “qocholmaydi”.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Troubleshooting</h2>
+        <div class="rounded-xl border border-red-500/20 p-5 space-y-3 text-sm text-slate-300">
+          <p><strong class="text-white">Ikkinchi yo‘l “soxta”:</strong> juda uzun — hech kim ishlatmaydi. Qisqartiring.</p>
+          <p><strong class="text-white">Choke sezilmaydi:</strong> atrofida parallel yo‘l ochiq — toraytiring.</p>
+          <p><strong class="text-white">Adashish:</strong> label / farqli shakl; labirintni soddalashtiring.</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">FAQ</h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Nechta muqobil yetarli?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">Kamida 1 juftlik uchun 2 yo‘l. Ideal: asosiy juftliklarda 2.</div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Navmesh kerakmi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">AI uchun keyin. Bugun odam playtest.</div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Eshik yopiq bo‘lsa route?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">Hozir ochiq/yopiq o‘yinchi tanlovi. Keyin qulf route’ni o‘zgartiradi.</div>
+          </details>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Lug‘at</h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Route</td><td class="py-2.5 px-4 text-slate-400">Xonadan xonaga yo‘l</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Chokepoint</td><td class="py-2.5 px-4 text-slate-400">Tor majburiy o‘tish</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Sightline</td><td class="py-2.5 px-4 text-slate-400">Ko‘rish chizig‘i</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Player flow</td><td class="py-2.5 px-4 text-slate-400">Tabiiy harakat oqimi</td></tr>
+              <tr><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Node diagram</td><td class="py-2.5 px-4 text-slate-400">Xona + bog‘lanish chizmasi</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CHECKLIST -->
+      <section id="checklist" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4">Yakuniy checklist</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">2+ muqobil yo‘l playtest qilindi</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">1 chokepoint aniq</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Vaqt hissi OK</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Sightline ongli</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Qayta blockout qilinmadi</span></label>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <ul class="space-y-1.5">
+            <li>✓ Xarita gameplay route sinovidan o‘tdi</li>
+            <li>✓ Muqobil yo‘l + choke muvozanati</li>
+            <li>✓ Flow endi ongli</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs">MAP_BetrayBuilder — routes tuned</code>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="r25-1" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 1</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-2" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 2</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-3" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 3</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-4" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 4</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-5" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 5</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-6" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 6</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-7" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 7</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-8" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 8</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-9" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 9</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-10" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 10</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-11" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 11</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-12" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 12</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-13" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 13</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-14" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 14</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-15" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 15</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-16" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 16</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-17" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 17</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-18" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 18</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-19" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 19</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-20" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 20</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-21" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 21</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-22" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 22</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-23" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 23</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-24" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 24</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-25" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 25</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-26" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 26</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-27" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 27</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-28" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 28</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-29" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 29</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-30" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 30</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-31" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 31</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-32" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 32</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-33" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 33</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+
+      <section id="r25-34" class="mb-7">
+        <h2 class="text-lg font-bold text-white mb-2">Route design eslatma 34</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Muqobil yo'l "mavjud" bo'lishi yetarli emas — o'yinchi uni ishlatishi kerak. Agar ikkinchi yo'l 3x uzun bo'lsa, u de-facto yo'q.</p>
+          <p>Chokepoint strategik: meeting oldidan o'tish, Utility ga kirish. Har koridor choke qilmang.</p>
+          <p>Sightline va route bog'liq: uzun to'g'ri yo'l = ko'rinish + tez harakat. Burchak = sekinroq, yashirinroq.</p>
+          <p>Social deduction xaritasi "adil" bo'lishi shart emas, lekin o'qiladigan bo'lishi shart. Node diagram shuni ta'minlaydi.</p>
+          <p>Playtestni yolg'iz qiling, keyin do'st bilan (agar bo'lsa): ikkinchi odam boshqa yo'lni tanlaydimi?</p>
+        </div>
+      </section>
+
+      
+      <section id="more25-35" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 35</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-36" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 36</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-37" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 37</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-38" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 38</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-39" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 39</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-40" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 40</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-41" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 41</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-42" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 42</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-43" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 43</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-44" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 44</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-45" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 45</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-46" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 46</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-47" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 47</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-48" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 48</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-49" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 49</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-50" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 50</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-51" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 51</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-52" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 52</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-53" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 53</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+
+      <section id="more25-54" class="mb-6">
+        <h2 class="text-lg font-bold text-white mb-2">Qo'shimcha 54</h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-400 space-y-2">
+          <p>Gameplay route — Stage 4 ning "mantiqiy" qatlami. Keyingi lighting va prop shu oqim ustiga qo'yiladi.</p>
+          <p>Agar faqat bitta juftlikda 2 yo'l bo'lsa ham milestone uchun yetarli; ideal ko'proq.</p>
+          <p>Diagrammani saqlang — Kun 54 sabotage joylashuvida qayta ochasiz.</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-24.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 24
+        </a>
+        <div class="text-xs text-slate-600">Kun 25 / 90 · Stage 4</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 26 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

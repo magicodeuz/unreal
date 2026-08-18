@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 16 — BPI_Interact | Betray Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h2, h3 { scroll-margin-top: 5rem; }
+    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
+    .ui-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #80deea;
+    }
+    .callout { border-left: 4px solid; }
+    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
+    pre, .flow, .tree {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
+        </a>
+        <div class="h-5 w-px bg-slate-700"></div>
+        <div class="min-w-0">
+          <div class="text-xs text-slate-500">Stage 3 · Interaction System</div>
+          <div class="font-semibold text-sm truncate">Kun 16 — BPI_Interact</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline text-xs text-slate-500">~3–4 soat · chuqur dars</span>
+        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav class="sticky top-20 space-y-0.5 text-sm max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
+        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
+        <a href="#kun5" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Kun 5 eslatmasi</a>
+        <a href="#nima-uchun" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Nima uchun BPI_Interact?</a>
+        <a href="#shartnoma" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Uchta funksiya</a>
+        <a href="#instigator" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Instigator nima?</a>
+        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">To‘liq oqim</a>
+        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
+        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. BPI_Interact yaratish</a>
+        <a href="#funcs" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Uch funksiya imzosi</a>
+        <a href="#implement" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. BP_TestObject implement</a>
+        <a href="#player-e" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Player: E + Message</a>
+        <a href="#can-gate" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. CanInteract Branch</a>
+        <a href="#does" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Does Implement Interface</a>
+        <a href="#text" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. GetInteractionText</a>
+        <a href="#cast-anti" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">8. Cast yozmang</a>
+        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">9. Test ssenariylar</a>
+        <a href="#troubleshooting" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">10. Troubleshooting</a>
+        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
+        <a href="#bonus" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bonus</a>
+        <a href="#faq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">FAQ</a>
+        <a href="#glossary" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Lug‘at</a>
+        <a href="#design" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Dizayn eslatmalari</a>
+        <a href="#mistakes" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Ko‘p xatolar</a>
+        <a href="#arch-diagram" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Arxitektura</a>
+        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 max-w-3xl">
+
+      <!-- HERO -->
+      <div class="mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+          Stage 3 · Kun 16 · Universal Interaction shartnomasi
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">BPI_Interact</h1>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Kun 5 dagi Interface g‘oyasini <strong class="text-slate-200">real tizimga</strong> aylantirasiz. Door, Button, Light, Computer — hammasi bitta shartnoma: Interact, GetInteractionText, CanInteract.
+        </p>
+      </div>
+
+      <!-- MAQSAD -->
+      <section id="maqsad" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
+          Kun maqsadi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4">
+          <p class="text-slate-300 leading-relaxed">Kun oxirida:</p>
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">BPI_Interact</code> asset — uchta funksiya imzosi</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">BP_TestObject</code> interfeysni implement qiladi (Print sinovi)</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> BP_Player: Line Trace focus + <strong class="text-white">E</strong> → Interface Message <code class="text-xs text-cyan-300">Interact</code></li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">CanInteract</code> false bo‘lsa Interact chaqirilmaydi</li>
+            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <strong class="text-white">Cast To BP_Door</strong> yozilmaydi — bitta Message hammaga</li>
+          </ul>
+          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun qilmang:</strong> Haqiqiy eshik animatsiyasi, UI widget “Press E”, yangi 10 xil interactable. Faqat shartnoma + bitta sinov obyekti + Player chaqiruvi.</p>
+          </div>
+          <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+            <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima uchun uzun dars?</strong> Bu interface butun 90 kunlik kursda qayta ishlatiladi. Imzo noto‘g‘ri bo‘lsa — keyin har bir Door/Button ni qayta yozasiz. Bir marta to‘g‘ri qo‘ying.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- KUN 5 -->
+      <section id="kun5" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm">5</span>
+          Kun 5 eslatmasi — nima o‘zgardi?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>
+            Kun 5 da <code class="text-xs text-cyan-300">BPI_TestInterface</code> va Cast vs Interface farqini ko‘rdingiz. Bugun:
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-slate-400">
+            <li>Interface nomi professional: <strong class="text-white">BPI_Interact</strong></li>
+            <li>Faqat “OnActivate Print” emas — <strong class="text-white">uchta aniq majburiyat</strong></li>
+            <li>Chaqiruv manbai: random reference emas, <strong class="text-white">Line Trace focus</strong> (Kun 15)</li>
+            <li>Input: oddiy Keyboard emas, <strong class="text-white">IA_Interact</strong></li>
+          </ul>
+          <p class="text-slate-400">
+            Agar Kun 5 dagi BPI_TestInterface hali bor bo‘lsa — chalkashtirmang. Yangi BPI_Interact yarating; eski test interface’ni keyin o‘chirishingiz mumkin.
+          </p>
+        </div>
+      </section>
+
+      <!-- NIMA UCHUN -->
+      <section id="nima-uchun" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">?</span>
+          Nima uchun bitta BPI_Interact?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>O‘yinda interaktiv narsalar ko‘p:</p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Eshik ochish / yopish</li>
+            <li>Generator yoqish</li>
+            <li>Task panel</li>
+            <li>Item olish</li>
+            <li>Light switch / saboteur sabotage</li>
+          </ul>
+          <p>
+            Agar Player’da har biri uchun <span class="ui-label">Cast To BP_Door</span>, <span class="ui-label">Cast To BP_Generator</span>… bo‘lsa — har yangi obyekt Player kodini ochishni talab qiladi. Bu <strong class="text-white">tight coupling</strong> (Kun 5).
+          </p>
+          <p>
+            BPI_Interact: Player faqat “Interact deb ayt” deydi. Har obyekt o‘zi biladi nima qilishni. Yangi tip = yangi Blueprint + implement — Player o‘zgarmaydi.
+          </p>
+          <div class="overflow-x-auto mt-2">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700 text-left text-slate-400">
+                  <th class="py-2 pr-3">Yondashuv</th>
+                  <th class="py-2 pr-3">Yangi Door qo‘shilsa</th>
+                  <th class="py-2">Player kodi</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 pr-3">Cast zanjiri</td>
+                  <td class="py-2 pr-3">Yangi Cast tarmog‘i</td>
+                  <td class="py-2 text-red-400/90">O‘zgaradi</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-3 text-cyan-300">BPI_Interact</td>
+                  <td class="py-2 pr-3">Implement + o‘z mantig‘i</td>
+                  <td class="py-2 text-emerald-400/90">O‘zgarmaydi</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SHARTNOMA -->
+      <section id="shartnoma" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📜</span>
+          Shartnoma — uchta funksiya
+        </h2>
+        <div class="space-y-4 text-sm text-slate-300 leading-relaxed">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+            <div class="font-semibold text-cyan-400 mb-2 font-mono text-sm">Interact</div>
+            <p class="mb-2">Amalni bajaradi. Input: kim bosgani (Instigator).</p>
+            <pre class="flow text-cyan-300/90 bg-black/40 rounded-lg p-3 border border-slate-800">Interact (Instigator: Actor)
+  // Door: open/close
+  // Button: toggle
+  // TestObject: Print String</pre>
+            <p class="text-slate-500 mt-2">Return shart emas (void). Side-effect’li “event” uslubidagi funksiya.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+            <div class="font-semibold text-cyan-400 mb-2 font-mono text-sm">GetInteractionText → String</div>
+            <p class="mb-2">UI’da ko‘rsatiladigan matn. Masalan: <code class="text-xs">"Eshikni ochish [E]"</code>, <code class="text-xs">"Generatorni yoqish"</code>.</p>
+            <p class="text-slate-500">Bugun Print yoki log uchun; Kun ~65 da widget shu string’ni o‘qiydi. Hozir implement qilib qo‘ying — keyin UI oson.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+            <div class="font-semibold text-cyan-400 mb-2 font-mono text-sm">CanInteract → Boolean</div>
+            <p class="mb-2">Hozir interact mumkinmi? Qulflangan eshik → false. Allaqachon olingan item → false. Masofa / role keyinroq.</p>
+            <p class="text-slate-500">Player E bosganda avval CanInteract so‘raydi; false bo‘lsa Interact chaqirmaydi (challenge + asosiy qoida).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- INSTIGATOR -->
+      <section id="instigator" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">👤</span>
+          Instigator — nima uchun kerak?
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p>
+            <strong class="text-white">Instigator</strong> = “kim interact qildi”. Odatda BP_Player (yoki Pawn).
+          </p>
+          <ul class="list-disc list-inside text-slate-400 space-y-1">
+            <li>Item olish → inventory shu o‘yinchiniki</li>
+            <li>Task → qaysi player progress</li>
+            <li>Multiplayer → server kim ekanini biladi</li>
+            <li>Eshik → ba’zan faqat certain role ochadi (Instigator dan role so‘rash)</li>
+          </ul>
+          <p class="text-slate-400">
+            Interface’da Input pin: <span class="ui-label">Instigator</span> (Actor yoki Pawn). Player Message chaqirganda Self ni uzatadi.
+          </p>
+        </div>
+      </section>
+
+      <!-- FLOW -->
+      <section id="flow" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
+          To‘liq oqim (Trace + E)
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5 space-y-4">
+          <pre class="flow text-cyan-300/90">// Har frame (Kun 15)
+Tick → Line Trace → CurrentFocusedActor / bHasFocus
+
+// E bosilganda (bugun)
+IA_Interact (Started yoki Triggered)
+  │
+  ├─ Branch (bHasFocus?) → False: return
+  │
+  ├─ Does Implement Interface?
+  │     Target: CurrentFocusedActor
+  │     Interface: BPI_Interact
+  │     False: return (devor, pol…)
+  │
+  ├─ CanInteract (Interface Message)
+  │     Target: CurrentFocusedActor
+  │     Branch (Return?) → False: return / feedback
+  │
+  └─ Interact (Interface Message)
+        Target: CurrentFocusedActor
+        Instigator: Self (BP_Player)</pre>
+          <p class="text-sm text-slate-500">GetInteractionText — UI tick yoki focus o‘zgarganda chaqiriladi (bugun ixtiyoriy Print).</p>
+        </div>
+      </section>
+
+      <!-- TALABLAR -->
+      <section id="talablar" class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
+          Oldindan talab
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-300 space-y-2">
+          <ul class="space-y-2">
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Kun 15: CurrentFocusedActor ishlaydi (debug chiziq bilan ishonch)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> IA_Interact + IMC’da E (Kun 6)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> BP_TestObject levelda (yoki yangi test cube Actor)</li>
+            <li class="flex gap-3"><span class="text-emerald-400 font-bold">✓</span> Kun 5 Interface tushunchasi (eslatma yetarli)</li>
+          </ul>
+          <div class="callout border-red-500/40 bg-red-500/5 rounded-r-lg p-3 mt-2">
+            <p class="text-sm text-red-200/90"><strong class="text-red-400">Agar Trace ishlamasa:</strong> Bugun E hech narsa qilmaydi. Avval Kun 15 ni tuzating — Focus Print’da to‘g‘ri nom chiqsin.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section id="boshlash" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BPI_Interact asset yaratish</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.1</span>
+              <span class="text-sm font-medium text-white">Papka</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p><span class="ui-label">Content/BetrayBuilder/Blueprints/Interaction/</span></p>
+              <p>Yo‘q bo‘lsa — yarating. Bu yerda keyin BP_Door, BP_Button ham yashaydi.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">1.2</span>
+              <span class="text-sm font-medium text-white">Blueprint Interface</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>O‘ng sichqoncha → Blueprint → <span class="ui-label">Blueprint Interface</span></p>
+              <p>(Yoki Add → Blueprints → Blueprint Interface)</p>
+              <p>Nom: <span class="ui-label font-mono">BPI_Interact</span></p>
+              <p>Ochilganda Functions ro‘yxati bo‘sh — faqat imzolar yoziladi, graph yo‘q.</p>
+              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">BPI_ prefiksi:</strong> Blueprint Interface. BPI_Interact, BPI_Damageable… — Content Browser’da filter qilish oson.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="funcs" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Uchta funksiya imzosi</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–25 daqiqa · eng muhim qism</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.1</span>
+              <span class="text-sm font-medium text-white">Interact</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Functions → <span class="ui-label">Add</span> → Name: <span class="ui-label font-mono">Interact</span></p>
+              <p>Details → Inputs → + :</p>
+              <ul class="space-y-1">
+                <li>Name: <span class="ui-label font-mono">Instigator</span></li>
+                <li>Type: <span class="ui-label">Actor</span> (Object Reference) — yoki Pawn, lekin Actor kengroq</li>
+              </ul>
+              <p>Outputs: bo‘sh (void).</p>
+              <p class="text-slate-400">Ba’zi versiyalarda funksiya nomi “Interact” reserved emas — ishlaydi. Agar conflict bo‘lsa: <span class="ui-label">OnInteract</span>.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.2</span>
+              <span class="text-sm font-medium text-white">GetInteractionText</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Yangi funksiya: <span class="ui-label font-mono">GetInteractionText</span></p>
+              <p>Inputs: bo‘sh (yoki ixtiyoriy Instigator — matn role’ga qarab o‘zgarishi mumkin; bugun bo‘sh).</p>
+              <p>Outputs → + :</p>
+              <ul class="space-y-1">
+                <li>Name: <span class="ui-label">Return Value</span> (yoki Text)</li>
+                <li>Type: <span class="ui-label">String</span></li>
+              </ul>
+              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Pure?</strong> Interface funksiyalarida “Pure” ba’zan cheklangan. Oddiy function qoldiring. Get matn — side-effect’siz bo‘lishi kerak (faqat string qaytarish).</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">2.3</span>
+              <span class="text-sm font-medium text-white">CanInteract</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Yangi funksiya: <span class="ui-label font-mono">CanInteract</span></p>
+              <p>Inputs: ixtiyoriy Instigator (Actor) — “shu o‘yinchi uchun mumkinmi?”</p>
+              <p>Bugun soddalashtirish: Inputs bo‘sh, Output Boolean.</p>
+              <p>Output: <span class="ui-label">Return Value</span> — Boolean.</p>
+              <p>Compile / Save BPI_Interact.</p>
+              <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Tekshirish:</strong> Interface’da 3 ta funksiya ko‘rinsin. Ichida node graph yo‘q — to‘g‘ri.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="implement" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BP_TestObject — implement</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20–25 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.1</span>
+              <span class="text-sm font-medium text-white">Class Settings</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>BP_TestObject oching → Toolbar <span class="ui-label">Class Settings</span></p>
+              <p>Interfaces → Implemented Interfaces → <span class="ui-label">Add</span> → <span class="ui-label">BPI_Interact</span></p>
+              <p>Compile. My Blueprint / Interfaces ostida uchta event/function paydo bo‘ladi.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.2</span>
+              <span class="text-sm font-medium text-white">Event Interact (implementatsiya)</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Event Graph → o‘ng sichqoncha → <span class="ui-label">Event Interact</span> (BPI_Interact) yoki Interfaces ro‘yxatidan oching.</p>
+              <p>Instigator pin keladi.</p>
+              <p>Zanjir (sinov):</p>
+              <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">Event Interact
+  → Print String ("TestObject: Interact chaqirildi!")
+  → (ixtiyoriy) Print Instigator Get Display Name</pre>
+              <p class="text-slate-400">Eski Custom Event OnActivate bo‘lsa — chalkashtirmang. Yangi tizim Interface Event.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.3</span>
+              <span class="text-sm font-medium text-white">GetInteractionText</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Interfaces → GetInteractionText ni implement qiling (function graph ochilishi mumkin).</p>
+              <p>Return Value = <span class="ui-label font-mono">"Test obyekt [E]"</span> (Make Literal String → Return Node).</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">3.4</span>
+              <span class="text-sm font-medium text-white">CanInteract</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Implement CanInteract → Return <strong class="text-white">true</strong> (default: har doim mumkin).</p>
+              <p>Challenge uchun: Boolean variable <span class="ui-label">bIsLocked</span> → Return NOT bIsLocked. Default false → CanInteract true.</p>
+              <p>Compile + Save BP_TestObject.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="player-e" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">BP_Player — E bosilganda Message</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 25–35 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.1</span>
+              <span class="text-sm font-medium text-white">IA_Interact event</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>BP_Player Event Graph → <span class="ui-label">IA_Interact</span></p>
+              <p>Kun 6 dagi Print bo‘lsa — o‘rniga haqiqiy mantiq. Trigger: <span class="ui-label">Started</span> (bir marta bosish) yaxshiroq — hold qayta-qayta Interact qilmasin.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.2</span>
+              <span class="text-sm font-medium text-white">Focus bormi?</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Started → Branch (<span class="ui-label">bHasFocus</span>) yoki Is Valid (CurrentFocusedActor).</p>
+              <p>False → hech narsa (yoki debug Print “Nothing in focus”).</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+              <span class="text-xs font-mono text-cyan-400">4.3</span>
+              <span class="text-sm font-medium text-white">Interact Message</span>
+            </div>
+            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+              <p>Qidiruv: <span class="ui-label">Interact</span> → <strong class="text-white">Interact (BPI_Interact)</strong> Message variantini tanlang.</p>
+              <p>Target = CurrentFocusedActor</p>
+              <p>Instigator = Self (Get a reference to self)</p>
+              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
+                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Cast yo‘q:</strong> Target to‘g‘ridan Actor. Message implement qilmagan Actor’da odatda jim o‘tadi — shuning uchun Does Implement ham qo‘shamiz.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="can-gate" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">CanInteract eshigi</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa · challenge asosi</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">5.1</span>
+            <span class="text-sm font-medium text-white">Message tartibi</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <pre class="flow text-cyan-300/90 bg-black/30 rounded-lg p-3 border border-slate-800">bHasFocus True
+  → Does Implement Interface (BPI_Interact)?
+  → True:
+       CanInteract (Message) → Branch
+         True  → Interact (Message)
+         False → Print "Can't interact" (ixtiyoriy)</pre>
+            <p>CanInteract Message: Target = CurrentFocusedActor, Return Value → Branch.</p>
+            <p>Bu challenge talabi ham, production qoidasi ham.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="does" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Does Implement Interface</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">6.1</span>
+            <span class="text-sm font-medium text-white">Nima uchun?</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>
+              Line Trace har qanday Actor’ga tegishi mumkin: devor, pol, prop. Ularga Interact Message yuborish — odatda zararsiz, lekin CanInteract chaqiruvi ham “bo‘sh” ishlashi mumkin.
+            </p>
+            <p>
+              <span class="ui-label">Does Implement Interface</span>: Target = CurrentFocusedActor, Interface Class = BPI_Interact → Boolean.
+            </p>
+            <p class="text-slate-400">True bo‘lsa — bu “bizning” interactable. False — e’tibor bermang (yoki debug rangini kulrang qiling).</p>
+            <p>Focus o‘zgarganda ham shu tekshiruv UI “Press E” ni faqat haqiqiy target’da ko‘rsatadi (keyinroq).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="text" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">GetInteractionText — hozircha sinov</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
+            <span class="text-xs font-mono text-cyan-400">7.1</span>
+            <span class="text-sm font-medium text-white">Focus o‘zgarganda Print</span>
+          </div>
+          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>Ixtiyoriy lekin foydali: Tick yoki focus change da, agar Does Implement:</p>
+            <p>GetInteractionText (Message) → Print String (qisqa duration).</p>
+            <p class="text-slate-400">Ekranda “Test obyekt [E]” ko‘rinsa — UI uchun tayyor kanal ochildi.</p>
+            <p>Spam bo‘lmasin deb faqat focus change da chaqiring (oldingi Actor ≠ yangi).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 8 -->
+      <section id="cast-anti" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">8</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Anti-pattern: Cast yozmang</h2>
+            <p class="text-sm text-slate-500">O‘qish · intizom</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
+          <p class="text-red-300/90 font-medium">Yomon (qilmang):</p>
+          <pre class="flow text-red-300/70 bg-black/40 rounded-lg p-3 border border-slate-800">Focus → Cast To BP_TestObject → Call something
+Focus → Cast To BP_Door → …
+Focus → Cast To BP_Button → …</pre>
+          <p class="text-emerald-300/90 font-medium mt-3">Yaxshi:</p>
+          <pre class="flow text-cyan-300/90 bg-black/40 rounded-lg p-3 border border-slate-800">Focus → Does Implement BPI_Interact?
+      → CanInteract → Interact Message</pre>
+          <p class="text-slate-400">
+            Maxsus logika kerak bo‘lsa (faqat Door ichida) — u Door Blueprint’ining Interact implementatsiyasida yashaydi, Player’da emas.
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 9 TEST -->
+      <section id="test" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">9</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Test ssenariylari</h2>
+            <p class="text-sm text-slate-500">Taxminiy vaqt: 20 daqiqa</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm">
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BP_TestObject’ga qarab E — Print “Interact chaqirildi”</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Bo‘sh joyga qarab E — hech narsa (yoki “no focus”)</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Oddiy Static Mesh Cube (interface yo‘q) ga E — Interact ishlamaydi</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">CanInteract false (challenge) — Interact chaqirilmaydi</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Player graph’da Cast To BP_TestObject yo‘q</span></label>
+          <label class="flex gap-3 items-start cursor-pointer"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Ikkinchi BP_TestObject nusxasi ham bir xil E bilan ishlaydi</span></label>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">10</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Troubleshooting</h2>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-red-500/20 overflow-hidden">
+          <div class="bg-red-500/10 px-5 py-3 border-b border-red-500/20">
+            <span class="text-sm font-medium text-red-300">Muammo → yechim</span>
+          </div>
+          <div class="p-5 space-y-5 text-sm text-slate-300">
+            <div>
+              <p class="font-medium text-white">E bosilsa ham Print yo‘q</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>bHasFocus true mi? (Trace ishlayaptimi?)</li>
+                <li>CurrentFocusedActor haqiqatan BP_TestObject mi?</li>
+                <li>Implemented Interfaces ro‘yxatida BPI_Interact bormi?</li>
+                <li>Event Interact graph’da ulanganmi?</li>
+                <li>Message Target to‘g‘ri pinmi?</li>
+                <li>IA_Interact Started ulanganmi, IMC bormi?</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Does Implement doimo false</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Compile + Save interface va BP_TestObject</li>
+                <li>To‘g‘ri interface asset tanlanganmi (BPI_TestInterface emas)?</li>
+                <li>Leveldagi instance eski class’danmi? (re-place)</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Interact “har narsaga” ishlaydi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Does Implement yo‘q — qo‘shing</li>
+                <li>Focus tozalanmayapti (Kun 15 False → None)</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">CanInteract Message ishlamaydi</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Implementatsiyada Return Node ulanganmi?</li>
+                <li>Message dan Return Value Branch’ga ulangani?</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-white">Instigator None</p>
+              <ul class="mt-1 list-disc list-inside text-slate-400 space-y-1">
+                <li>Message da Instigator piniga Self ulang</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHALLENGE -->
+      <section id="challenge" class="mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Challenge — CanInteract false</h2>
+          </div>
+        </div>
+        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-3">
+          <ol class="list-decimal list-inside space-y-2">
+            <li>BP_TestObject’da <span class="ui-label">bCanBeUsed</span> Boolean (default true).</li>
+            <li>CanInteract → Return bCanBeUsed.</li>
+            <li>Interact ichida: muvaffaqiyatli ishlagach bCanBeUsed = false (bir marta ishlatiladigan “tugma”).</li>
+            <li>Player’da CanInteract Branch majburiy.</li>
+            <li>Test: birinchi E — Print; ikkinchi E — jim (yoki “Can't”).</li>
+          </ol>
+          <p class="text-slate-500">Bu keyingi “qulflangan eshik” va “tugallangan task” modeli.</p>
+        </div>
+      </section>
+
+      <!-- BONUS -->
+      <section id="bonus" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">★</span>
+          Bonus
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B1</span>
+            <strong class="text-white ml-2">Ikkinchi test Actor</strong>
+            <p class="mt-1 text-slate-400">BP_TestObject2 — boshqa Print matn. Bir xil Player kodi ikkalasini ham ishlatadi.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B2</span>
+            <strong class="text-white ml-2">Debug: focus implement qiladimi?</strong>
+            <p class="mt-1 text-slate-400">Trace debug rang: implement qilsa yashil, hit bor lekin interface yo‘q — sariq, hit yo‘q — qizil.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B3</span>
+            <strong class="text-white ml-2">Instigator inventory stub</strong>
+            <p class="mt-1 text-slate-400">Interact da Instigator ni Cast To BP_Player (faqat <em>obyekt ichida</em>) — bu yerda Cast qabul qilinadi, chunki Door o‘ziga kerakli tipni biladi.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <span class="font-mono text-xs text-orange-400">B4</span>
+            <strong class="text-white ml-2">Interface’ga keyin qo‘shiladiganlar</strong>
+            <p class="mt-1 text-slate-400">Hozir qo‘shmang, lekin biling: GetInteractPriority, GetInteractHoldTime — hold-to-interact uchun. Imzoni barqaror saqlang.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">?</span>
+          FAQ
+        </h2>
+        <div class="space-y-3 text-sm">
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Interface va Component farqi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Interface — “qila olaman” shartnomasi, kod yo‘q. Component — qayta ishlatiladigan mantiq + state. Ko‘pincha: Actor BPI_Interact implement qiladi; og‘ir mantiq component’da bo‘lishi mumkin.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Nima uchun GetInteractionText alohida?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              UI har frame yoki focus change da matn so‘raydi; Interact bosilganda bir marta. Ajratilgan funksiya — matnni interact mantiqidan ajratadi (ochiq/yopiq eshik matni o‘zgaradi, CanInteract ham).
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Message vs Event Dispatcher?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Dispatcher — “eshtuvchilarga e’lon”. Interface Message — “shu obyektning shartnomasidagi funksiyani chaqir”. Interact uchun Message to‘g‘ri vosita.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Blueprint Native Interface / C++?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Keyinroq C++ ga o‘tkazish mumkin. Hozir toza Blueprint Interface yetarli.
+            </div>
+          </details>
+          <details class="rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <summary class="px-5 py-3 text-slate-300 hover:text-white font-medium">Bir Actor ikkita interface implement qila oladimi?</summary>
+            <div class="px-5 pb-4 text-slate-400 border-t border-slate-800 pt-3">
+              Ha. Masalan BPI_Interact + BPI_Damageable. Har biri alohida shartnoma.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center text-sm">Aa</span>
+          Lug‘at
+        </h2>
+        <div class="rounded-xl border border-slate-800 overflow-hidden">
+          <table class="w-full text-sm">
+            <tbody class="text-slate-300">
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">BPI</td><td class="py-2.5 px-4 text-slate-400">Blueprint Interface</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Implement</td><td class="py-2.5 px-4 text-slate-400">Shartnomani qabul qilib, ichki mantiq yozish</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Interface Message</td><td class="py-2.5 px-4 text-slate-400">Target’da interface funksiyasini chaqirish</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Instigator</td><td class="py-2.5 px-4 text-slate-400">Interact’ni boshlagan Actor</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">CanInteract</td><td class="py-2.5 px-4 text-slate-400">Hozir amalga ruxsat bormi</td></tr>
+              <tr><td class="py-2.5 px-4 font-mono text-xs text-cyan-300">Tight coupling</td><td class="py-2.5 px-4 text-slate-400">Player har bir concret class’ni bilishi</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- WORKED -->
+      <section id="worked" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">1:1</span>
+          Yakuniy checklist
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm">
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BPI_Interact: Interact, GetInteractionText, CanInteract</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">BP_TestObject implement + 3 implementatsiya</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Player: focus → DoesImplement → CanInteract → Interact</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Instigator = Self</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Cast zanjiri yo‘q</span></label>
+          <label class="flex gap-3"><input type="checkbox" class="mt-1 accent-cyan-400"><span class="text-slate-300">Play: E → Print ishlaydi</span></label>
+        </div>
+      </section>
+
+      <!-- DESIGN NOTES -->
+      <section id="design" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">◇</span>
+          Dizayn eslatmalari — keyingi kunlar uchun
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p><strong class="text-white">1. Matn dinamikasi</strong></p>
+          <p class="text-slate-400">Eshik yopiq: “Ochish [E]”. Ochiq: “Yopish [E]”. GetInteractionText ichida Branch (bIsOpen) — UI har safar yangi matn oladi.</p>
+          <p><strong class="text-white">2. CanInteract vs masofa</strong></p>
+          <p class="text-slate-400">Masofa odatda TraceDistance bilan allaqachon cheklangan. CanInteract — holat (qulf, cooldown, inventory talabi), masofa emas.</p>
+          <p><strong class="text-white">3. Hold to interact</strong></p>
+          <p class="text-slate-400">Hozir Started = bir marta. Keyin: hold 1.5 s → progress bar. Interface’ga HoldDuration qo‘shish o‘rniga alohida “channel” yoki component — imzoni buzmaslik uchun.</p>
+          <p><strong class="text-white">4. Multiplayer</strong></p>
+          <p class="text-slate-400">Interact ko‘pincha Server RPC. Interface Message client’da chaqiriladi → ichida “Server_Interact”. Hozir single-player; architecture shu yo‘lga ochiq.</p>
+          <p><strong class="text-white">5. Outline / highlight</strong></p>
+          <p class="text-slate-400">Focus + DoesImplement true → Custom Depth / outline. Trace kunida focus bor; bugun interface bilamiz — highlight faqat interactable’larga.</p>
+        </div>
+      </section>
+
+      <!-- COMMON MISTAKES -->
+      <section id="mistakes" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm">!</span>
+          Eng ko‘p uchraydigan xatolar
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">1. Interface’ga mantiq yozishga urinish</p>
+            <p class="text-slate-400 mt-1">BPI ichida Event Graph yo‘q. Mantiq faqat implement qiluvchi BP’da.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">2. Message o‘rniga “Call function on BP_TestObject”</p>
+            <p class="text-slate-400 mt-1">Bu yana Cast talab qiladi. Message ishlating.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">3. Implement qilgach Compile qilmaslik</p>
+            <p class="text-slate-400 mt-1">Does Implement false qaytishi mumkin. Har doim Compile + Save.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">4. Focus Actor’ni “promoted” hard-reference qilib qo‘yish</p>
+            <p class="text-slate-400 mt-1">Har tick yangilanadi. Levelda fixed reference emas.</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
+            <p class="font-medium text-white">5. CanInteract’ni faqat obyektda yozib, Player’da tekshirmaslik</p>
+            <p class="text-slate-400 mt-1">Obyekt true/false qaytarishi kerak; Player Branch qilishi kerak. Ikkalasi ham.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- MINI ARCH -->
+      <section id="arch-diagram" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">🗺</span>
+          Kichik arxitektura sxemasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <pre class="flow text-cyan-300/90">┌─────────────┐     Trace      ┌──────────────────┐
+│  BP_Player  │ ──────────────►│ CurrentFocused   │
+│  IA_Interact│                │ Actor            │
+└──────┬──────┘                └────────┬─────────┘
+       │ E Started                      │
+       │ DoesImplement?                 │
+       │ CanInteract?                   │
+       │ Interact Message ──────────────┼──► BP_TestObject
+       │                                │    BP_Door (keyin)
+       │                                │    BP_Button (keyin)
+       ▼                                ▼
+   Instigator=Self              BPI_Interact implement
+                                (har biri o‘z mantig‘i)</pre>
+        </div>
+      </section>
+
+      <!-- XULOSA -->
+      <section id="xulosa" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
+          Kun xulosasi
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
+          <p>Bugun Interaction System’ning “tili” paydo bo‘ldi:</p>
+          <ul class="space-y-1.5">
+            <li>✓ <code class="text-xs text-cyan-300">BPI_Interact</code> — universal shartnoma</li>
+            <li>✓ Interact / GetInteractionText / CanInteract</li>
+            <li>✓ TestObject implement + Player Message</li>
+            <li>✓ Trace focus + E = birinchi haqiqiy interact</li>
+            <li>✓ Cast’siz kengaytiriladigan arxitektura</li>
+          </ul>
+          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
+            <code class="text-cyan-300 text-xs block">Content/BetrayBuilder/Blueprints/Interaction/BPI_Interact</code>
+          </div>
+          <div class="border-t border-slate-800 pt-4 mt-4 space-y-2">
+            <p class="text-slate-400">
+              <strong class="text-white">Ertaga (Kun 17):</strong> odatda birinchi haqiqiy interactable — masalan Door yoki oddiy usable Actor. BPI_Interact endi “bo‘sh Print” emas, gameplay.
+            </p>
+            <p class="text-slate-500">
+              Trace (15) + Interface (16) = Interaction yuragi. Qolgani — turli tanlar.
+            </p>
+          </div>
+          <div class="mt-4 rounded-lg border border-slate-700 bg-slate-950 p-4">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">O‘zingizga savol</p>
+            <p class="text-slate-400">Yangi BP_Button qo‘shish uchun Player graph’ini ochish kerakmi? Agar “yo‘q” deb javob bersangiz — maqsadga yetdingiz.</p>
+          </div>
+          <div class="mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-2">
+            <p class="text-xs font-semibold text-emerald-400/90 uppercase tracking-wider">Stage 3 holati</p>
+            <p class="text-slate-400">Kun 15: ko‘z (trace). Kun 16: til (interface). Keyingi kunlar: eshik, tugma, item — tanlar. Poydevor qo‘yildi.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="prep17" class="mb-14">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm">17</span>
+          Kun 17 ga nima olib o‘ting
+        </h2>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm text-slate-300">
+          <ul class="list-disc list-inside space-y-1 text-slate-400">
+            <li>Ishlaydigan E → Interact Print</li>
+            <li>BPI_Interact imzosi o‘zgarmagan (barqaror)</li>
+            <li>CanInteract Branch Player’da</li>
+            <li>Backup: BPI_Interact + BP_TestObject nusxasi ixtiyoriy</li>
+            <li>Levelda kamida bitta implement qilingan Actor</li>
+            <li>Debug Print’larni production’dan oldin o‘chirish rejalashtirilgan</li>
+          </ul>
+          <p class="text-slate-500 mt-3">Agar bugun E ishlamasa — Kun 17 Door yozishdan oldin shu kunni yoping. Interface ustiga Door qo‘yish chalkashtiradi.</p>
+          <p class="text-slate-500">Trace + Interface ishlayotganini 2 daqiqalik video yoki checklist bilan o‘zingizga “yopiq” deb belgilang.</p>
+          <p class="text-slate-600 text-xs">Stage 3 · Interaction · Foundation complete when E prints on focused TestObject.</p>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
+        <a href="day-15.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kun 15
+        </a>
+        <div class="text-xs text-slate-600">Kun 16 / 90 · Stage 3</div>
+        <a href="#" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
+          Kun 17 →
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="h-20"></div>
+    </main>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.toc-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    function updateToc() {
+      const scrollY = window.scrollY + 120;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= scrollY) current = s;
+      }
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
+      });
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
+  </script>
+</body>
+</html>
+
+
