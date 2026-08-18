@@ -7,602 +7,511 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
           }
         }
       }
     }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', system-ui, sans-serif; }
-    .prose h2 { scroll-margin-top: 5rem; }
-    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
-    .ui-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      background: #2d2d2d;
-      border: 1px solid #404040;
-      padding: 0.15rem 0.45rem;
-      border-radius: 4px;
-      color: #80deea;
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+    .prose-custom h2 {
+      font-size: 1.45rem; font-weight: 800; color: #f8fafc;
+      margin-top: 3rem; margin-bottom: 1rem;
+      padding-bottom: 0.65rem; border-bottom: 1px solid #1e293b;
+      display: flex; align-items: center; gap: 0.75rem;
     }
-    .callout { border-left: 4px solid; }
-    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
-    pre, .flow {
+    .prose-custom h3 { font-size: 1.15rem; font-weight: 700; color: #a78bfa; margin-top: 1.75rem; margin-bottom: 0.75rem; }
+    .prose-custom p { color: #cbd5e1; line-height: 1.8; margin-bottom: 1.1rem; }
+    .prose-custom ul, .prose-custom ol { padding-left: 1.35rem; margin-bottom: 1.1rem; color: #cbd5e1; }
+    .prose-custom li { margin-bottom: 0.45rem; line-height: 1.65; }
+    .prose-custom strong { color: #f1f5f9; font-weight: 600; }
+    .prose-custom code {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      line-height: 1.65;
+      background: #1e293b; color: #c4b5fd;
+      padding: 0.12rem 0.4rem; border-radius: 0.3rem; font-size: 0.85em;
+    }
+    .prose-custom pre {
+      font-family: 'JetBrains Mono', monospace;
+      background: #0f172a; border: 1px solid #1e293b;
+      border-radius: 0.75rem; padding: 1.15rem; overflow-x: auto;
+      font-size: 0.78rem; line-height: 1.55; color: #e2e8f0; margin-bottom: 1.25rem;
+    }
+
+    .callout {
+      border-radius: 1rem; border: 1px solid; padding: 1.2rem 1.35rem;
+      margin: 1.4rem 0; display: flex; gap: 1rem;
+    }
+    .callout-info { background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.35); }
+    .callout-tip { background: rgba(56,189,248,0.08); border-color: rgba(56,189,248,0.3); }
+    .callout-warning { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); }
+    .callout-danger { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
+    .callout-architect {
+      background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.06));
+      border-color: rgba(99,102,241,0.4);
+    }
+    .callout-professor {
+      background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(245,158,11,0.05));
+      border-color: rgba(251,191,36,0.35);
+    }
+
+    .method-card {
+      background: #0f172a; border: 1px solid #1e293b; border-radius: 1rem; padding: 1.35rem;
+      height: 100%;
+    }
+    .method-card.cast { border-top: 3px solid #f97316; }
+    .method-card.iface { border-top: 3px solid #22c55e; }
+
+    .step-card {
+      background: linear-gradient(180deg, #0f172a 0%, #0c1222 100%);
+      border: 1px solid #1e293b; border-radius: 1rem; padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .step-num {
+      width: 2.25rem; height: 2.25rem; border-radius: 0.65rem;
+      background: linear-gradient(135deg, #6366f1, #4f46e5); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.95rem; flex-shrink: 0;
+    }
+
+    .checklist-item {
+      display: flex; align-items: flex-start; gap: 0.8rem;
+      padding: 0.8rem 1rem; border-radius: 0.65rem;
+      border: 1px solid #1e293b; background: #0f172a;
+      margin-bottom: 0.45rem; cursor: pointer; transition: all 0.2s;
+    }
+    .checklist-item:hover { border-color: #334155; }
+    .checklist-item.checked { border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.06); }
+    .checklist-item.checked .check-label { text-decoration: line-through; color: #64748b; }
+    .check-box {
+      width: 1.3rem; height: 1.3rem; border-radius: 0.35rem;
+      border: 2px solid #475569; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .checklist-item.checked .check-box { background: #10b981; border-color: #10b981; }
+
+    .toc-link {
+      display: block; padding: 0.35rem 0.7rem; border-radius: 0.4rem;
+      color: #94a3b8; font-size: 0.85rem; transition: all 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .toc-link:hover { color: #a5b4fc; background: rgba(165,180,252,0.05); border-left-color: #6366f1; }
+
+    .progress-ring-circle { transition: stroke-dashoffset 0.5s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
+
+    @media (min-width: 1024px) {
+      .sticky-toc { position: sticky; top: 5rem; max-height: calc(100vh - 6rem); overflow-y: auto; }
     }
   </style>
 </head>
-<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+<body class="h-full bg-slate-950 text-slate-100 antialiased">
 
-  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/95 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3 min-w-0">
-        <a href="../index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
-        </a>
-        <div class="h-5 w-px bg-slate-700"></div>
+        <a href="../index.html" class="w-9 h-9 rounded-lg bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center font-bold text-sm shrink-0 hover:scale-105 transition shadow-lg shadow-orange-500/20">BB</a>
         <div class="min-w-0">
-          <div class="text-xs text-slate-500">Stage 1 · Fundamentals</div>
-          <div class="font-semibold text-sm truncate">Kun 5 — Blueprint Communication</div>
+          <div class="font-bold text-sm sm:text-base truncate">Betray Builder Docs</div>
+          <div class="text-xs text-slate-500 truncate">Kun 5 · Blueprint Communication · Stage 1</div>
         </div>
       </div>
-      <div class="flex items-center gap-2">
-        <span class="hidden sm:inline text-xs text-slate-500">Taxminiy vaqt: 2–2.5 soat</span>
-        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5">
+          <svg class="w-4 h-4 text-indigo-400" viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="#1e293b" stroke-width="3"/>
+            <circle id="day-progress-ring" class="progress-ring-circle" cx="18" cy="18" r="15.5" fill="none"
+                    stroke="#818cf8" stroke-width="3" stroke-dasharray="97.4" stroke-dashoffset="97.4" stroke-linecap="round"/>
+          </svg>
+          <span class="text-xs text-slate-400"><span id="day-progress-text" class="text-indigo-400 font-semibold">0</span>/10 qadam</span>
+        </div>
+        <a href="../index.html" class="text-xs text-slate-400 hover:text-white transition px-3 py-1.5 rounded-lg hover:bg-slate-800">Kursga qaytish</a>
       </div>
     </div>
   </header>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 lg:py-12">
+    <div class="lg:grid lg:grid-cols-[230px_1fr] lg:gap-10">
 
-    <aside class="hidden lg:block w-56 shrink-0">
-      <nav class="sticky top-20 space-y-0.5 text-sm">
-        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
-        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
-        <a href="#tushunchalar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Asosiy tushunchalar</a>
-        <a href="#farq" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Cast vs Interface</a>
-        <a href="#flow" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Ikki usul sxemasi</a>
-        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Oldindan talab</a>
-        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. BP_TestObject2</a>
-        <a href="#cast" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Cast usuli</a>
-        <a href="#interface" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. BPI_TestInterface</a>
-        <a href="#implement" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Implement qilish</a>
-        <a href="#message" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Interface Message</a>
-        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Test</a>
-        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
-        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
-      </nav>
-    </aside>
-
-    <main class="flex-1 min-w-0 max-w-3xl">
-
-      <div class="mb-10">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-medium mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-          Stage 1 · Kun 5 / 7
-        </div>
-        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Blueprint Communication</h1>
-        <p class="text-lg text-slate-400 leading-relaxed">
-          Ikki Actor qanday gaplashadi: avval <strong class="text-slate-200">Cast</strong>, keyin <strong class="text-slate-200">Blueprint Interface</strong>. Interaction System’ning poydevori shu yerda qo‘yiladi.
-        </p>
-      </div>
-
-      <!-- MAQSAD -->
-      <section id="maqsad" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
-          Kun maqsadi
-        </h2>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3">
-          <p class="text-slate-300 leading-relaxed">Bugun siz:</p>
-          <ul class="space-y-2 text-slate-300">
-            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Ikkinchi Actor <code class="text-xs text-cyan-300">BP_TestObject2</code> yaratasiz</li>
-            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Player’dan <strong class="text-white">Cast To BP_TestObject</strong> orqali OnActivate chaqirasiz</li>
-            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> <code class="text-xs text-cyan-300">BPI_TestInterface</code> yaratib, ichiga OnActivate qo‘shasiz</li>
-            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Ikkala TestObject’ga interfeysni <strong class="text-white">implement</strong> qilasiz</li>
-            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Cast o‘rniga <strong class="text-white">Interface Message</strong> ishlatasiz — bitta kod, ikkala obyekt</li>
-          </ul>
-          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3 mt-4">
-            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Bugun chuqurlashmang:</strong> Line Trace’ni to‘liq Interaction System darajasida yozmang (Kun 15). Hozircha sodda usul yetarli — masalan, yaqin Actor reference yoki oddiy Get All / overlap. Maqsad — Cast va Interface farqini his qilish.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- TUSHUNCHALAR -->
-      <section id="tushunchalar" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📖</span>
-          Asosiy tushunchalar
-        </h2>
-        <div class="space-y-3">
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Object Reference</div>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              “Shu Actor’ga ishora” — o‘zgaruvchi yoki pin orqali boshqa Actor’ni ushlab turish. Reference bo‘lmasa, boshqa obyektning funksiyasini chaqira olmaysiz.
-            </p>
-          </div>
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Cast</div>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              Umumiy Actor / Object reference’ni <strong>aniq turga</strong> aylantirish (masalan Cast To BP_TestObject). Muvaffaqiyatli bo‘lsa — o‘sha class’ning event/function’larini chaqirasiz. Muvaffaqiyatsiz — boshqa tarmoq (Cast Failed).
-            </p>
-            <p class="text-sm text-slate-500 mt-2">Kamchilik: har yangi tur (Door, Button, Light...) uchun alohida Cast tarmog‘i kerak → kod shishadi, “tight coupling”.</p>
-          </div>
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Blueprint Interface (BPI)</div>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              Shartnoma: “men OnActivate qila olaman” deb va’da beradigan funksiyalar to‘plami. Har xil Blueprint’lar shu interfeysni <strong>implement</strong> qiladi — har biri o‘zicha ichki mantiq yozadi. Chaqiruvchi tomon aniq class’ni bilishi shart emas: Interface Message yuboradi.
-            </p>
-          </div>
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Interface Message</div>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              “Shu target’da BPI’ning OnActivate’ini ishga tushir” deb yuboriladigan chaqiruv. Target interfeysni implement qilgan bo‘lsa — ishlaydi; qilmagan bo‘lsa — odatda hech narsa bo‘lmaydi (xatosiz o‘tib ketishi mumkin).
-            </p>
-          </div>
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Tight coupling</div>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              Player to‘g‘ridan-to‘g‘ri BP_Door, BP_Button, BP_Light... ni bilishi. Yangi obyekt qo‘shilsa Player kodi ham o‘zgaradi. Interface bilan Player faqat “Interact qiladigan narsa” ni biladi — yangi tur qo‘shish oson.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- FARQ -->
-      <section id="farq" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">⚖️</span>
-          Cast vs Interface (qachon qaysi)
-        </h2>
-        <div class="rounded-xl border border-slate-800 overflow-hidden">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="border-b border-slate-700 text-left text-slate-400 bg-slate-900">
-                <th class="py-2.5 px-4 font-medium"></th>
-                <th class="py-2.5 px-4 font-medium">Cast</th>
-                <th class="py-2.5 px-4 font-medium">Interface</th>
-              </tr>
-            </thead>
-            <tbody class="text-slate-300">
-              <tr class="border-b border-slate-800">
-                <td class="py-2.5 px-4 text-slate-500">Bilish kerak</td>
-                <td class="py-2.5 px-4">Aniq class nomi</td>
-                <td class="py-2.5 px-4">Faqat interfeys</td>
-              </tr>
-              <tr class="border-b border-slate-800">
-                <td class="py-2.5 px-4 text-slate-500">Ko‘p turlar</td>
-                <td class="py-2.5 px-4">Har biri uchun Cast</td>
-                <td class="py-2.5 px-4">Bitta Message</td>
-              </tr>
-              <tr class="border-b border-slate-800">
-                <td class="py-2.5 px-4 text-slate-500">Mos kelmasa</td>
-                <td class="py-2.5 px-4">Cast Failed</td>
-                <td class="py-2.5 px-4">Odatda jim o‘tadi</td>
-              </tr>
-              <tr>
-                <td class="py-2.5 px-4 text-slate-500">Kursda</td>
-                <td class="py-2.5 px-4">O‘rganish / maxsus holat</td>
-                <td class="py-2.5 px-4"><strong class="text-cyan-300">Interaction asosi</strong></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- FLOW -->
-      <section id="flow" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">↗</span>
-          Ikki usul sxemasi
-        </h2>
-        <div class="rounded-xl border border-slate-800 bg-slate-950 p-5 space-y-5">
-          <div>
-            <p class="text-xs text-amber-400/90 mb-2 font-medium">USUL 1 — Cast</p>
-            <pre class="flow text-cyan-300/90">Player: E Pressed
-    │
-    ▼
-Target Actor reference (masalan yaqin obyekt)
-    │
-    ▼
-Cast To BP_TestObject
-    ├─ Success → Call OnActivate
-    └─ Failed  → (hech narsa / boshqa Cast)</pre>
-          </div>
-          <div class="border-t border-slate-800 pt-4">
-            <p class="text-xs text-emerald-400/90 mb-2 font-medium">USUL 2 — Interface (maqsad)</p>
-            <pre class="flow text-cyan-300/90">Player: E Pressed
-    │
-    ▼
-Target Actor reference
-    │
-    ▼
-OnActivate (Interface Message) → Target
-    │
-    └── Implement qilgan har qanday Actor
-        o‘z OnActivate mantig‘ini bajaradi</pre>
-          </div>
-        </div>
-      </section>
-
-      <!-- TALABLAR -->
-      <section id="talablar" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
-          Oldindan talab
-        </h2>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
-          <ul class="space-y-2 text-sm text-slate-300">
-            <li class="flex gap-3">
-              <span class="text-emerald-400 font-bold">✓</span>
-              <span><code class="text-cyan-300 text-xs">BP_TestObject</code> da <code class="text-cyan-300 text-xs">OnActivate</code> Custom Event bor (Kun 4)</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="text-emerald-400 font-bold">✓</span>
-              <span>Third Person template’dagi Character (BP_ThirdPersonCharacter yoki o‘xshash) — Player sifatida</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="text-emerald-400 font-bold">✓</span>
-              <span>Level’da kamida bitta BP_TestObject</span>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- STEP 1 -->
-      <section id="boshlash" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">BP_TestObject2 yaratish</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">1.1</span>
-              <span class="text-sm font-medium text-white">Nusxa yoki yangi Actor</span>
+      <aside class="hidden lg:block">
+        <div class="sticky-toc">
+          <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-2">Mundarija</div>
+          <nav class="space-y-0.5">
+            <a href="#hero" class="toc-link">Kirish</a>
+            <a href="#maqsad" class="toc-link">Bugungi maqsad</a>
+            <a href="#muammo" class="toc-link">Muammo: tight coupling</a>
+            <a href="#ikki-usul" class="toc-link">Ikki usul yonma-yon</a>
+            <a href="#cast" class="toc-link">Usul 1: Cast</a>
+            <a href="#iface" class="toc-link">Usul 2: Interface</a>
+            <a href="#amaliy" class="toc-link">Amaliy qadamlar</a>
+            <a href="#test" class="toc-link">Test Checklist</a>
+            <a href="#natija" class="toc-link">Natija</a>
+            <a href="#qilmang" class="toc-link">Bugun qilmang</a>
+            <a href="#challenge" class="toc-link">Challenge</a>
+            <a href="#professor" class="toc-link">Professor izohi</a>
+          </nav>
+          <div class="mt-8 p-4 rounded-xl bg-slate-900 border border-indigo-500/20">
+            <div class="text-xs text-indigo-400/80 mb-2">Bugungi progress</div>
+            <div class="text-2xl font-bold text-indigo-400" id="sidebar-percent">0%</div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full mt-2 overflow-hidden">
+              <div id="sidebar-bar" class="h-full bg-gradient-to-r from-indigo-500 to-violet-400 rounded-full transition-all duration-500" style="width:0%"></div>
             </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p><strong class="text-white">Usul A (tez):</strong> Content Browser’da <span class="ui-label">BP_TestObject</span> ga o‘ng sichqoncha → <span class="ui-label">Duplicate</span> → nomini <span class="ui-label font-mono">BP_TestObject2</span> qiling.</p>
-              <p><strong class="text-white">Usul B:</strong> Yangi Actor Blueprint yarating, Mesh + Collision qo‘shing, Event Graph’da OnActivate + Print (“TestObject2 faollashtirildi”) yozing — Kun 2–4 qisqacha takrori.</p>
-              <p>Muhim: ikkalasida ham chaqiriladigan <strong class="text-white">OnActivate</strong> (yoki keyin Interface orqali bir xil nom) bo‘lsin.</p>
+            <button id="btn-reset-day" class="mt-3 w-full text-xs text-slate-500 hover:text-red-400 transition py-1">Checklistni tozalash</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="min-w-0">
+
+        <section id="hero" class="mb-10">
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700">KUN 5 / 90</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">STAGE 1 · FUNDAMENTALS</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-violet-500/15 text-violet-400 border border-violet-500/30">ARXITEKTURA</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tight mb-4 leading-tight">Blueprint Communication</h1>
+          <p class="text-lg sm:text-xl text-slate-400 max-w-3xl leading-relaxed">
+            Ikki Actor qanday gaplashadi? Avval <strong class="text-orange-300">Cast</strong>, 
+            keyin <strong class="text-emerald-300">Interface</strong>. 
+            Bu kun — keyingi Interaction System ning poydevori.
+          </p>
+        </section>
+
+        <section id="maqsad">
+          <div class="callout callout-info">
+            <div class="text-indigo-400 shrink-0 mt-0.5">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-indigo-200 text-base mb-1">Bugungi aniq maqsad</h3>
+              <p class="text-slate-300 text-sm leading-relaxed m-0">
+                Cast bilan OnActivate, keyin <code>BPI_TestInterface</code> va Interface Message. 
+                Ikkala obyekt — bitta kod. Line Trace chuqur emas.
+              </p>
             </div>
           </div>
+        </section>
 
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">1.2</span>
-              <span class="text-sm font-medium text-white">Levelga ikkala obyekt</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Level’ga <span class="ui-label">BP_TestObject</span> va <span class="ui-label">BP_TestObject2</span> dan kamida bittadan joylashtiring. Bir-biridan uzoqroq qo‘ying — keyinroq qaysi biri ishlaganini ajratish oson.</p>
-              <p>Ixtiyoriy: Print matnlarini farqlang — “Object1” / “Object2”.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        <article class="prose-custom">
 
-      <!-- STEP 2 CAST -->
-      <section id="cast" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Cast usuli (vaqtinchalik)</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 25–35 daqiqa</p>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">2.1</span>
-              <span class="text-sm font-medium text-white">Player Character’ni topish</span>
+          <section id="muammo">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm font-bold">01</span>
+              Muammo: tight coupling
+            </h2>
+            <p>
+              Agar Player faqat <code>Cast to BP_Door</code>, keyin <code>Cast to BP_Lever</code>, 
+              keyin <code>Cast to BP_Chest</code> deb yozilsa — har yangi obyekt uchun Player ochiladi. 
+              Bu <strong>tight coupling</strong>: o‘zgarish qimmat, xato ko‘p.
+            </p>
+            <div class="callout callout-architect">
+              <div class="text-indigo-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+              </div>
+              <p class="text-sm text-slate-300 m-0">
+                Interface: “Kimdir OnActivate ni bajaradi” deb va’da. 
+                Player faqat va’dani chaqiradi — kim ekanini bilishi shart emas. 
+                Shu sabab 90 kunlik kursda Interaction <strong>BPI</strong> asosida.
+              </p>
             </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Third Person template’da odatda:</p>
-              <p><span class="ui-label">Content/ThirdPerson/Blueprints/BP_ThirdPersonCharacter</span></p>
-              <p>(yoki loyihangizdagi asosiy Character). Uni oching → Event Graph.</p>
-              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nima uchun Player:</strong> Input allaqachon Character’da ishlaydi. BP_TestObject’da E ishlashi uchun Enable Input kerak edi; Player’da bu muammo yo‘q.</p>
+          </section>
+
+          <section id="ikki-usul">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm font-bold">02</span>
+              Ikki usul — yonma-yon
+            </h2>
+            <div class="grid sm:grid-cols-2 gap-4 not-prose my-4">
+              <div class="method-card cast">
+                <div class="text-orange-400 font-bold text-sm mb-2">① Cast</div>
+                <p class="text-xs text-slate-400 mb-3">Aniq tipni bilish kerak</p>
+                <pre class="text-xs m-0 p-3 rounded-lg bg-slate-950 border border-slate-800 text-slate-300">Hit Actor
+  → Cast to BP_TestObject
+  → Success: Call OnActivate
+  → Fail: (boshqa tip?)</pre>
+                <p class="text-xs text-orange-300/80 mt-3 mb-0">Yangi tip = yangi Cast tarmoq</p>
+              </div>
+              <div class="method-card iface">
+                <div class="text-emerald-400 font-bold text-sm mb-2">② Interface</div>
+                <p class="text-xs text-slate-400 mb-3">Faqat “va’da” muhim</p>
+                <pre class="text-xs m-0 p-3 rounded-lg bg-slate-950 border border-slate-800 text-slate-300">Hit Actor
+  → Does Implement BPI?
+  → Yes: Interface Message
+        OnActivate
+  → No: e'tibor bermaslik</pre>
+                <p class="text-xs text-emerald-300/80 mt-3 mb-0">Yangi tip = faqat implement</p>
               </div>
             </div>
-          </div>
+          </section>
 
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">2.2</span>
-              <span class="text-sm font-medium text-white">Target reference olish (sodda variant)</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>To‘liq Line Trace Kun 15 da. Bugun <strong class="text-white">o‘rganish uchun</strong> quyidagilardan birini tanlang:</p>
-              <p class="font-medium text-white">Variant A — Instance Editable reference</p>
-              <ol class="list-decimal list-inside space-y-1 text-slate-400">
-                <li>Character’da variable: <span class="ui-label">TargetObject</span>, tip: Object Reference → Actor (yoki BP_TestObject).</li>
-                <li>Instance Editable / Expose on Spawn yoqing.</li>
-                <li>Level’da Player Start / Character instance Details’da TargetObject sifatida BP_TestObject’ni tanlang.</li>
-                <li>E Pressed → Cast / Call shu variable orqali.</li>
-              </ol>
-              <p class="font-medium text-white mt-3">Variant B — Get All Actors of Class (test uchun)</p>
-              <p class="text-slate-400">E Pressed → Get All Actors Of Class (BP_TestObject) → For Each → Cast (ixtiyoriy) → OnActivate. Barcha TestObject’lar birga ishlaydi — demo uchun qulay.</p>
-              <p class="font-medium text-white mt-3">Variant C — qisqa Line Trace (ixtiyoriy oldindan)</p>
-              <p class="text-slate-400">Camera location → forward × 300 → Line Trace By Channel → Hit Actor. Keyin Cast. Bu Kun 15 ga yaqinroq; xohlasangiz sinab ko‘ring, lekin asosiy maqsad Cast/Interface.</p>
-            </div>
-          </div>
+          <section id="cast">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm font-bold">03</span>
+              Usul 1 — avval Cast (tushunish uchun)
+            </h2>
+            <p>
+              BP_Player (yoki Character) da vaqtincha: E bosilganda 
+              “nima qarshimizda?” deb oling (Get Hit Result / oddiy reference test ham mumkin — 
+              Line Trace chuqurligi Day 15). Cast to BP_TestObject → OnActivate.
+            </p>
+            <p>
+              BP_TestObject2 ga Cast qilsangiz — Fail. Shu yerda muammo seziladi.
+            </p>
+          </section>
 
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">2.3</span>
-              <span class="text-sm font-medium text-white">Cast To BP_TestObject → OnActivate</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>E (yoki mavjud Interact) Pressed zanjirida:</p>
-              <ol class="list-decimal list-inside space-y-2">
-                <li>Target Actor pinidan (reference) sim torting.</li>
-                <li><span class="ui-label">Cast To BP_TestObject</span> qo‘shing (Object piniga reference ulang).</li>
-                <li><span class="ui-label">As BP Test Object</span> chiqishidan → <span class="ui-label">OnActivate</span> (Call) chaqiring.</li>
-                <li>Cast Failed tarmog‘iga ixtiyoriy Print: “Bu TestObject emas”.</li>
-              </ol>
-              <p>Play: Target to‘g‘ri BP_TestObject bo‘lsa — “Obyekt faollashtirildi”. <strong class="text-white">BP_TestObject2</strong> ga Cast To BP_TestObject odatda <strong>Failed</strong> bo‘ladi (boshqa class) — shu yerda Cast cheklovini ko‘rasiz.</p>
-              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Agar Duplicate qilgan bo‘lsangiz:</strong> BP_TestObject2 parent’i BP_TestObject bo‘lsa, Cast To BP_TestObject Success bo‘lishi mumkin (meros). To‘liq “boshqa tur” effekti uchun BP_TestObject2 ni alohida Actor qilib, o‘z OnActivate’iga ega qiling — yoki keyingi Interface bosqichida farqni ko‘ring.</p>
+          <section id="iface">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">04</span>
+              Usul 2 — BPI_TestInterface
+            </h2>
+            <ol>
+              <li>Content → Interaction papka (yarating) → Blueprint Interface → <code>BPI_TestInterface</code></li>
+              <li>Ichiga funksiya: <code>OnActivate</code> (input/output hozircha bo‘sh ham bo‘ladi)</li>
+              <li>BP_TestObject va BP_TestObject2: Class Settings → Implemented Interfaces → qo‘shing</li>
+              <li>Har birida Interfaces → OnActivate ni implement qiling (Print)</li>
+              <li>Player da: Cast o‘rniga <strong>Interface Message → OnActivate</strong></li>
+            </ol>
+            <div class="callout callout-tip">
+              <div class="text-sky-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
               </div>
+              <p class="text-sm text-slate-300 m-0">
+                Interface Message “jim” ishlaydi: implement qilmagan Actor da hech narsa bo‘lmaydi (xato emas). 
+                Does Implement Interface? bilan oldindan tekshirish mumkin.
+              </p>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      <!-- STEP 3 INTERFACE -->
-      <section id="interface" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">BPI_TestInterface yaratish</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 10–15 daqiqa</p>
-          </div>
-        </div>
+          <section id="amaliy">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-sm font-bold">05</span>
+              Amaliy qadamlar
+            </h2>
 
-        <div class="space-y-6">
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">3.1</span>
-              <span class="text-sm font-medium text-white">Papka</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p><span class="ui-label">Content/BetrayBuilder/Blueprints/</span> ichida <span class="ui-label">Interaction</span> papkasini yarating (yo‘q bo‘lsa).</p>
-            </div>
-          </div>
-
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">3.2</span>
-              <span class="text-sm font-medium text-white">Blueprint Interface asset</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>O‘ng sichqoncha → <span class="ui-label">Blueprint Interface</span> (Add → Blueprints → Blueprint Interface).</p>
-              <p>Nom: <span class="ui-label font-mono">BPI_TestInterface</span></p>
-              <p>Ochilganda Functions ro‘yxati bo‘sh bo‘ladi.</p>
-            </div>
-          </div>
-
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">3.3</span>
-              <span class="text-sm font-medium text-white">OnActivate funksiyasini qo‘shish</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p><span class="ui-label">Add</span> (yoki + Function) → nom: <span class="ui-label font-mono">OnActivate</span></p>
-              <p>Hozircha parametr shart emas (bo‘sh Input/Output). Keyinroq BPI_Interact da Instigator, Text, CanInteract qo‘shiladi (Kun 16).</p>
-              <p>Compile / Save interface asset’ni.</p>
-              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Eslatma:</strong> Interface’da faqat “imzo” (nom + pin’lar) bo‘ladi, ichki mantiq yo‘q. Mantiq har bir implement qiluvchi Blueprint’da yoziladi.</p>
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">1</div>
+                <h3 class="m-0 text-white text-base font-bold">BP_TestObject2</h3>
               </div>
+              <p class="text-sm text-slate-300 m-0">BP_TestObject dan Duplicate yoki yangi Actor + OnActivate Print. Levelga ikkalasini qo‘ying.</p>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- STEP 4 IMPLEMENT -->
-      <section id="implement" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Interfeysni implement qilish</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">4.1</span>
-              <span class="text-sm font-medium text-white">BP_TestObject</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>BP_TestObject’ni oching.</p>
-              <p>Toolbar: <span class="ui-label">Class Settings</span> (yoki Details’da class sozlamalari).</p>
-              <p><span class="ui-label">Interfaces</span> → <span class="ui-label">Implemented Interfaces</span> → <span class="ui-label">Add</span> → <span class="ui-label">BPI_TestInterface</span></p>
-              <p>Compile. My Blueprint / Interfaces ostida OnActivate paydo bo‘lishi mumkin.</p>
-              <p><strong class="text-white">Event Graph’da implementatsiya:</strong></p>
-              <p>O‘ng sichqoncha → <span class="ui-label">Event OnActivate</span> (BPI_TestInterface) ni qo‘shing — yoki Interfaces ro‘yxatidan oching.</p>
-              <p>Bu event’ga avvalgi Custom Event OnActivate mantig‘ini ulashing (Print String), yoki Custom Event’ni olib tashlab, faqat Interface Event OnActivate ichida Print yozing.</p>
-              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Nom to‘qnashuvi:</strong> Custom Event ham OnActivate deb nomlangan bo‘lsa, chalkashishi mumkin. Eng toza yo‘l: Interface’dagi <strong>Event OnActivate</strong> ichida Print; eski Custom Event’ni Call o‘rniga Interface ishlatish.</p>
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">2</div>
+                <h3 class="m-0 text-white text-base font-bold">Cast sinovi</h3>
               </div>
+              <p class="text-sm text-slate-300 m-0">Player da Cast to BP_TestObject → OnActivate. Object2 da ishlamasligini ko‘ring.</p>
             </div>
-          </div>
 
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">4.2</span>
-              <span class="text-sm font-medium text-white">BP_TestObject2</span>
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">3</div>
+                <h3 class="m-0 text-white text-base font-bold">BPI + implement</h3>
+              </div>
+              <p class="text-sm text-slate-300 m-0">BPI_TestInterface, ikkala BP ga implement, Interface Message ga o‘ting.</p>
             </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Xuddi shu: Class Settings → Implemented Interfaces → BPI_TestInterface.</p>
-              <p>Event OnActivate → Print String: masalan <span class="ui-label font-mono">TestObject2 faollashtirildi</span></p>
-              <p>Compile + Save har ikkala Blueprint.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- STEP 5 MESSAGE -->
-      <section id="message" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Cast o‘rniga Interface Message</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">5.1</span>
-              <span class="text-sm font-medium text-white">Player Character’da o‘zgartirish</span>
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">4</div>
+                <h3 class="m-0 text-white text-base font-bold">Bir kod — ikki obyekt</h3>
+              </div>
+              <p class="text-sm text-slate-300 m-0">E (yoki test chaqiruv) ikkalasida ham OnActivate ishlatadi.</p>
             </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>E Pressed zanjiridagi <strong class="text-white">Cast To BP_TestObject</strong> ni olib tashlang yoki o‘chirib qo‘ying.</p>
-              <p>Target Actor (reference) pinidan:</p>
-              <ol class="list-decimal list-inside space-y-2">
-                <li>Qidiruv: <span class="ui-label">OnActivate</span> — ro‘yxatda <strong class="text-white">OnActivate (BPI_TestInterface)</strong> / Message variantini tanlang.</li>
-                <li>Yoki: <span class="ui-label">Interface Message</span> → BPI_TestInterface → OnActivate.</li>
-                <li><span class="ui-label">Target</span> piniga Actor reference’ni ulang (Cast’siz).</li>
-              </ol>
-              <p>Endi kod BP_TestObject class’ini bilmaydi — faqat “OnActivate deb yubor” deydi.</p>
-            </div>
-          </div>
+          </section>
 
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">5.2</span>
-              <span class="text-sm font-medium text-white">Ikkala target bilan sinash</span>
+          <section id="test">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">06</span>
+              Test Checklist
+            </h2>
+            <div id="checklist" class="not-prose mt-3 space-y-1"></div>
+            <div class="mt-3 flex items-center justify-between text-sm not-prose">
+              <span class="text-slate-500">Bajarildi: <span id="check-count" class="text-indigo-400 font-semibold">0</span> / <span id="check-total">10</span></span>
+              <button id="btn-check-all" class="text-xs text-slate-500 hover:text-indigo-400 transition">Barchasini belgilash</button>
             </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Reference’ni Level’da avval Object1, keyin Object2 ga qo‘ying (yoki Get All + For Each da Interface Message chaqiring).</p>
-              <p>Bitta xil chaqiruv — ikkala implementatsiya ham ishlashi kerak.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      <!-- STEP 6 TEST -->
-      <section id="test" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Test qilish</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 10 daqiqa</p>
-          </div>
-        </div>
-
-        <div class="rounded-xl border border-slate-800 overflow-hidden">
-          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
-            <span class="text-sm font-medium text-white">Kutilgan natija</span>
-          </div>
-          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-            <ul class="space-y-2">
-              <li>✓ Target = BP_TestObject → o‘z Print xabari</li>
-              <li>✓ Target = BP_TestObject2 → o‘z Print xabari</li>
-              <li>✓ Player kodida <strong class="text-white">Cast To BP_TestObject</strong> yo‘q (yoki ishlatilmaydi)</li>
-              <li>✓ Yangi tur qo‘shish = yangi Blueprint + implement BPI; Player’ni o‘zgartirish shart emas</li>
+          <section id="natija">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center text-sm font-bold">07</span>
+              Kutilayotgan natija
+            </h2>
+            <ul>
+              <li>Cast va Interface farqi amalda ko‘rildi</li>
+              <li><code>BPI_TestInterface</code> — Interaction System poydevori</li>
             </ul>
-            <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
-              <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Natija:</strong> Cast va Interface farqi amalda ko‘rindi; <code class="text-emerald-300">BPI_TestInterface</code> — Interaction System poydevori.</p>
+            <p class="text-sm text-slate-500">Structure: <code>Content/BetrayBuilder/Blueprints/Interaction/BPI_TestInterface</code></p>
+          </section>
+
+          <section id="qilmang">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm font-bold">08</span>
+              Bugun nima qilmang
+            </h2>
+            <div class="callout callout-danger">
+              <div class="text-red-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+              </div>
+              <ul class="text-sm text-slate-300 m-0 list-none pl-0 space-y-1">
+                <li><span class="text-red-400 font-bold">✕</span> Line Trace chuqur sozlash (Day 15)</li>
+                <li><span class="text-red-400 font-bold">✕</span> Juda ko‘p Actor turlari</li>
+              </ul>
             </div>
-            <div class="callout border-red-500/50 bg-red-500/5 rounded-r-lg p-3">
-              <p class="text-sm text-red-200/90"><strong class="text-red-400">Message ishlamasa:</strong> Implemented Interfaces ro‘yxatida BPI bormi? Event OnActivate graph’da bormi va Print ulanganmi? Message Target to‘g‘ri Actor’mi? Interface asset saqlanganmi?</p>
+          </section>
+
+          <section id="challenge">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">★</span>
+              Challenge
+            </h2>
+            <div class="callout callout-warning">
+              <div class="text-amber-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-amber-300 mb-1">O‘z so‘zingiz bilan yozing</h4>
+                <p class="text-sm text-slate-300 m-0">
+                  Nima uchun 90 kunlik kursda Interaction System aynan Interface asosida? 
+                  Notes yoki loyiha papkasiga 2–3 gap yozing — keyin Day 15+ da qayta o‘qing.
+                </p>
+              </div>
             </div>
-          </div>
+          </section>
+
+          <section id="professor">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">★</span>
+              Professor izohi
+            </h2>
+            <div class="callout callout-professor">
+              <div class="text-amber-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              </div>
+              <p class="text-sm text-slate-300 m-0 leading-relaxed">
+                Bu kun “texnika” emas — <strong class="text-amber-200">dizayn qarori</strong>. 
+                Cast yomon emas; kichik prototipda tez. Lekin o‘yin o‘sganda Interface yutadi. 
+                Siz endi shu tanlovni ko‘rdingiz — ko‘pchilik o‘yinchilar emas, dasturchilar ko‘radi.
+              </p>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="mt-14 pt-8 border-t border-slate-800 flex flex-col sm:flex-row gap-3 justify-between">
+          <a href="day-04.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 text-sm transition">← Kun 4</a>
+          <a href="../index.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium transition">Kursga qaytish</a>
+          <a href="day-06.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition shadow-lg shadow-indigo-500/20">Kun 6 →</a>
         </div>
-      </section>
 
-      <!-- CHALLENGE -->
-      <section id="challenge" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Challenge — yozma tushuncha</h2>
-            <p class="text-sm text-slate-500">Kod emas, fikr</p>
-          </div>
-        </div>
-
-        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-          <p>O‘z so‘zlaringiz bilan (3–8 jumla) yozing:</p>
-          <p class="text-white font-medium">Nima uchun 90 kunlik kursda Interaction System aynan Interface asosida quriladi?</p>
-          <p class="text-slate-400">Yordamchi nuqtalar: Door, Button, Light, Computer, Generator...; Player kodini har safar o‘zgartirmaslik; multiplayer va yangi obyektlar; Cast “Failed” tarmoqlari ko‘payishi.</p>
-          <p class="text-slate-500">Bu yozuvni saqlab qo‘ying — Kun 16 (BPI_Interact) va keyingi bosqichlarda o‘zingizga eslatma bo‘ladi.</p>
-        </div>
-      </section>
-
-      <!-- XULOSA -->
-      <section id="xulosa" class="mb-14">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
-          Kun xulosasi
-        </h2>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-          <p>Bugun siz:</p>
-          <ul class="space-y-1.5">
-            <li>✓ <code class="text-xs text-cyan-300">BP_TestObject2</code> yaratdingiz</li>
-            <li>✓ <strong class="text-white">Cast</strong> orqali boshqa Actor’ning OnActivate’ini chaqirdingiz</li>
-            <li>✓ <code class="text-xs text-cyan-300">BPI_TestInterface</code> yaratib, OnActivate qo‘shdingiz</li>
-            <li>✓ Ikkala obyektga interfeysni <strong class="text-white">implement</strong> qildingiz</li>
-            <li>✓ Player’da <strong class="text-white">Interface Message</strong> bilan bir xil chaqiruv ishlatdingiz</li>
-          </ul>
-          <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 mt-4">
-            <code class="text-cyan-300 text-xs">Content/BetrayBuilder/Blueprints/Interaction/BPI_TestInterface</code>
-          </div>
-          <div class="border-t border-slate-800 pt-4 mt-4">
-            <p class="text-slate-400"><strong class="text-white">Ertaga (Kun 6):</strong> Enhanced Input — IA_Interact, IA_Sprint, IA_Crouch va IMC_BetrayBuilder. Oddiy Keyboard Event o‘rniga professional input tizimi.</p>
-          </div>
-        </div>
-      </section>
-
-      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
-        <a href="day-04.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          Kun 4
-        </a>
-        <div class="text-xs text-slate-600">Kun 5 / 90</div>
-        <a href="day-06.html" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
-          Kun 6 →
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-
-      <div class="h-16"></div>
-    </main>
+        <footer class="mt-10 pb-8 text-center text-xs text-slate-600">
+          Betray Builder · Kun 5 / 90 · Blueprint Communication
+        </footer>
+      </main>
+    </div>
   </div>
 
   <script>
-    const links = document.querySelectorAll('.toc-link');
-    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
-    function updateToc() {
-      const scrollY = window.scrollY + 120;
-      let current = sections[0];
-      for (const s of sections) {
-        if (s.offsetTop <= scrollY) current = s;
-      }
-      links.forEach(l => {
-        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
-      });
+    const CHECKLIST_KEY = 'bb_day05_checklist';
+    const CHECK_ITEMS = [
+      "BP_TestObject2 yaratildi / nusxalandi",
+      "Cast to BP_TestObject orqali OnActivate sinab ko'rildi",
+      "Cast Object2 da muvaffaqiyatsiz ekanligi sezildi",
+      "BPI_TestInterface yaratildi",
+      "OnActivate funksiyasi Interface ichida bor",
+      "BP_TestObject implement qilindi",
+      "BP_TestObject2 implement qilindi",
+      "Player da Interface Message ishlatiladi",
+      "Ikkala obyekt bitta kod bilan ishlaydi",
+      "Challenge: Interface tanlovi haqida 2-3 gap yozildi"
+    ];
+
+    function safeGet(key) {
+      try { return JSON.parse(localStorage.getItem(key) || '[]'); }
+      catch { return []; }
     }
-    window.addEventListener('scroll', updateToc, { passive: true });
-    updateToc();
+    function safeSet(key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); }
+      catch {}
+    }
+
+    let checked = new Set(safeGet(CHECKLIST_KEY));
+
+    function renderChecklist() {
+      const container = document.getElementById('checklist');
+      container.innerHTML = CHECK_ITEMS.map((text, i) => {
+        const isChecked = checked.has(i);
+        return `
+          <div class="checklist-item ${isChecked ? 'checked' : ''}" data-idx="${i}">
+            <div class="check-box">
+              ${isChecked ? '<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>' : ''}
+            </div>
+            <span class="check-label text-sm text-slate-300 leading-snug">${text}</span>
+          </div>
+        `;
+      }).join('');
+      container.querySelectorAll('.checklist-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const idx = +el.dataset.idx;
+          if (checked.has(idx)) checked.delete(idx);
+          else checked.add(idx);
+          safeSet(CHECKLIST_KEY, [...checked]);
+          renderChecklist();
+          updateProgress();
+        });
+      });
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const total = CHECK_ITEMS.length;
+      const done = checked.size;
+      const percent = Math.round((done / total) * 100);
+      document.getElementById('check-count').textContent = done;
+      document.getElementById('check-total').textContent = total;
+      document.getElementById('day-progress-text').textContent = done;
+      document.getElementById('sidebar-percent').textContent = percent + '%';
+      document.getElementById('sidebar-bar').style.width = percent + '%';
+      const ring = document.getElementById('day-progress-ring');
+      const circumference = 2 * Math.PI * 15.5;
+      ring.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+    }
+
+    document.getElementById('btn-check-all')?.addEventListener('click', () => {
+      if (checked.size === CHECK_ITEMS.length) checked.clear();
+      else CHECK_ITEMS.forEach((_, i) => checked.add(i));
+      safeSet(CHECKLIST_KEY, [...checked]);
+      renderChecklist();
+    });
+
+    document.getElementById('btn-reset-day')?.addEventListener('click', () => {
+      if (confirm('Bugungi checklist tozalansinmi?')) {
+        checked.clear();
+        safeSet(CHECKLIST_KEY, []);
+        renderChecklist();
+      }
+    });
+
+    document.querySelectorAll('.toc-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const id = link.getAttribute('href')?.slice(1);
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    renderChecklist();
   </script>
 </body>
 </html>

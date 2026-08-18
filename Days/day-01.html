@@ -7,844 +7,602 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
-          colors: {
-            ue: {
-              dark: '#1a1a1a',
-              panel: '#242424',
-              border: '#3a3a3a',
-              accent: '#26c6da',
-              blue: '#0078d4',
-              green: '#4caf50',
-              orange: '#ff9800',
-              text: '#e0e0e0',
-              muted: '#9e9e9e'
-            }
-          },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
           }
         }
       }
     }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', system-ui, sans-serif; }
-    .prose h2 { scroll-margin-top: 5rem; }
-    .prose h3 { scroll-margin-top: 5rem; }
-    .step-num {
-      background: linear-gradient(135deg, #26c6da, #0078d4);
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+    .prose-custom h2 {
+      font-size: 1.45rem; font-weight: 800; color: #f8fafc;
+      margin-top: 3rem; margin-bottom: 1rem;
+      padding-bottom: 0.65rem; border-bottom: 1px solid #1e293b;
+      display: flex; align-items: center; gap: 0.75rem;
     }
-    .ui-label {
+    .prose-custom h3 { font-size: 1.15rem; font-weight: 700; color: #7dd3fc; margin-top: 1.75rem; margin-bottom: 0.75rem; }
+    .prose-custom p { color: #cbd5e1; line-height: 1.8; margin-bottom: 1.1rem; }
+    .prose-custom ul, .prose-custom ol { padding-left: 1.35rem; margin-bottom: 1.1rem; color: #cbd5e1; }
+    .prose-custom li { margin-bottom: 0.45rem; line-height: 1.65; }
+    .prose-custom strong { color: #f1f5f9; font-weight: 600; }
+    .prose-custom code {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      background: #2d2d2d;
-      border: 1px solid #404040;
-      padding: 0.15rem 0.45rem;
-      border-radius: 4px;
-      color: #80deea;
+      background: #1e293b; color: #7dd3fc;
+      padding: 0.12rem 0.4rem; border-radius: 0.3rem; font-size: 0.85em;
     }
+
     .callout {
-      border-left: 4px solid;
+      border-radius: 1rem; border: 1px solid; padding: 1.2rem 1.35rem;
+      margin: 1.4rem 0; display: flex; gap: 1rem;
     }
-    .toc-link.active {
-      color: #26c6da;
-      border-left-color: #26c6da;
+    .callout-welcome {
+      background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(14,165,233,0.05));
+      border-color: rgba(56,189,248,0.35);
     }
-    pre {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      line-height: 1.6;
+    .callout-tip { background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.3); }
+    .callout-warning { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); }
+    .callout-danger { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
+    .callout-professor {
+      background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(245,158,11,0.05));
+      border-color: rgba(251,191,36,0.35);
     }
-    .screenshot-placeholder {
-      background: repeating-linear-gradient(
-        45deg,
-        #1e1e1e,
-        #1e1e1e 10px,
-        #252525 10px,
-        #252525 20px
-      );
+
+    .panel-card {
+      background: #0f172a; border: 1px solid #1e293b; border-radius: 1rem;
+      padding: 1.25rem; transition: border-color 0.2s, transform 0.15s;
+    }
+    .panel-card:hover { border-color: #38bdf8; transform: translateY(-2px); }
+
+    .editor-map {
+      background: linear-gradient(180deg, #0c1222 0%, #0f172a 100%);
+      border: 1px solid #1e293b; border-radius: 1rem;
+      padding: 1.5rem; position: relative;
+    }
+    .editor-map::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, #1e293b 1px, transparent 0);
+      background-size: 18px 18px; opacity: 0.35; pointer-events: none; border-radius: 1rem;
+    }
+
+    .step-card {
+      background: linear-gradient(180deg, #0f172a 0%, #0c1222 100%);
+      border: 1px solid #1e293b; border-radius: 1rem; padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .step-num {
+      width: 2.25rem; height: 2.25rem; border-radius: 0.65rem;
+      background: linear-gradient(135deg, #0ea5e9, #0284c7); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.95rem; flex-shrink: 0;
+    }
+
+    .checklist-item {
+      display: flex; align-items: flex-start; gap: 0.8rem;
+      padding: 0.8rem 1rem; border-radius: 0.65rem;
+      border: 1px solid #1e293b; background: #0f172a;
+      margin-bottom: 0.45rem; cursor: pointer; transition: all 0.2s;
+    }
+    .checklist-item:hover { border-color: #334155; }
+    .checklist-item.checked { border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.06); }
+    .checklist-item.checked .check-label { text-decoration: line-through; color: #64748b; }
+    .check-box {
+      width: 1.3rem; height: 1.3rem; border-radius: 0.35rem;
+      border: 2px solid #475569; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .checklist-item.checked .check-box { background: #10b981; border-color: #10b981; }
+
+    .toc-link {
+      display: block; padding: 0.35rem 0.7rem; border-radius: 0.4rem;
+      color: #94a3b8; font-size: 0.85rem; transition: all 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .toc-link:hover { color: #7dd3fc; background: rgba(125,211,252,0.05); border-left-color: #38bdf8; }
+
+    .progress-ring-circle { transition: stroke-dashoffset 0.5s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
+
+    @media (min-width: 1024px) {
+      .sticky-toc { position: sticky; top: 5rem; max-height: calc(100vh - 6rem); overflow-y: auto; }
+    }
+
+    .glossary-term {
+      border-bottom: 1px dashed #475569; cursor: help;
     }
   </style>
 </head>
-<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+<body class="h-full bg-slate-950 text-slate-100 antialiased">
 
-  <!-- TOP BAR -->
-  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/95 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3 min-w-0">
-        <a href="../index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
-        </a>
-        <div class="h-5 w-px bg-slate-700"></div>
+        <a href="../index.html" class="w-9 h-9 rounded-lg bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center font-bold text-sm shrink-0 hover:scale-105 transition shadow-lg shadow-orange-500/20">BB</a>
         <div class="min-w-0">
-          <div class="text-xs text-slate-500">Stage 1 · Fundamentals</div>
-          <div class="font-semibold text-sm truncate">Kun 1 — Unreal Engine bilan tanishish</div>
+          <div class="font-bold text-sm sm:text-base truncate">Betray Builder Docs</div>
+          <div class="text-xs text-slate-500 truncate">Kun 1 · Unreal Engine bilan tanishish · Stage 1</div>
         </div>
       </div>
-      <div class="flex items-center gap-2">
-        <span class="hidden sm:inline text-xs text-slate-500">Taxminiy vaqt: 1.5–2 soat</span>
-        <a href="#boshlash" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Boshlash →</a>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5">
+          <svg class="w-4 h-4 text-sky-400" viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="#1e293b" stroke-width="3"/>
+            <circle id="day-progress-ring" class="progress-ring-circle" cx="18" cy="18" r="15.5" fill="none"
+                    stroke="#38bdf8" stroke-width="3" stroke-dasharray="97.4" stroke-dashoffset="97.4" stroke-linecap="round"/>
+          </svg>
+          <span class="text-xs text-slate-400"><span id="day-progress-text" class="text-sky-400 font-semibold">0</span>/8 qadam</span>
+        </div>
+        <a href="../index.html" class="text-xs text-slate-400 hover:text-white transition flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-slate-800">
+          Kursga qaytish
+        </a>
       </div>
     </div>
   </header>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 lg:py-12">
+    <div class="lg:grid lg:grid-cols-[230px_1fr] lg:gap-10">
 
-    <!-- SIDE TOC (desktop) -->
-    <aside class="hidden lg:block w-56 shrink-0">
-      <nav class="sticky top-20 space-y-0.5 text-sm">
-        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
-        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
-        <a href="#tushunchalar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Asosiy tushunchalar</a>
-        <a href="#talablar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Talablar</a>
-        <a href="#boshlash" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">1. Loyiha yaratish</a>
-        <a href="#interfeys" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">2. Editor interfeysi</a>
-        <a href="#papkalar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">3. Papka strukturasi</a>
-        <a href="#level" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">4. Level yaratish</a>
-        <a href="#shakllar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">5. Shakllar joylashtirish</a>
-        <a href="#transform" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">6. Transform bilan ishlash</a>
-        <a href="#test" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">7. Test qilish</a>
-        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
-        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa</a>
-      </nav>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="flex-1 min-w-0 max-w-3xl prose prose-invert">
-
-      <!-- HERO -->
-      <div class="mb-10">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-medium mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-          Stage 1 · Kun 1 / 7
+      <aside class="hidden lg:block">
+        <div class="sticky-toc">
+          <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-2">Mundarija</div>
+          <nav class="space-y-0.5">
+            <a href="#hero" class="toc-link">Kirish</a>
+            <a href="#maqsad" class="toc-link">Bugungi maqsad</a>
+            <a href="#qoqrmang" class="toc-link">Qo'rqmang</a>
+            <a href="#lugat" class="toc-link">Asosiy lug'at</a>
+            <a href="#editor" class="toc-link">Editor xaritasi</a>
+            <a href="#amaliy" class="toc-link">Amaliy qadamlar</a>
+            <a href="#transform" class="toc-link">Transform nima?</a>
+            <a href="#test" class="toc-link">Test Checklist</a>
+            <a href="#natija" class="toc-link">Natija</a>
+            <a href="#qilmang" class="toc-link">Bugun qilmang</a>
+            <a href="#challenge" class="toc-link">Challenge</a>
+            <a href="#professor" class="toc-link">Professor izohi</a>
+          </nav>
+          <div class="mt-8 p-4 rounded-xl bg-slate-900 border border-sky-500/20">
+            <div class="text-xs text-sky-400/80 mb-2">Bugungi progress</div>
+            <div class="text-2xl font-bold text-sky-400" id="sidebar-percent">0%</div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full mt-2 overflow-hidden">
+              <div id="sidebar-bar" class="h-full bg-gradient-to-r from-sky-500 to-cyan-400 rounded-full transition-all duration-500" style="width:0%"></div>
+            </div>
+            <button id="btn-reset-day" class="mt-3 w-full text-xs text-slate-500 hover:text-red-400 transition py-1">Checklistni tozalash</button>
+          </div>
         </div>
-        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Unreal Engine bilan tanishish</h1>
-        <p class="text-lg text-slate-400 leading-relaxed">
-          Bugun kod yozmaymiz. Maqsad — Unreal Editor muhitini tushunish, loyiha yaratish va asosiy panellar bilan ishlashni o‘rganish.
-        </p>
-      </div>
+      </aside>
 
-      <!-- MAQSAD -->
-      <section id="maqsad" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
-          Kun maqsadi
-        </h2>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3">
-          <p class="text-slate-300 leading-relaxed">
-            Kursning birinchi kunida siz:
+      <main class="min-w-0">
+
+        <section id="hero" class="mb-10">
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700">KUN 1 / 90</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-sky-500/15 text-sky-400 border border-sky-500/30">STAGE 1 · FUNDAMENTALS</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">KOD YO'Q</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tight mb-4 leading-tight">Unreal Engine bilan tanishish</h1>
+          <p class="text-lg sm:text-xl text-slate-400 max-w-3xl leading-relaxed">
+            Bugun <strong class="text-slate-200">kod yozilmaydi</strong>. 
+            Faqat muhit: project ochish, papkalar, level, uchta oddiy shakl. 
+            90 kunlik yo‘lning birinchi qadami — tinch, sekin, aniq.
           </p>
-          <ul class="space-y-2 text-slate-300">
-            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Unreal Engine 5 ni ochib, yangi loyiha yaratasiz</li>
-            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Editor interfeysining asosiy panellarini tanib olasiz</li>
-            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Loyiha uchun papka strukturasini yaratasiz</li>
-            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Bo‘sh Level yaratib, unga oddiy shakllar joylashtirasiz</li>
-            <li class="flex gap-2"><span class="text-cyan-400 shrink-0">→</span> Transform (Location, Rotation, Scale) bilan ishlashni sinab ko‘rasiz</li>
-          </ul>
-          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3 mt-4">
-            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Eslatma:</strong> Bugun Blueprint, C++, Material yoki boshqa murakkab narsalarga tegmang. Faqat muhitni o‘rganing.</p>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- TUSHUNCHALAR -->
-      <section id="tushunchalar" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📖</span>
-          Asosiy tushunchalar
-        </h2>
-        <p class="text-slate-400 text-sm mb-4">Bu so‘zlarni bugun eslab qoling — butun kurs davomida ishlatiladi.</p>
+        <section id="maqsad">
+          <div class="callout callout-welcome">
+            <div class="text-sky-400 shrink-0 mt-0.5">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-sky-200 text-base mb-1">Bugungi aniq maqsad</h3>
+              <p class="text-slate-300 text-sm leading-relaxed m-0">
+                Unreal Editor interfeysi bilan tanishish va <code>BetrayBuilder</code> loyihasini ochish. 
+                Content Browser, Viewport, Details — uchta asosiy oynani topib, ishlatib ko‘rish.
+              </p>
+            </div>
+          </div>
+        </section>
 
-        <div class="space-y-3">
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Project</div>
-            <p class="text-sm text-slate-300 leading-relaxed">Butun o‘yiningizni saqlaydigan konteyner. Ichida Level’lar, Blueprint’lar, materiallar, audio — hammasi bor. Bir Project = bitta o‘yin.</p>
-          </div>
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Level (Map)</div>
-            <p class="text-sm text-slate-300 leading-relaxed">O‘yin bo‘lib o‘tadigan joy. Xona, bino, ochiq maydon — bularning hammasi Level. Bitta Project’da ko‘p Level bo‘lishi mumkin (masalan: MainMenu, Lobby, GameMap).</p>
-          </div>
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Actor</div>
-            <p class="text-sm text-slate-300 leading-relaxed">Level ichiga qo‘yiladigan har qanday narsa. Kub, chiroq, eshik, o‘yinchi, kamera — bularning hammasi Actor. Har bir Actor’ning o‘z Transform’i (joylashuvi) bor.</p>
-          </div>
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Component</div>
-            <p class="text-sm text-slate-300 leading-relaxed">Actor ichidagi kichik qism. Masalan: Static Mesh Component (3D model), Collision Component (fizik chegara), Light Component (yorug‘lik). Actor = Component’lar yig‘indisi.</p>
-          </div>
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Content Browser</div>
-            <p class="text-sm text-slate-300 leading-relaxed">Barcha fayllaringizni ko‘rsatadigan panel (pastda yoki yon tomonda). Papkalar, Blueprint’lar, materiallar, texture’lar shu yerda turadi. Windows’dagi File Explorer’ga o‘xshaydi.</p>
-          </div>
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Viewport</div>
-            <p class="text-sm text-slate-300 leading-relaxed">3D dunyoni ko‘rish oynasi. Sichqoncha bilan aylanasiz, WASD bilan harakatlanasiz (Editor rejimida). O‘yinni Play qilganda ham shu oynada ko‘rinadi.</p>
-          </div>
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Details</div>
-            <p class="text-sm text-slate-300 leading-relaxed">Tanlangan Actor’ning barcha sozlamalari shu panelda. Location, Rotation, Scale, material, collision va boshqa parametrlar.</p>
-          </div>
-          <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
-            <div class="font-semibold text-cyan-400 mb-1">Transform</div>
-            <p class="text-sm text-slate-300 leading-relaxed">Actor’ning 3 ta asosiy xususiyati: <strong>Location</strong> (qayerda turibdi), <strong>Rotation</strong> (qaysi tomonga qaragan), <strong>Scale</strong> (qanchalik katta).</p>
-          </div>
-        </div>
-      </section>
+        <article class="prose-custom">
 
-      <!-- TALABLAR -->
-      <section id="talablar" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">⚙️</span>
-          Talablar
-        </h2>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
-          <ul class="space-y-3 text-sm text-slate-300">
-            <li class="flex gap-3">
-              <span class="text-emerald-400 font-bold">✓</span>
-              <div>
-                <strong class="text-white">Unreal Engine 5.3 yoki undan yuqori</strong>
-                <p class="text-slate-500 mt-0.5">Epic Games Launcher orqali o‘rnatilgan bo‘lishi kerak. Agar yo‘q bo‘lsa — <a href="https://www.unrealengine.com/download" target="_blank" class="text-cyan-400 hover:underline">unrealengine.com/download</a></p>
-              </div>
-            </li>
-            <li class="flex gap-3">
-              <span class="text-emerald-400 font-bold">✓</span>
-              <div>
-                <strong class="text-white">Kamida 20–30 GB bo‘sh joy</strong>
-                <p class="text-slate-500 mt-0.5">Engine + Project + Cache uchun.</p>
-              </div>
-            </li>
-            <li class="flex gap-3">
-              <span class="text-emerald-400 font-bold">✓</span>
-              <div>
-                <strong class="text-white">8 GB RAM (tavsiya: 16 GB+)</strong>
-                <p class="text-slate-500 mt-0.5">Kamroq bo‘lsa ishlaydi, lekin sekinroq bo‘lishi mumkin.</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- ===================== STEP 1 ===================== -->
-      <section id="boshlash" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Yangi loyiha yaratish</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 5–10 daqiqa</p>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <!-- 1.1 -->
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">1.1</span>
-              <span class="text-sm font-medium text-white">Epic Games Launcher’ni oching</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Kompyuteringizda <strong class="text-white">Epic Games Launcher</strong> dasturini ishga tushiring. Agar yo‘q bo‘lsa, avval o‘rnating.</p>
-              <p>Chap menyudan <span class="ui-label">Unreal Engine</span> bo‘limini bosing. Keyin yuqoridagi <span class="ui-label">Library</span> tab’iga o‘ting.</p>
-              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Ko‘rinishi:</strong> Library’da o‘rnatilgan Engine versiyalari (masalan 5.4, 5.5) ro‘yxati chiqadi. Har birining yonida <span class="ui-label">Launch</span> tugmasi bor.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 1.2 -->
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">1.2</span>
-              <span class="text-sm font-medium text-white">Engine’ni ishga tushiring</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>O‘rnatilgan UE5 versiyangizning yonidagi <span class="ui-label">Launch</span> tugmasini bosing.</p>
-              <p>Bir necha soniya (yoki bir daqiqagacha) kutasiz — Engine yuklanadi va <strong class="text-white">Project Browser</strong> oynasi ochiladi.</p>
-              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Agar birinchi marta ochayotgan bo‘lsangiz:</strong> “Shaders compiling” degan xabar chiqishi mumkin. Bu normal — 5–15 daqiqa kutishingiz mumkin. Keyingi safar tezroq ochiladi.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 1.3 -->
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">1.3</span>
-              <span class="text-sm font-medium text-white">Template tanlash</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Project Browser oynasida chap tomonda <span class="ui-label">GAMES</span> kategoriyasi tanlanganligiga ishonch hosil qiling.</p>
-              <p>Ro‘yxatdan <strong class="text-white">Third Person</strong> template’ini tanlang (odamcha ko‘rinishidagi ikonka).</p>
-              <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 font-mono text-xs text-slate-400 space-y-1">
-                <div>GAMES</div>
-                <div class="pl-3 text-cyan-400">→ Third Person  ← mana shuni tanlang</div>
-                <div class="pl-3">First Person</div>
-                <div class="pl-3">Top Down</div>
-                <div class="pl-3">Blank</div>
-                <div class="pl-3">...</div>
-              </div>
-              <p class="text-slate-400">Nima uchun Third Person? Chunki Betray Builder third-person kamera bilan ishlaydi, va bu template’da allaqachon Character, Camera, Input tayyor turadi. Keyinroq o‘zimiznikiga almashtiramiz, lekin boshlash uchun qulay.</p>
-            </div>
-          </div>
-
-          <!-- 1.4 -->
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">1.4</span>
-              <span class="text-sm font-medium text-white">Loyiha sozlamalari</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>O‘ng pastki qismda loyiha parametrlarini to‘ldiring:</p>
-              <div class="overflow-x-auto">
-                <table class="w-full text-sm border-collapse">
-                  <thead>
-                    <tr class="border-b border-slate-700 text-left text-slate-400">
-                      <th class="py-2 pr-4 font-medium">Maydon</th>
-                      <th class="py-2 pr-4 font-medium">Qiymat</th>
-                      <th class="py-2 font-medium">Izoh</th>
-                    </tr>
-                  </thead>
-                  <tbody class="text-slate-300">
-                    <tr class="border-b border-slate-800">
-                      <td class="py-2.5 pr-4"><span class="ui-label">Project Name</span></td>
-                      <td class="py-2.5 pr-4 font-mono text-cyan-300">BetrayBuilder</td>
-                      <td class="py-2.5 text-slate-500">Bo‘sh joy va maxsus belgilar qo‘ymang</td>
-                    </tr>
-                    <tr class="border-b border-slate-800">
-                      <td class="py-2.5 pr-4"><span class="ui-label">Project Location</span></td>
-                      <td class="py-2.5 pr-4 font-mono text-cyan-300">Istalgan papka</td>
-                      <td class="py-2.5 text-slate-500">Masalan: D:\UE_Projects\</td>
-                    </tr>
-                    <tr class="border-b border-slate-800">
-                      <td class="py-2.5 pr-4"><span class="ui-label">Blueprint / C++</span></td>
-                      <td class="py-2.5 pr-4 font-mono text-cyan-300">Blueprint</td>
-                      <td class="py-2.5 text-slate-500">C++ tanlamang — bu kurs Blueprint asosida</td>
-                    </tr>
-                    <tr>
-                      <td class="py-2.5 pr-4"><span class="ui-label">Target Platform</span></td>
-                      <td class="py-2.5 pr-4 font-mono text-cyan-300">Desktop</td>
-                      <td class="py-2.5 text-slate-500">Standart qoldiring</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p>Hammasi to‘g‘ri bo‘lgach, <span class="ui-label">Create</span> tugmasini bosing.</p>
-              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Kutish:</strong> Birinchi marta loyiha yaratilganda shader’lar kompilyatsiya qilinadi. Bu 5–20 daqiqa davom etishi mumkin. Ekranda “Compiling Shaders” progress ko‘rinadi. Kutib turing, yopmang.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 1.5 -->
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">1.5</span>
-              <span class="text-sm font-medium text-white">Editor ochilganini tasdiqlang</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Muvaffaqiyatli bo‘lsa, to‘liq Unreal Editor oynasi ochiladi. O‘rtada 3D Viewport, atrofida panellar ko‘rinadi.</p>
-              <p>Template tufayli allaqachon bitta Level ochiq bo‘ladi (ThirdPersonMap) va unda Mannequin (odam modeli) turadi. Bu normal.</p>
-              <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Tekshirish:</strong> Agar Viewport’da 3D sahna ko‘rinsa va yuqorida toolbar (Play tugmasi va h.k.) bo‘lsa — hammasi joyida. Keyingi bosqichga o‘ting.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================== STEP 2 ===================== -->
-      <section id="interfeys" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">2</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Editor interfeysini tushunish</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 15–20 daqiqa</p>
-          </div>
-        </div>
-
-        <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-          Unreal Editor bir nechta asosiy panelga bo‘lingan. Har birini alohida ko‘rib chiqamiz. Panellar joylashuvini keyinroq o‘zgartirish mumkin, lekin hozircha standart layout bilan ishlaymiz.
-        </p>
-
-        <div class="space-y-6">
-          <!-- Viewport -->
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
-              <span class="text-sm font-medium text-white">Viewport (markaziy oyna)</span>
-            </div>
-            <div class="p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
-              <p>Bu — 3D dunyoni ko‘radigan asosiy maydon. Hozir unda template’ning sahnasi turibdi.</p>
-              <p class="font-medium text-white">Harakatlanish (Editor rejimida):</p>
-              <ul class="space-y-1.5 pl-1">
-                <li><span class="ui-label">O‘ng sichqoncha + WASD</span> — uchib yurish (fly mode)</li>
-                <li><span class="ui-label">O‘ng sichqoncha + sichqoncha harakati</span> — atrofga qarash</li>
-                <li><span class="ui-label">Chap sichqoncha</span> — obyektni tanlash</li>
-                <li><span class="ui-label">O‘rta sichqoncha (scroll bosib)</span> — pan (siljitish)</li>
-                <li><span class="ui-label">Scroll g‘ildirak</span> — yaqinlashish / uzoqlashish</li>
-                <li><span class="ui-label">F</span> — tanlangan obyektga fokus (frame)</li>
-                <li><span class="ui-label">Alt + Chap sichqoncha</span> — orbit (aylanish)</li>
-              </ul>
-              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3 mt-3">
-                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Mashq:</strong> Hozir Viewport’da o‘ng sichqonchani bosib turing va WASD bilan atrofda uchib ko‘ring. Keyin biror obyektni chap sichqoncha bilan tanlang va <span class="ui-label">F</span> bosing — kamera unga yaqinlashadi.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Content Browser -->
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
-              <span class="text-sm font-medium text-white">Content Browser (odatda pastki qism)</span>
-            </div>
-            <div class="p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
-              <p>Barcha asset’laringiz (fayllar) shu yerda. Chapda papka daraxti, o‘ngda tanlangan papkadagi fayllar.</p>
-              <p>Agar ko‘rinmasa: yuqoridagi menyudan <span class="ui-label">Window → Content Browser → Content Browser 1</span> ni tanlang.</p>
-              <p class="font-medium text-white">Muhim tugmalar:</p>
-              <ul class="space-y-1.5 pl-1">
-                <li><span class="ui-label">Add</span> (yashil +) — yangi asset yaratish (Blueprint, Material, Level...)</li>
-                <li><span class="ui-label">Import</span> — tashqi fayl (FBX, PNG, WAV...) yuklash</li>
-                <li><span class="ui-label">Save All</span> (Ctrl+Shift+S) — barcha o‘zgarishlarni saqlash</li>
-              </ul>
-              <p>Content Browser’da hozir <span class="ui-label">Content</span> ildiz papkasi va uning ichida template papkalari (Characters, Input, LevelPrototyping...) ko‘rinadi. Ularga tegmang — o‘z papkalarimizni yaratamiz.</p>
-            </div>
-          </div>
-
-          <!-- Details -->
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
-              <span class="text-sm font-medium text-white">Details (odatda o‘ng tomon)</span>
-            </div>
-            <div class="p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
-              <p>Viewport’da biror Actor’ni tanlaganingizda, uning barcha sozlamalari shu panelda chiqadi.</p>
-              <p>Eng muhim bo‘lim — <strong class="text-white">Transform</strong>:</p>
-              <ul class="space-y-1.5 pl-1">
-                <li><span class="ui-label">Location</span> — X, Y, Z koordinatalari (qayerda turibdi)</li>
-                <li><span class="ui-label">Rotation</span> — Pitch, Yaw, Roll (qaysi tomonga aylangan)</li>
-                <li><span class="ui-label">Scale</span> — X, Y, Z o‘lchami (1.0 = asl o‘lcham)</li>
-              </ul>
-              <p>Qiymatlarni qo‘lda yozishingiz yoki Viewport’dagi gizmo (o‘qlar) bilan sichqoncha orqali o‘zgartirishingiz mumkin.</p>
-            </div>
-          </div>
-
-          <!-- Outliner -->
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
-              <span class="text-sm font-medium text-white">World Outliner (odatda o‘ng yuqori)</span>
-            </div>
-            <div class="p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
-              <p>Joriy Level’dagi <strong class="text-white">barcha Actor’larning ro‘yxati</strong>. Viewport’da topish qiyin bo‘lgan obyektni shu yerdan nomiga qarab topib, tanlash mumkin.</p>
-              <p>Actor’ni tanlash → Details panelida sozlamalari ochiladi. O‘ng tugma → Delete, Rename, Edit va h.k.</p>
-            </div>
-          </div>
-
-          <!-- Toolbar -->
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
-              <span class="text-sm font-medium text-white">Toolbar (yuqori qism)</span>
-            </div>
-            <div class="p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
-              <p>Eng muhim tugmalar:</p>
-              <ul class="space-y-1.5 pl-1">
-                <li><span class="ui-label">Save</span> — joriy Level’ni saqlash</li>
-                <li><span class="ui-label">Play ▸</span> — o‘yinni ishga tushirish (PIE — Play In Editor)</li>
-                <li><span class="ui-label">Stop ■</span> — o‘yinni to‘xtatish (Play paytida chiqadi)</li>
-                <li><span class="ui-label">Selection Mode / Landscape / Foliage...</span> — turli ish rejimlari (hozircha Selection Mode’da qoling)</li>
-              </ul>
-              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3 mt-3">
-                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Mashq:</strong> Yuqoridagi <span class="ui-label">Play</span> tugmasini bosing. O‘yin ishga tushadi — WASD bilan yurasiz, sichqoncha bilan qaraysiz. Chiqish uchun <span class="ui-label">Esc</span> bosing yoki toolbar’dagi Stop’ni bosing.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Place Actors -->
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
-              <span class="text-sm font-medium text-white">Place Actors panel (chap tomon, ba’zan yashirin)</span>
-            </div>
-            <div class="p-5 space-y-3 text-sm text-slate-300 leading-relaxed">
-              <p>Level’ga yangi Actor qo‘yish uchun ishlatiladi. Agar ko‘rinmasa: <span class="ui-label">Window → Place Actors</span>.</p>
-              <p>Ichida kategoriyalar bor: Basic (Cube, Sphere, Cylinder...), Lights, Visual Effects, Volumes va h.k.</p>
-              <p>Keyingi bosqichda aynan shu paneldan foydalanamiz.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================== STEP 3 ===================== -->
-      <section id="papkalar" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">3</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Papka strukturasini yaratish</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 5–10 daqiqa</p>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">3.1</span>
-              <span class="text-sm font-medium text-white">Content ildizida asosiy papkani yaratish</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Content Browser’da chapdagi papka daraxtida <span class="ui-label">Content</span> ni tanlang (ildiz).</p>
-              <p>Bo‘sh joyda <strong class="text-white">o‘ng sichqoncha</strong> bosing → <span class="ui-label">New Folder</span>.</p>
-              <p>Papka nomini yozing: <span class="ui-label font-mono">BetrayBuilder</span></p>
-              <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Nima uchun alohida papka?</strong> Template’ning o‘z papkalari bor. Bizning barcha ishimizni <code class="text-amber-300">Content/BetrayBuilder/</code> ichida saqlaymiz — chalkashib ketmaslik uchun.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">3.2</span>
-              <span class="text-sm font-medium text-white">Ichki papkalarni yaratish</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p><span class="ui-label">BetrayBuilder</span> papkasiga kiring. Ichida quyidagi papkalarni birma-bir yarating (har biri uchun o‘ng sichqoncha → New Folder):</p>
-              <div class="rounded-lg bg-slate-950 border border-slate-700 p-4 font-mono text-xs space-y-1">
-                <div class="text-slate-500">Content/</div>
-                <div class="text-slate-500 pl-3">└── BetrayBuilder/</div>
-                <div class="text-cyan-400 pl-6">├── Maps/</div>
-                <div class="text-cyan-400 pl-6">├── Blueprints/</div>
-                <div class="text-cyan-400 pl-6">├── Characters/</div>
-                <div class="text-cyan-400 pl-6">├── UI/</div>
-                <div class="text-cyan-400 pl-6">├── Materials/</div>
-                <div class="text-cyan-400 pl-6">├── Audio/</div>
-                <div class="text-cyan-400 pl-6">└── Props/</div>
-              </div>
-              <p>Har bir papkaning vazifasi:</p>
-              <ul class="space-y-1.5">
-                <li><span class="ui-label">Maps</span> — barcha Level’lar (xaritalar)</li>
-                <li><span class="ui-label">Blueprints</span> — umumiy Blueprint’lar, System’lar, Interaction</li>
-                <li><span class="ui-label">Characters</span> — Player, AI Character’lar</li>
-                <li><span class="ui-label">UI</span> — Widget’lar (HUD, Menu, Inventory...)</li>
-                <li><span class="ui-label">Materials</span> — Material va Material Instance’lar</li>
-                <li><span class="ui-label">Audio</span> — Sound Wave, Sound Cue, Music</li>
-                <li><span class="ui-label">Props</span> — dekorativ Static Mesh’lar, item’lar</li>
-              </ul>
-              <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Tekshirish:</strong> Content Browser’da <code class="text-emerald-300">Content/BetrayBuilder/</code> ichida 7 ta papka ko‘rinishi kerak. Agar ko‘rinsa — keyingi bosqichga o‘ting.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================== STEP 4 ===================== -->
-      <section id="level" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">4</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Yangi Level yaratish</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 5 daqiqa</p>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">4.1</span>
-              <span class="text-sm font-medium text-white">Empty Level yaratish</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Yuqoridagi menyudan: <span class="ui-label">File → New Level...</span></p>
-              <p>Ochilgan oynada <strong class="text-white">Empty Level</strong> ni tanlang (ba’zi versiyalarda “Empty Open World” yoki “Basic” ham bor — bizga oddiy <strong>Empty Level</strong> kerak).</p>
-              <p><span class="ui-label">Create</span> bosing.</p>
-              <p>Viewport endi deyarli qora/bo‘sh bo‘ladi — bu normal. Hech narsa yo‘q, chunki Empty Level.</p>
-            </div>
-          </div>
-
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">4.2</span>
-              <span class="text-sm font-medium text-white">Level’ni saqlash</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p><span class="ui-label">Ctrl + S</span> bosing (yoki File → Save Current Level).</p>
-              <p>Saqlash oynasi ochiladi. Chapda papka daraxtidan <span class="ui-label">Content → BetrayBuilder → Maps</span> ni tanlang.</p>
-              <p>Fayl nomi: <span class="ui-label font-mono">MAP_Day01</span></p>
-              <p><span class="ui-label">Save</span> bosing.</p>
-              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Nomlash konvensiyasi:</strong> Kurs davomida Level’lar <code class="text-blue-300">MAP_</code> prefiksi bilan nomlanadi (MAP_Day01, MAP_BetrayBuilder, MAP_MainMenu...). Bu Content Browser’da tez topish uchun.</p>
-              </div>
-              <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Tekshirish:</strong> Content Browser’da <code class="text-emerald-300">Content/BetrayBuilder/Maps/MAP_Day01</code> ko‘rinishi kerak. Viewport yuqorisida ham Level nomi chiqadi.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================== STEP 5 ===================== -->
-      <section id="shakllar" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">5</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Oddiy shakllarni joylashtirish</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 10–15 daqiqa</p>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">5.1</span>
-              <span class="text-sm font-medium text-white">Place Actors panelini ochish</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Agar chapda Place Actors paneli ko‘rinmasa:</p>
-              <p><span class="ui-label">Window → Place Actors</span> ni bosing. Panel ochiladi.</p>
-              <p>Ichida <span class="ui-label">Basic</span> kategoriyasini tanlang (yoki qidiruvga “Cube” yozing).</p>
-            </div>
-          </div>
-
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">5.2</span>
-              <span class="text-sm font-medium text-white">Cube qo‘yish</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <ol class="space-y-3 list-decimal list-inside">
-                <li><span class="ui-label">Cube</span> ni toping (Basic Shapes ichida).</li>
-                <li>Uni <strong class="text-white">sichqoncha bilan ushlab</strong>, Viewport’ga <strong class="text-white">sudrab tashlang</strong> (drag & drop).</li>
-                <li>Cube Viewport’da paydo bo‘ladi. Uni tanlangan holatda qoldiring (sariq/oranq chegara bilan ajralib turadi).</li>
-              </ol>
-              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Muammo:</strong> Agar Cube “erda” emas, osmonda yoki uzoqda paydo bo‘lsa — tanlang va <span class="ui-label">F</span> bosing (fokus). Yoki Details’da Location X/Y/Z ni 0, 0, 100 qilib qo‘ying.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">5.3</span>
-              <span class="text-sm font-medium text-white">Sphere va Cylinder qo‘yish</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Xuddi shu usulda:</p>
-              <ol class="space-y-2 list-decimal list-inside">
-                <li><span class="ui-label">Sphere</span> ni Viewport’ga sudrab tashlang.</li>
-                <li><span class="ui-label">Cylinder</span> ni ham sudrab tashlang.</li>
-              </ol>
-              <p>Uchala shakl ham Viewport’da ko‘rinishi kerak. Agar bir-birining ustiga tushib qolsa — keyingi bosqichda joyini o‘zgartiramiz.</p>
-              <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Tekshirish:</strong> World Outliner’da 3 ta Actor ko‘rinishi kerak: Cube, Sphere, Cylinder (yoki StaticMeshActor_...). Agar ko‘rinsa — yaxshi.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================== STEP 6 ===================== -->
-      <section id="transform" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">6</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Transform bilan ishlash</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 15 daqiqa</p>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">6.1</span>
-              <span class="text-sm font-medium text-white">Gizmo rejimlarini bilish</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Viewport yuqorisida (yoki o‘ng yuqori burchakda) 3 ta muhim rejim tugmasi bor:</p>
-              <ul class="space-y-2">
-                <li><span class="ui-label">W</span> — <strong class="text-white">Translate</strong> (ko‘chirish). Qizil/yashil/ko‘k o‘qlar chiqadi.</li>
-                <li><span class="ui-label">E</span> — <strong class="text-white">Rotate</strong> (aylantirish). Doira shaklidagi gizmo.</li>
-                <li><span class="ui-label">R</span> — <strong class="text-white">Scale</strong> (kattalashtirish/kichraytirish). Kubchalar chiqadi.</li>
-              </ul>
-              <p>Actor’ni tanlang → <span class="ui-label">W</span> bosing → o‘qlarni ushlab sudrab, joyini o‘zgartiring.</p>
-            </div>
-          </div>
-
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">6.2</span>
-              <span class="text-sm font-medium text-white">Details orqali aniq qiymat berish</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Cube’ni tanlang. O‘ngdagi <strong class="text-white">Details</strong> panelida Transform bo‘limini toping.</p>
-              <p>Quyidagi qiymatlarni qo‘lda yozib ko‘ring (misol):</p>
-              <div class="overflow-x-auto">
-                <table class="w-full text-sm border-collapse">
-                  <thead>
-                    <tr class="border-b border-slate-700 text-left text-slate-400">
-                      <th class="py-2 pr-4">Actor</th>
-                      <th class="py-2 pr-4">Location (X, Y, Z)</th>
-                      <th class="py-2">Scale (X, Y, Z)</th>
-                    </tr>
-                  </thead>
-                  <tbody class="text-slate-300 font-mono text-xs">
-                    <tr class="border-b border-slate-800">
-                      <td class="py-2 pr-4 text-white">Cube</td>
-                      <td class="py-2 pr-4">0, 0, 50</td>
-                      <td class="py-2">1.5, 1.5, 1.5</td>
-                    </tr>
-                    <tr class="border-b border-slate-800">
-                      <td class="py-2 pr-4 text-white">Sphere</td>
-                      <td class="py-2 pr-4">200, 0, 50</td>
-                      <td class="py-2">1.0, 1.0, 1.0</td>
-                    </tr>
-                    <tr>
-                      <td class="py-2 pr-4 text-white">Cylinder</td>
-                      <td class="py-2 pr-4">-200, 0, 100</td>
-                      <td class="py-2">1.0, 1.0, 2.0</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p>Qiymatni yozgach <span class="ui-label">Enter</span> bosing — Actor darhol shu joyga ko‘chadi.</p>
-              <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
-                <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Maslahat:</strong> Scale’da qulf ikonkasini ochsangiz (Unlock), X/Y/Z ni alohida o‘zgartirish mumkin. Yopiq bo‘lsa — birini o‘zgartirsangiz, hammasi bir xil o‘zgaradi.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="rounded-xl border border-slate-800 overflow-hidden">
-            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center gap-2">
-              <span class="text-xs font-mono text-cyan-400">6.3</span>
-              <span class="text-sm font-medium text-white">Rotation sinab ko‘rish</span>
-            </div>
-            <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-              <p>Cylinder’ni tanlang → <span class="ui-label">E</span> (Rotate mode) → gizmo doiralarini ushlab aylantiring.</p>
-              <p>Yoki Details’da Rotation → Yaw qiymatini 45 deb yozing — 45 gradus aylanadi.</p>
-              <p>Bu keyinroq eshik ochilishi (Yaw 0→90) kabi animatsiyalarda ishlatiladi. Hozircha faqat tanishib chiqing.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================== STEP 7 ===================== -->
-      <section id="test" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">7</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Test qilish</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 5 daqiqa</p>
-          </div>
-        </div>
-
-        <div class="rounded-xl border border-slate-800 overflow-hidden">
-          <div class="bg-slate-900 px-5 py-3 border-b border-slate-800">
-            <span class="text-sm font-medium text-white">Play orqali tekshirish</span>
-          </div>
-          <div class="p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-            <ol class="space-y-3 list-decimal list-inside">
-              <li>Yuqoridagi toolbar’dan <span class="ui-label">Play ▸</span> tugmasini bosing (yoki <span class="ui-label">Alt + P</span>).</li>
-              <li>O‘yin ishga tushadi. Kamera harakat qilishi kerak (WASD + sichqoncha).</li>
-              <li>Viewport’da uchta shakl (Cube, Sphere, Cylinder) ko‘rinib turishi kerak.</li>
-              <li>Chiqish: <span class="ui-label">Esc</span> yoki toolbar’dagi Stop.</li>
+          <section id="qoqrmang">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center text-sm font-bold">01</span>
+              Qo‘rqmang — bu oddiy kun
+            </h2>
+            <p>
+              Birinchi marta UE5 ochilganda ekran “to‘lib ketgan” ko‘rinadi. Bu normal. 
+              Bugun faqat <strong>uchta narsa</strong> muhim:
+            </p>
+            <ol>
+              <li><strong>Project</strong> yaratish va ochish</li>
+              <li><strong>Papka tuzilmasi</strong> (tartib — keyin osonlik)</li>
+              <li><strong>Level</strong> ga 3 ta shakl qo‘yish va Play bosish</li>
             </ol>
-            <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3 mt-4">
-              <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Muvaffaqiyat mezonlari:</strong></p>
-              <ul class="mt-2 space-y-1 text-emerald-200/80">
-                <li>✓ Unreal Editor ochiladi va asosiy panellarni tanib olasiz</li>
-                <li>✓ <code class="text-emerald-300">BetrayBuilder</code> project yaratilgan va papka strukturasi tayyor</li>
-                <li>✓ Level’da 3 ta oddiy shakl joylashtirilgan</li>
-                <li>✓ Play bosganda shakllar ko‘rinadi va kamera ishlaydi</li>
+            <p>
+              Blueprint, C++, Material, AI — bugun <em>taqiqlangan</em>. 
+              Ular keyin keladi. Hozir — uy qurishdan oldin maydonni tanish.
+            </p>
+          </section>
+
+          <section id="lugat">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm font-bold">02</span>
+              Asosiy lug‘at (9 ta so‘z)
+            </h2>
+            <p>Bu so‘zlar 90 kun davomida qayta-qayta uchraydi. Bugun ularni “tanib olish” yetarli.</p>
+            <div class="grid sm:grid-cols-2 gap-3 my-4 not-prose">
+              <div class="panel-card">
+                <div class="text-sky-400 font-bold text-sm mb-1">Project</div>
+                <p class="text-slate-400 text-sm m-0">Butun o‘yiningizni saqlaydigan konteyner. Bitta papka, bitta .uproject.</p>
+              </div>
+              <div class="panel-card">
+                <div class="text-sky-400 font-bold text-sm mb-1">Level (Map)</div>
+                <p class="text-slate-400 text-sm m-0">O‘yin bo‘lib o‘tadigan joy — xona, bino, butun dunyo.</p>
+              </div>
+              <div class="panel-card">
+                <div class="text-sky-400 font-bold text-sm mb-1">Actor</div>
+                <p class="text-slate-400 text-sm m-0">Level ichidagi har qanday narsa: kub, chiroq, o‘yinchi.</p>
+              </div>
+              <div class="panel-card">
+                <div class="text-sky-400 font-bold text-sm mb-1">Component</div>
+                <p class="text-slate-400 text-sm m-0">Actor ichidagi kichik qism: Mesh, Collision, Light.</p>
+              </div>
+              <div class="panel-card">
+                <div class="text-sky-400 font-bold text-sm mb-1">World</div>
+                <p class="text-slate-400 text-sm m-0">Hozir ochiq Level + undagi barcha Actor’lar.</p>
+              </div>
+              <div class="panel-card">
+                <div class="text-sky-400 font-bold text-sm mb-1">Content Browser</div>
+                <p class="text-slate-400 text-sm m-0">Barcha fayllar: mesh, blueprint, texture, map.</p>
+              </div>
+              <div class="panel-card">
+                <div class="text-sky-400 font-bold text-sm mb-1">Viewport</div>
+                <p class="text-slate-400 text-sm m-0">3D dunyoni ko‘rish va harakat qilish oynasi.</p>
+              </div>
+              <div class="panel-card">
+                <div class="text-sky-400 font-bold text-sm mb-1">Details</div>
+                <p class="text-slate-400 text-sm m-0">Tanlangan Actor’ning sozlamalari (Location, Scale…).</p>
+              </div>
+              <div class="panel-card sm:col-span-2">
+                <div class="text-sky-400 font-bold text-sm mb-1">Transform</div>
+                <p class="text-slate-400 text-sm m-0">Location (qayerda), Rotation (qanday burilgan), Scale (qanchalik katta).</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="editor">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm font-bold">03</span>
+              Editor xaritasi — qayerda nima turadi?
+            </h2>
+            <p>Tipik joylashuv (default layout). Agar oynangiz yo‘qolgan bo‘lsa: Window menyusidan qayta oching.</p>
+            <div class="editor-map my-5 not-prose">
+              <div class="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+                <div class="rounded-lg border border-sky-500/40 bg-sky-500/10 p-4 sm:col-span-2 min-h-[100px]">
+                  <div class="text-sky-300 font-bold mb-1">Viewport (markaz)</div>
+                  <p class="text-slate-400 text-xs m-0">3D sahna. W/A/S/D + sichqoncha o‘ng tugma — uchish. Chap tugma — tanlash.</p>
+                </div>
+                <div class="rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-4">
+                  <div class="text-emerald-300 font-bold mb-1">Details (o‘ng)</div>
+                  <p class="text-slate-400 text-xs m-0">Tanlangan obyekt sozlamalari. Transform shu yerda.</p>
+                </div>
+                <div class="rounded-lg border border-amber-500/40 bg-amber-500/10 p-4 sm:col-span-2">
+                  <div class="text-amber-300 font-bold mb-1">Content Browser (pastda)</div>
+                  <p class="text-slate-400 text-xs m-0">Fayllar va papkalar. Shu yerdan Maps, Blueprints ochiladi.</p>
+                </div>
+                <div class="rounded-lg border border-violet-500/40 bg-violet-500/10 p-4">
+                  <div class="text-violet-300 font-bold mb-1">Place Actors / Outliner</div>
+                  <p class="text-slate-400 text-xs m-0">Yangi shape qo‘yish; Leveldagi barcha Actor ro‘yxati.</p>
+                </div>
+              </div>
+            </div>
+            <div class="callout callout-tip">
+              <div class="text-violet-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <p class="text-sm text-slate-300 m-0">
+                <strong>Play</strong> tugmasi odatda yuqorida (toolbar). 
+                Bosilganda Viewport “o‘yin” rejimiga o‘tadi — kamera harakatlanadi.
+              </p>
+            </div>
+          </section>
+
+          <section id="amaliy">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">04</span>
+              Amaliy qadamlar — sekin-asta
+            </h2>
+
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">1</div>
+                <h3 class="m-0 text-white text-base font-bold">Project yaratish</h3>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-1.5 ml-1 list-decimal list-inside">
+                <li>Unreal Engine 5 ni oching (Epic Launcher orqali).</li>
+                <li><strong>Games</strong> → <strong>Third Person</strong> → Blueprint.</li>
+                <li>Project nomi: <code class="text-sky-300">BetrayBuilder</code>.</li>
+                <li>Create. Birinchi ochilish biroz vaqt olishi mumkin — kuting.</li>
+              </ol>
+            </div>
+
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">2</div>
+                <h3 class="m-0 text-white text-base font-bold">Papka strukturasi</h3>
+              </div>
+              <p class="text-sm text-slate-400 mb-2">Content Browser da (Content ostida) yangi papka:</p>
+              <p class="text-sm text-slate-300 mb-2">
+                Avval <code class="text-sky-300">BetrayBuilder</code> deb asosiy papka oching, ichiga:
+              </p>
+              <div class="flex flex-wrap gap-2 text-xs font-mono">
+                <span class="px-2 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700">Maps</span>
+                <span class="px-2 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700">Blueprints</span>
+                <span class="px-2 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700">Characters</span>
+                <span class="px-2 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700">UI</span>
+                <span class="px-2 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700">Materials</span>
+                <span class="px-2 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700">Audio</span>
+                <span class="px-2 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700">Props</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-2 mb-0">Right-click → New Folder. Tartib keyinroq sizni qutqaradi.</p>
+            </div>
+
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">3</div>
+                <h3 class="m-0 text-white text-base font-bold">MAP_Day01</h3>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-1.5 list-decimal list-inside">
+                <li>File → New Level → Empty Level (yoki Basic).</li>
+                <li>Save As → <code class="text-sky-300">Content/BetrayBuilder/Maps/MAP_Day01</code>.</li>
+              </ol>
+            </div>
+
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">4</div>
+                <h3 class="m-0 text-white text-base font-bold">Uchta shakl</h3>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-1.5 list-decimal list-inside">
+                <li>Place Actors (yoki Quickly Add) → Basic → <strong>Cube</strong>, <strong>Sphere</strong>, <strong>Cylinder</strong>.</li>
+                <li>Har birini Viewport da turli joyga sudrab qo‘ying.</li>
+                <li>Tanlang → Details → Location va Scale ni o‘zgartirib ko‘ring.</li>
+              </ol>
+            </div>
+
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">5</div>
+                <h3 class="m-0 text-white text-base font-bold">Play</h3>
+              </div>
+              <p class="text-sm text-slate-300 m-0">
+                Toolbar dagi <strong>Play</strong> (yoki Alt+P). 
+                Kamera harakat qilishi va 3 ta shakl ko‘rinishi kerak. 
+                To‘xtatish: Esc.
+              </p>
+            </div>
+          </section>
+
+          <section id="transform">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">05</span>
+              Transform — 30 soniyalik tushuncha
+            </h2>
+            <ul>
+              <li><strong>Location</strong> — X, Y, Z (qayerda turibdi)</li>
+              <li><strong>Rotation</strong> — necha gradus burilgan</li>
+              <li><strong>Scale</strong> — 1 = asl o‘lcham; 2 = ikki baravar katta</li>
+            </ul>
+            <p>
+              Viewport da W (Move), E (Rotate), R (Scale) tugmalari gizmo ni almashtiradi. 
+              Bugun faqat sudrash va Details da raqam o‘zgartirish yetarli.
+            </p>
+          </section>
+
+          <section id="test">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">06</span>
+              Test Checklist
+            </h2>
+            <div id="checklist" class="not-prose mt-3 space-y-1"></div>
+            <div class="mt-3 flex items-center justify-between text-sm not-prose">
+              <span class="text-slate-500">Bajarildi: <span id="check-count" class="text-sky-400 font-semibold">0</span> / <span id="check-total">8</span></span>
+              <button id="btn-check-all" class="text-xs text-slate-500 hover:text-sky-400 transition">Barchasini belgilash</button>
+            </div>
+          </section>
+
+          <section id="natija">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center text-sm font-bold">07</span>
+              Kutilayotgan natija
+            </h2>
+            <ul>
+              <li>Unreal Editor ochiladi, asosiy panellarni taniysiz</li>
+              <li><code>BetrayBuilder</code> project va papka strukturasi tayyor</li>
+              <li>Levelda Cube, Sphere, Cylinder joylashgan</li>
+              <li>Play bosilganda ko‘rinadi va kamera ishlaydi</li>
+            </ul>
+            <p class="text-sm text-slate-500">
+              Structure: <code>Content/BetrayBuilder/Maps/MAP_Day01</code>
+            </p>
+          </section>
+
+          <section id="qilmang">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm font-bold">08</span>
+              Bugun nima qilmang
+            </h2>
+            <div class="callout callout-danger">
+              <div class="text-red-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+              </div>
+              <ul class="text-sm text-slate-300 m-0 list-none pl-0 space-y-1">
+                <li><span class="text-red-400 font-bold">✕</span> Blueprint scripting</li>
+                <li><span class="text-red-400 font-bold">✕</span> C++</li>
+                <li><span class="text-red-400 font-bold">✕</span> Material yaratish</li>
+                <li><span class="text-red-400 font-bold">✕</span> Har qanday “advanced” funksiya</li>
               </ul>
             </div>
-            <div class="callout border-red-500/50 bg-red-500/5 rounded-r-lg p-3">
-              <p class="text-sm text-red-200/90"><strong class="text-red-400">Agar Play bosganda hech narsa ko‘rinmasa:</strong></p>
-              <ul class="mt-2 space-y-1 text-red-200/80">
-                <li>Shakllar juda uzoqda bo‘lishi mumkin — Outliner’dan tanlab F bosing</li>
-                <li>Level saqlanmagan bo‘lishi mumkin — Ctrl+S</li>
-                <li>Yorug‘lik yo‘qligi sababli qorong‘u bo‘lishi mumkin — Place Actors → Lights → Directional Light qo‘ying</li>
-              </ul>
+          </section>
+
+          <section id="challenge">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">★</span>
+              Challenge
+            </h2>
+            <div class="callout callout-warning">
+              <div class="text-amber-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-amber-300 mb-1">Systems + BP_Sandbox</h4>
+                <p class="text-sm text-slate-300 m-0">
+                  Content Browser da yana bitta papka — <code>Systems</code>. 
+                  Ichiga bo‘sh Actor Blueprint: <code>BP_Sandbox</code> (Notes.txt emas). 
+                  Ertaga Actor/Component darsi shu yerdan boshlanadi.
+                </p>
+              </div>
             </div>
-          </div>
+          </section>
+
+          <section id="professor">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">★</span>
+              Professor izohi
+            </h2>
+            <div class="callout callout-professor">
+              <div class="text-amber-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              </div>
+              <p class="text-sm text-slate-300 m-0 leading-relaxed">
+                Birinchi kun eng muhim kun emas — lekin eng xavflisi: 
+                “hamma narsani birga o‘rganaman” deb charchash. 
+                Bugun faqat <strong class="text-amber-200">eshikni ochdingiz</strong>. 
+                Ertaga birinchi Actor. Hafta oxirida o‘zingiz kichik mexanika yozasiz. 
+                Sekin boring — 90 kun uzoq yo‘l.
+              </p>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="mt-14 pt-8 border-t border-slate-800 flex flex-col sm:flex-row gap-3 justify-between">
+          <span class="flex items-center justify-center px-5 py-3 rounded-xl border border-slate-800 text-slate-600 text-sm">
+            Boshlanish
+          </span>
+          <a href="../index.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium transition">
+            Kursga qaytish
+          </a>
+          <a href="day-02.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-medium transition shadow-lg shadow-sky-500/20">
+            Kun 2 — Actor va Component
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
         </div>
-      </section>
 
-      <!-- CHALLENGE -->
-      <section id="challenge" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Challenge (ixtiyoriy)</h2>
-            <p class="text-sm text-slate-500">Qo‘shimcha mashq</p>
-          </div>
-        </div>
-
-        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-          <p>Asosiy vazifalar tugagach, quyidagini sinab ko‘ring:</p>
-          <ol class="space-y-2 list-decimal list-inside">
-            <li>Content Browser’da <span class="ui-label">Content/BetrayBuilder/</span> ichida yana bitta papka yarating: <span class="ui-label font-mono">Systems</span>.</li>
-            <li>Shu papka ichiga kiring.</li>
-            <li>O‘ng sichqoncha → <span class="ui-label">Blueprint Class</span> → ochilgan oynada <strong class="text-white">Actor</strong> ni tanlang → nomini <span class="ui-label font-mono">BP_Sandbox</span> qiling.</li>
-            <li>Yaratilgan Blueprint’ni ikki marta bosib oching — Blueprint Editor ochiladi. Hozircha hech narsa yozmang, faqat yoping.</li>
-          </ol>
-          <p class="text-slate-400">Bu challenge’ning maqsadi — papka yaratish va oddiy Blueprint asset yaratish jarayonini bir marta ko‘rish. Keyingi kunlarda shu yerda ko‘p ishlaymiz.</p>
-        </div>
-      </section>
-
-      <!-- XULOSA -->
-      <section id="xulosa" class="mb-14">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
-          Kun xulosasi
-        </h2>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-          <p>Bugun siz:</p>
-          <ul class="space-y-1.5">
-            <li>✓ Unreal Engine 5 ni ochdingiz va <strong class="text-white">BetrayBuilder</strong> loyihasini yaratdingiz</li>
-            <li>✓ Editor interfeysining asosiy panellarini (Viewport, Content Browser, Details, Outliner, Toolbar) tanib oldingiz</li>
-            <li>✓ Loyiha uchun papka strukturasini yaratdingiz</li>
-            <li>✓ Bo‘sh Level yaratib, unga Cube, Sphere, Cylinder joylashtirdingiz</li>
-            <li>✓ Transform (Location, Rotation, Scale) bilan ishlashni sinab ko‘rdingiz</li>
-            <li>✓ Play orqali sahnani tekshirdingiz</li>
-          </ul>
-          <div class="border-t border-slate-800 pt-4 mt-4">
-            <p class="text-slate-400"><strong class="text-white">Ertaga (Kun 2):</strong> O‘zingizning birinchi Actor Blueprint’ingizni yaratasiz va unga Component qo‘shishni o‘rganasiz.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- NAV BOTTOM -->
-      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
-        <a href="index.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          Kursga qaytish
-        </a>
-        <div class="text-xs text-slate-600">Kun 1 / 90</div>
-        <a href="day-02.html" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
-          Kun 2 →
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-
-      <div class="h-16"></div>
-    </main>
+        <footer class="mt-10 pb-8 text-center text-xs text-slate-600">
+          Betray Builder · Kun 1 / 90 · Stage 1 — Unreal Engine bilan tanishish
+        </footer>
+      </main>
+    </div>
   </div>
 
   <script>
-    // Simple TOC active state on scroll
-    const links = document.querySelectorAll('.toc-link');
-    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    const CHECKLIST_KEY = 'bb_day01_checklist';
+    const CHECK_ITEMS = [
+      "UE5 ochildi, Third Person Blueprint template tanlandi",
+      "Project nomi: BetrayBuilder",
+      "Content/BetrayBuilder ostida Maps, Blueprints, Characters, UI, Materials, Audio, Props",
+      "MAP_Day01 yaratildi va Maps papkasiga saqlandi",
+      "Levelga Cube joylashtirildi",
+      "Sphere va Cylinder ham qo'yildi",
+      "Details da Location / Scale o'zgartirib ko'rildi",
+      "Play: kamera ishlaydi, 3 shakl ko'rinadi"
+    ];
 
-    function updateToc() {
-      const scrollY = window.scrollY + 120;
-      let current = sections[0];
-      for (const s of sections) {
-        if (s.offsetTop <= scrollY) current = s;
-      }
-      links.forEach(l => {
-        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
-      });
+    function safeGet(key) {
+      try { return JSON.parse(localStorage.getItem(key) || '[]'); }
+      catch { return []; }
     }
-    window.addEventListener('scroll', updateToc, { passive: true });
-    updateToc();
+    function safeSet(key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); }
+      catch {}
+    }
+
+    let checked = new Set(safeGet(CHECKLIST_KEY));
+
+    function renderChecklist() {
+      const container = document.getElementById('checklist');
+      container.innerHTML = CHECK_ITEMS.map((text, i) => {
+        const isChecked = checked.has(i);
+        return `
+          <div class="checklist-item ${isChecked ? 'checked' : ''}" data-idx="${i}">
+            <div class="check-box">
+              ${isChecked ? '<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>' : ''}
+            </div>
+            <span class="check-label text-sm text-slate-300 leading-snug">${text}</span>
+          </div>
+        `;
+      }).join('');
+      container.querySelectorAll('.checklist-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const idx = +el.dataset.idx;
+          if (checked.has(idx)) checked.delete(idx);
+          else checked.add(idx);
+          safeSet(CHECKLIST_KEY, [...checked]);
+          renderChecklist();
+          updateProgress();
+        });
+      });
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const total = CHECK_ITEMS.length;
+      const done = checked.size;
+      const percent = Math.round((done / total) * 100);
+      document.getElementById('check-count').textContent = done;
+      document.getElementById('check-total').textContent = total;
+      document.getElementById('day-progress-text').textContent = done;
+      document.getElementById('sidebar-percent').textContent = percent + '%';
+      document.getElementById('sidebar-bar').style.width = percent + '%';
+      const ring = document.getElementById('day-progress-ring');
+      const circumference = 2 * Math.PI * 15.5;
+      ring.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+    }
+
+    document.getElementById('btn-check-all')?.addEventListener('click', () => {
+      if (checked.size === CHECK_ITEMS.length) checked.clear();
+      else CHECK_ITEMS.forEach((_, i) => checked.add(i));
+      safeSet(CHECKLIST_KEY, [...checked]);
+      renderChecklist();
+    });
+
+    document.getElementById('btn-reset-day')?.addEventListener('click', () => {
+      if (confirm('Bugungi checklist tozalansinmi?')) {
+        checked.clear();
+        safeSet(CHECKLIST_KEY, []);
+        renderChecklist();
+      }
+    });
+
+    document.querySelectorAll('.toc-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const id = link.getAttribute('href')?.slice(1);
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    renderChecklist();
   </script>
 </body>
 </html>

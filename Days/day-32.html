@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 32 — Item Data | Betray Builder Documentation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    .prose-custom h2 { 
+      font-size: 1.5rem; font-weight: 800; color: #f8fafc; 
+      margin-top: 3.5rem; margin-bottom: 1.25rem; 
+      padding-bottom: 0.75rem; border-bottom: 1px solid #1e293b;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .prose-custom h3 { font-size: 1.2rem; font-weight: 700; color: #5eead4; margin-top: 2.25rem; margin-bottom: 0.85rem; }
+    .prose-custom h4 { font-size: 1.05rem; font-weight: 600; color: #e2e8f0; margin-top: 1.75rem; margin-bottom: 0.6rem; }
+    .prose-custom p { color: #cbd5e1; line-height: 1.75; margin-bottom: 1.1rem; }
+    .prose-custom ul { list-style: disc; padding-left: 1.4rem; margin-bottom: 1.1rem; color: #cbd5e1; }
+    .prose-custom ol { list-style: decimal; padding-left: 1.4rem; margin-bottom: 1.1rem; color: #cbd5e1; }
+    .prose-custom li { margin-bottom: 0.45rem; line-height: 1.65; }
+    .prose-custom strong { color: #f1f5f9; font-weight: 600; }
+    .prose-custom code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #1e293b; color: #5eead4;
+      padding: 0.15rem 0.45rem; border-radius: 0.3rem; font-size: 0.85em;
+    }
+    .prose-custom pre {
+      font-family: 'JetBrains Mono', monospace;
+      background: #0f172a; border: 1px solid #1e293b;
+      border-radius: 0.75rem; padding: 1.25rem; overflow-x: auto;
+      font-size: 0.82rem; line-height: 1.6; color: #e2e8f0; margin-bottom: 1.5rem;
+    }
+
+    .bp-graph {
+      background: linear-gradient(180deg, #0c1222 0%, #0f172a 100%);
+      border: 1px solid #1e293b; border-radius: 1rem;
+      padding: 1.75rem; margin: 1.5rem 0; position: relative; overflow-x: auto;
+    }
+    .bp-graph::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, #1e293b 1px, transparent 0);
+      background-size: 20px 20px; opacity: 0.4; pointer-events: none; border-radius: 1rem;
+    }
+    .bp-node {
+      display: inline-flex; flex-direction: column;
+      background: #1e293b; border: 2px solid #334155; border-radius: 0.5rem;
+      min-width: 150px; position: relative; z-index: 1;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .bp-node-header {
+      padding: 0.4rem 0.75rem; font-size: 0.72rem; font-weight: 700;
+      color: white; border-radius: 0.35rem 0.35rem 0 0; text-align: center;
+    }
+    .bp-node-body { padding: 0.5rem 0.75rem; font-size: 0.68rem; color: #94a3b8; }
+    .bp-node.exec .bp-node-header { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+    .bp-node.pure .bp-node-header { background: linear-gradient(90deg, #0d9488, #0f766e); }
+    .bp-node.func .bp-node-header { background: linear-gradient(90deg, #7c3aed, #6d28d9); }
+    .bp-node.var .bp-node-header { background: linear-gradient(90deg, #0891b2, #0e7490); }
+    .bp-node.event .bp-node-header { background: linear-gradient(90deg, #dc2626, #b91c1c); }
+    .bp-node.data .bp-node-header { background: linear-gradient(90deg, #d97706, #b45309); }
+    .bp-node.struct .bp-node-header { background: linear-gradient(90deg, #ea580c, #c2410c); }
+
+    .pin { display: flex; align-items: center; gap: 0.35rem; margin: 0.2rem 0; font-size: 0.68rem; }
+    .pin-dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid; flex-shrink: 0; }
+    .pin-dot.exec { background: #fff; border-color: #fff; }
+    .pin-dot.bool { background: #ef4444; border-color: #ef4444; }
+    .pin-dot.string { background: #ec4899; border-color: #ec4899; }
+    .pin-dot.name { background: #ec4899; border-color: #ec4899; }
+    .pin-dot.object { background: #3b82f6; border-color: #3b82f6; }
+    .pin-dot.struct { background: #f59e0b; border-color: #f59e0b; }
+
+    .callout { border-radius: 0.9rem; border: 1px solid; padding: 1.25rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; }
+    .callout-icon { flex-shrink: 0; margin-top: 0.1rem; }
+    .callout-info { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.3); }
+    .callout-warning { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); }
+    .callout-success { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.3); }
+    .callout-danger { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
+    .callout-tip { background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.3); }
+    .callout-professor { background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(245,158,11,0.05)); border-color: rgba(251,191,36,0.35); }
+
+    .step-card {
+      background: linear-gradient(180deg, #0f172a 0%, #0c1222 100%);
+      border: 1px solid #1e293b; border-radius: 1rem; padding: 1.75rem;
+      margin-bottom: 1.75rem; transition: border-color 0.2s;
+    }
+    .step-card:hover { border-color: #334155; }
+    .step-number {
+      width: 2.5rem; height: 2.5rem; border-radius: 0.75rem;
+      background: linear-gradient(135deg, #0d9488, #0f766e); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(13,148,136,0.3);
+    }
+
+    .checklist-item {
+      display: flex; align-items: flex-start; gap: 0.85rem;
+      padding: 0.85rem 1rem; border-radius: 0.65rem;
+      border: 1px solid #1e293b; background: #0f172a;
+      margin-bottom: 0.5rem; cursor: pointer; transition: all 0.2s;
+    }
+    .checklist-item:hover { border-color: #334155; background: #111827; }
+    .checklist-item.checked { border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.06); }
+    .checklist-item.checked .check-label { text-decoration: line-through; color: #64748b; }
+    .check-box {
+      width: 1.35rem; height: 1.35rem; border-radius: 0.35rem;
+      border: 2px solid #475569; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.2s; margin-top: 0.1rem;
+    }
+    .checklist-item.checked .check-box { background: #10b981; border-color: #10b981; }
+
+    .toc-link {
+      display: block; padding: 0.4rem 0.75rem; border-radius: 0.4rem;
+      color: #94a3b8; font-size: 0.875rem; transition: all 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .toc-link:hover { color: #5eead4; background: rgba(94,234,212,0.05); border-left-color: #5eead4; }
+
+    .progress-ring-circle { transition: stroke-dashoffset 0.5s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
+
+    .accordion-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.25rem; background: #0f172a; border: 1px solid #1e293b;
+      border-radius: 0.75rem; cursor: pointer; transition: all 0.2s; user-select: none;
+    }
+    .accordion-header:hover { border-color: #334155; }
+    .accordion-header.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-color: transparent; }
+    .accordion-body {
+      display: none; padding: 1.25rem; background: #0c1222;
+      border: 1px solid #1e293b; border-top: none; border-radius: 0 0 0.75rem 0.75rem;
+    }
+    .accordion-body.open { display: block; }
+
+    @media (min-width: 1024px) {
+      .sticky-toc { position: sticky; top: 5rem; max-height: calc(100vh - 6rem); overflow-y: auto; }
+    }
+
+    .code-block { position: relative; }
+    .copy-btn {
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      padding: 0.3rem 0.65rem; font-size: 0.7rem;
+      background: #1e293b; border: 1px solid #334155; border-radius: 0.35rem;
+      color: #94a3b8; cursor: pointer; transition: all 0.15s; z-index: 5;
+    }
+    .copy-btn:hover { background: #334155; color: #e2e8f0; }
+    .copy-btn.copied { background: #065f46; border-color: #10b981; color: #6ee7b7; }
+
+    .flow-arrow { color: #475569; font-size: 1.5rem; text-align: center; margin: 0.4rem 0; }
+
+    .compare-card {
+      border-radius: 1rem; border: 1px solid; padding: 1.25rem;
+    }
+  </style>
+</head>
+<body class="h-full bg-slate-950 text-slate-100 antialiased">
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/95 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="../index.html" class="w-9 h-9 rounded-lg bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center font-bold text-sm shrink-0 hover:scale-105 transition shadow-lg shadow-orange-500/20">BB</a>
+        <div class="min-w-0">
+          <div class="font-bold text-sm sm:text-base truncate">Betray Builder Docs</div>
+          <div class="text-xs text-slate-500 truncate">Kun 32 · Item Data · Stage 5</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5">
+          <svg class="w-4 h-4 text-teal-400" viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="#1e293b" stroke-width="3"/>
+            <circle id="day-progress-ring" class="progress-ring-circle" cx="18" cy="18" r="15.5" fill="none" 
+                    stroke="#2dd4bf" stroke-width="3" stroke-dasharray="97.4" stroke-dashoffset="97.4" stroke-linecap="round"/>
+          </svg>
+          <span class="text-xs text-slate-400"><span id="day-progress-text" class="text-teal-400 font-semibold">0</span>/11 qadam</span>
+        </div>
+        <a href="../index.html" class="text-xs text-slate-400 hover:text-white transition flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-slate-800">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Kursga qaytish
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 lg:py-12">
+    <div class="lg:grid lg:grid-cols-[240px_1fr] lg:gap-10">
+
+      <!-- SIDEBAR -->
+      <aside class="hidden lg:block">
+        <div class="sticky-toc">
+          <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-2">Mundarija</div>
+          <nav class="space-y-0.5">
+            <a href="#hero" class="toc-link">Kirish</a>
+            <a href="#maqsad" class="toc-link">Bugungi maqsad</a>
+            <a href="#nima-uchun" class="toc-link">Nima uchun Data Table?</a>
+            <a href="#nazariya" class="toc-link">Nazariya (Data-driven)</a>
+            <a href="#solishtirish" class="toc-link">Eski vs Yangi yondashuv</a>
+            <a href="#dt-create" class="toc-link">DT_Items yaratish</a>
+            <a href="#rows" class="toc-link">Qatorlarni to'ldirish</a>
+            <a href="#beginplay" class="toc-link">BeginPlay da o'qish</a>
+            <a href="#amaliy" class="toc-link">Amaliy qadamlar</a>
+            <a href="#blueprint" class="toc-link">Blueprint vizualizatsiya</a>
+            <a href="#common-mistakes" class="toc-link">Keng tarqalgan xatolar</a>
+            <a href="#test" class="toc-link">Test Checklist</a>
+            <a href="#natija" class="toc-link">Kutilayotgan natija</a>
+            <a href="#qilmang" class="toc-link">Bugun qilmang</a>
+            <a href="#challenge" class="toc-link">Challenge</a>
+            <a href="#professor" class="toc-link">Professor izohi</a>
+            <a href="#keyingi" class="toc-link">Keyingi kun</a>
+          </nav>
+          <div class="mt-8 p-4 rounded-xl bg-slate-900 border border-slate-800">
+            <div class="text-xs text-slate-500 mb-2">Bugungi progress</div>
+            <div class="text-2xl font-bold text-teal-400" id="sidebar-percent">0%</div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full mt-2 overflow-hidden">
+              <div id="sidebar-bar" class="h-full bg-gradient-to-r from-teal-500 to-emerald-400 rounded-full transition-all duration-500" style="width:0%"></div>
+            </div>
+            <button id="btn-reset-day" class="mt-3 w-full text-xs text-slate-500 hover:text-red-400 transition py-1">Checklistni tozalash</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="min-w-0">
+
+        <!-- HERO -->
+        <section id="hero" class="mb-12">
+          <div class="flex flex-wrap items-center gap-2 mb-5">
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 tracking-wide">KUN 32 / 90</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-orange-500/15 text-orange-400 border border-orange-500/30">STAGE 5 · ITEMS & INVENTORY</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">DATA-DRIVEN</span>
+          </div>
+          <h1 class="text-4xl sm:text-5xl font-black tracking-tight mb-5 leading-tight">Item Data</h1>
+          <p class="text-xl text-slate-400 max-w-3xl leading-relaxed mb-6">
+            Bugun ma’lumotni Actor ichidan <strong class="text-slate-200">markazlashgan jadvalga</strong> ko‘chiramiz. 
+            Bu — professional o‘yinlardagi “data-driven design” ga o‘tish kuni.
+          </p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+              <div class="text-2xl font-bold text-amber-400">1</div>
+              <div class="text-xs text-slate-500 mt-1">Data Table</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+              <div class="text-2xl font-bold text-teal-400">3+</div>
+              <div class="text-xs text-slate-500 mt-1">Qator (Row)</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+              <div class="text-2xl font-bold text-violet-400">1</div>
+              <div class="text-xs text-slate-500 mt-1">BeginPlay logic</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+              <div class="text-2xl font-bold text-emerald-400">~45</div>
+              <div class="text-xs text-slate-500 mt-1">Daqiqa</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- GOAL -->
+        <section id="maqsad">
+          <div class="callout callout-info">
+            <div class="callout-icon text-blue-400">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-blue-300 text-base mb-1.5">Bugungi aniq maqsad</h3>
+              <p class="text-slate-300 text-sm leading-relaxed m-0">
+                Item ma’lumotlarini Actor ichidan Data Table’ga ko‘chirib, professional darajadagi ma’lumot boshqaruviga o‘tish. 
+                <code>DT_Items</code> yaratish, qatorlarni to‘ldirish, BP_Item BeginPlay’da o‘qib olish.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <article class="prose-custom">
+
+          <!-- WHY -->
+          <section id="nima-uchun">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm font-bold">01</span>
+              Nima uchun Data Table kerak?
+            </h2>
+            <p>
+              Hozirgacha har bir child Blueprint’da (BP_Item_Key, BP_Item_Battery…) ItemName, ItemDescription ni qo‘lda yozganmiz. 
+              5 ta item bo‘lsa — chidasa bo‘ladi. 50 ta bo‘lsa — do‘zax.
+            </p>
+            <p>
+              Data Table — bu Excelga o‘xshash jadval. Bitta joyda barcha item’larning nomi, tavsifi, ikonkasi turadi. 
+              Dizayner balansni o‘zgartirmoqchi bo‘lsa — Blueprint ochmasdan, faqat jadvalni tahrirlaydi.
+            </p>
+            <div class="callout callout-professor">
+              <div class="callout-icon text-amber-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-amber-300 text-sm mb-1">Professor eslatmasi</h4>
+                <p class="text-slate-300 text-sm m-0 leading-relaxed">
+                  AAA o‘yinlarda item, qurol, dushman, quest — hammasi Data Table yoki Data Asset orqali boshqariladi. 
+                  Kod (Blueprint/C++) faqat “qanday ishlashni” biladi, “nima ekanligini” esa ma’lumot belgilaydi. 
+                  Bu ajratish <strong>data-driven design</strong> deb ataladi. Bugun shu falsafaga o‘tasiz.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- THEORY -->
+          <section id="nazariya">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center text-sm font-bold">02</span>
+              Nazariya — Data-driven design
+            </h2>
+
+            <h3>Data Table nima?</h3>
+            <p>
+              Data Table — Unreal’dagi maxsus asset. U <strong>Struct</strong> asosida quriladi (bizda <code>S_ItemData</code>). 
+              Har bir qator (Row) — bitta item. Har bir ustun — Struct maydoni (ItemID, ItemName, Icon…).
+            </p>
+            <p>
+              Muhim: Row’ning o‘zi ham nomga ega. Odatda bu nomni ItemID bilan bir xil qilamiz: 
+              <code>Key</code>, <code>Battery</code>, <code>Medkit</code>. Shunda <code>Get Data Table Row</code> da 
+              Row Name sifatida ItemID ni berib, to‘g‘ri qatorni topamiz.
+            </p>
+
+            <h3>Ishlash tartibi</h3>
+            <div class="bp-graph">
+              <div class="relative z-10 space-y-1 text-center">
+                <div class="inline-block bp-node event" style="min-width:180px;">
+                  <div class="bp-node-header">BeginPlay (BP_Item)</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="inline-block bp-node data" style="min-width:220px;">
+                  <div class="bp-node-header">Get Data Table Row</div>
+                  <div class="bp-node-body text-xs">DT_Items + Row Name = ItemID</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="inline-block bp-node struct" style="min-width:200px;">
+                  <div class="bp-node-header">Break S_ItemData</div>
+                  <div class="bp-node-body text-xs">ItemName, Icon, Description ajratiladi</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="inline-block bp-node var" style="min-width:200px;">
+                  <div class="bp-node-header">Set local variables</div>
+                  <div class="bp-node-body text-xs">ItemName, ItemIcon, ItemDescription</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- COMPARE -->
+          <section id="solishtirish">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm font-bold">03</span>
+              Eski vs Yangi yondashuv
+            </h2>
+
+            <div class="grid sm:grid-cols-2 gap-4 my-6">
+              <div class="compare-card bg-red-500/5 border-red-500/25">
+                <div class="text-red-400 font-bold text-sm mb-3">Eski (Day 29–31)</div>
+                <ul class="text-sm text-slate-400 space-y-2 list-none pl-0 m-0">
+                  <li>• Har child’da ItemName qo‘lda yoziladi</li>
+                  <li>• Yangi item = yangi child Blueprint</li>
+                  <li>• Nom o‘zgartirish = Blueprint ochish</li>
+                  <li>• 20 item = 20 joyda tahrirlash</li>
+                  <li>• Dizayner kodga tegishi kerak</li>
+                </ul>
+              </div>
+              <div class="compare-card bg-emerald-500/5 border-emerald-500/25">
+                <div class="text-emerald-400 font-bold text-sm mb-3">Yangi (bugundan)</div>
+                <ul class="text-sm text-slate-400 space-y-2 list-none pl-0 m-0">
+                  <li>• Barcha ma’lumot DT_Items da</li>
+                  <li>• Yangi item = yangi qator (+ ixtiyoriy child)</li>
+                  <li>• Nom o‘zgartirish = jadvalni tahrirlash</li>
+                  <li>• 20 item = bitta jadval</li>
+                  <li>• Dizayner faqat Data Table bilan ishlaydi</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- CREATE DT -->
+          <section id="dt-create">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">04</span>
+              DT_Items yaratish
+            </h2>
+
+            <div class="step-card">
+              <ol class="text-sm space-y-2 m-0">
+                <li>Content Browser’da <code>Content/BetrayBuilder/Data/</code> papkasini yarating (yo‘q bo‘lsa)</li>
+                <li>O‘ng tugma → <strong>Miscellaneous</strong> → <strong>Data Table</strong></li>
+                <li>Row Structure sifatida <code>S_ItemData</code> ni tanlang</li>
+                <li>Nomini <code>DT_Items</code> deb qo‘ying</li>
+                <li>Save</li>
+              </ol>
+              <div class="callout callout-tip mt-4 mb-0">
+                <div class="callout-icon text-violet-400">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div>
+                  <p class="text-sm text-slate-300 m-0">
+                    Agar S_ItemData ro‘yxatda chiqmasa — avval uni Compile/Save qiling (Day 31’da yaratilgan). 
+                    Data Table faqat saqlangan Struct’lardan foydalanadi.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ROWS -->
+          <section id="rows">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm font-bold">05</span>
+              Qatorlarni to‘ldirish
+            </h2>
+
+            <p>DT_Items ni oching. Yuqoridagi <strong>Add</strong> tugmasi bilan yangi qator qo‘shing. Har bir qator uchun:</p>
+
+            <div class="overflow-x-auto my-4">
+              <table class="w-full text-sm border border-slate-700 rounded-xl overflow-hidden">
+                <thead>
+                  <tr class="bg-slate-800">
+                    <th class="px-4 py-2.5 text-left text-slate-300">Row Name</th>
+                    <th class="px-4 py-2.5 text-left text-slate-300">ItemID</th>
+                    <th class="px-4 py-2.5 text-left text-slate-300">ItemName</th>
+                    <th class="px-4 py-2.5 text-left text-slate-300">Icon</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-700 text-slate-300">
+                  <tr class="bg-slate-900/50">
+                    <td class="px-4 py-2 font-mono text-amber-300">Key</td>
+                    <td class="px-4 py-2 font-mono text-teal-300">Key</td>
+                    <td class="px-4 py-2">Eski kalit</td>
+                    <td class="px-4 py-2 text-slate-500">None (hozircha)</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-2 font-mono text-amber-300">Battery</td>
+                    <td class="px-4 py-2 font-mono text-teal-300">Battery</td>
+                    <td class="px-4 py-2">Energiya batareyasi</td>
+                    <td class="px-4 py-2 text-slate-500">None</td>
+                  </tr>
+                  <tr class="bg-slate-900/50">
+                    <td class="px-4 py-2 font-mono text-amber-300">Medkit</td>
+                    <td class="px-4 py-2 font-mono text-teal-300">Medkit</td>
+                    <td class="px-4 py-2">Tibbiy to‘plam</td>
+                    <td class="px-4 py-2 text-slate-500">None</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="callout callout-warning">
+              <div class="callout-icon text-amber-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm text-slate-300 m-0">
+                  <strong class="text-amber-300">Row Name = ItemID</strong> bo‘lishi juda muhim. 
+                  Get Data Table Row da biz Row Name sifatida ItemID ni beramiz. Ular mos kelmasa — qator topilmaydi.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- BEGINPLAY -->
+          <section id="beginplay">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center text-sm font-bold">06</span>
+              BP_Item BeginPlay — ma’lumotni o‘qish
+            </h2>
+
+            <p>
+              Endi BP_Item o‘zining ItemName, ItemIcon, ItemDescription ni qo‘lda saqlamaydi. 
+              BeginPlay’da Data Table’dan o‘qiydi.
+            </p>
+
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">Nusxa</button>
+              <pre class="m-0"><code>// BP_Item → Event BeginPlay
+
+1. Get Data Table Row
+   - Data Table: DT_Items
+   - Row Name:   ItemID   (variable, Name tipida)
+   
+2. Row Found pinidan:
+   - Break S_ItemData (Out Row pinidan)
+   - Set ItemName      ← Break.ItemName
+   - Set ItemIcon      ← Break.Icon
+   - Set ItemDescription ← (agar Struct'da bo'lsa)
+
+3. Row Not Found:
+   - Print String: "ItemID topilmadi: " + ItemID
+   - (ixtiyoriy) Destroy Actor yoki default qiymat</code></pre>
+            </div>
+
+            <div class="callout callout-tip">
+              <div class="callout-icon text-violet-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm text-slate-300 m-0">
+                  <strong class="text-violet-300">ItemID qayerda qoladi?</strong> 
+                  ItemID hali ham BP_Item (yoki child) da Instance Editable variable bo‘lib qoladi. 
+                  Level’ga joylashtirganda yoki child’da default qilib berasiz. Qolgan ma’lumotlar jadvaldan keladi.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- PRACTICAL -->
+          <section id="amaliy">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">07</span>
+              Amaliy qadamlar — bosqichma-bosqich
+            </h2>
+
+            <div class="step-card">
+              <div class="flex items-start gap-4 mb-3">
+                <div class="step-number">1</div>
+                <h3 class="m-0 text-white text-lg">Data papkasi + DT_Items</h3>
+              </div>
+              <ol class="text-sm space-y-1.5 ml-2">
+                <li><code>Content/BetrayBuilder/Data/</code> yarating</li>
+                <li>Data Table → Row Struct: S_ItemData → nomi <code>DT_Items</code></li>
+              </ol>
+            </div>
+
+            <div class="step-card">
+              <div class="flex items-start gap-4 mb-3">
+                <div class="step-number">2</div>
+                <h3 class="m-0 text-white text-lg">Uchta qator qo‘shish</h3>
+              </div>
+              <ol class="text-sm space-y-1.5 ml-2">
+                <li>Row Name: <code>Key</code> → ItemID: Key, ItemName: "Eski kalit"</li>
+                <li>Row Name: <code>Battery</code> → ItemID: Battery, ItemName: "Energiya batareyasi"</li>
+                <li>Row Name: <code>Medkit</code> → ItemID: Medkit, ItemName: "Tibbiy to‘plam"</li>
+                <li>Save</li>
+              </ol>
+            </div>
+
+            <div class="step-card">
+              <div class="flex items-start gap-4 mb-3">
+                <div class="step-number">3</div>
+                <h3 class="m-0 text-white text-lg">BP_Item BeginPlay mantiq</h3>
+              </div>
+              <ol class="text-sm space-y-1.5 ml-2">
+                <li>BP_Item → Event Graph → BeginPlay</li>
+                <li>Get Data Table Row (DT_Items, Row Name = ItemID)</li>
+                <li>Row Found → Break S_ItemData → Set local variables</li>
+                <li>Row Not Found → ogohlantirish Print String</li>
+                <li>Compile + Save</li>
+              </ol>
+            </div>
+
+            <div class="step-card">
+              <div class="flex items-start gap-4 mb-3">
+                <div class="step-number">4</div>
+                <h3 class="m-0 text-white text-lg">Child’larni moslashtirish</h3>
+              </div>
+              <ol class="text-sm space-y-1.5 ml-2">
+                <li>BP_Item_Key → Class Defaults → ItemID = <code>Key</code> (boshqa maydonlarni tozalash mumkin)</li>
+                <li>BP_Item_Battery → ItemID = <code>Battery</code></li>
+                <li>BP_Item_Medkit → ItemID = <code>Medkit</code></li>
+                <li>Endi ItemName ni child’da yozish shart emas — jadvaldan keladi</li>
+              </ol>
+            </div>
+
+            <div class="step-card">
+              <div class="flex items-start gap-4 mb-3">
+                <div class="step-number">5</div>
+                <h3 class="m-0 text-white text-lg">Sinov</h3>
+              </div>
+              <ol class="text-sm space-y-1.5 ml-2">
+                <li>Levelga Key, Battery, Medkit joylashtiring</li>
+                <li>Play → har biriga qarang — interaction matni jadvaldagi nomni ko‘rsatishi kerak</li>
+                <li>DT_Items da biror ItemName ni o‘zgartiring → qayta Play → yangi nom chiqishi kerak</li>
+              </ol>
+            </div>
+          </section>
+
+          <!-- BLUEPRINT VISUAL -->
+          <section id="blueprint">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold">08</span>
+              Blueprint vizualizatsiya
+            </h2>
+
+            <div class="bp-graph">
+              <div class="relative z-10">
+                <div class="text-xs text-slate-500 mb-4 font-mono">BP_Item → Event BeginPlay</div>
+                <div class="flex flex-wrap items-start gap-3 justify-center">
+                  <div class="bp-node event" style="min-width:120px;">
+                    <div class="bp-node-header">BeginPlay</div>
+                    <div class="bp-node-body"><div class="pin"><span class="pin-dot exec"></span> Exec</div></div>
+                  </div>
+                  <div class="text-slate-600 self-center">→</div>
+                  <div class="bp-node data" style="min-width:160px;">
+                    <div class="bp-node-header">Get Data Table Row</div>
+                    <div class="bp-node-body">
+                      <div class="pin"><span class="pin-dot object"></span> Data Table</div>
+                      <div class="pin"><span class="pin-dot name"></span> Row Name</div>
+                      <div class="border-t border-slate-600 my-1"></div>
+                      <div class="pin"><span class="pin-dot exec"></span> Row Found</div>
+                      <div class="pin"><span class="pin-dot struct"></span> Out Row</div>
+                    </div>
+                  </div>
+                  <div class="text-slate-600 self-center">→</div>
+                  <div class="bp-node struct" style="min-width:140px;">
+                    <div class="bp-node-header">Break S_ItemData</div>
+                    <div class="bp-node-body">
+                      <div class="pin"><span class="pin-dot name"></span> ItemID</div>
+                      <div class="pin"><span class="pin-dot string"></span> ItemName</div>
+                      <div class="pin"><span class="pin-dot object"></span> Icon</div>
+                    </div>
+                  </div>
+                  <div class="text-slate-600 self-center">→</div>
+                  <div class="bp-node var" style="min-width:130px;">
+                    <div class="bp-node-header">Set Variables</div>
+                    <div class="bp-node-body text-xs">ItemName, ItemIcon…</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- MISTAKES -->
+          <section id="common-mistakes">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm font-bold">09</span>
+              Keng tarqalgan xatolar
+            </h2>
+            <div class="space-y-3">
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="text-sm font-medium text-slate-200">1. “Row Not Found” doim ishlayapti</span>
+                  <svg class="w-4 h-4 text-slate-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+                <div class="accordion-body">
+                  <p class="text-sm text-slate-300 m-0">
+                    Row Name (Data Table’dagi) va ItemID (Blueprint’dagi) bir xil ekaniga ishonch hosil qiling. 
+                    Katta-kichik harf ham muhim: <code>Key</code> ≠ <code>key</code>.
+                  </p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="text-sm font-medium text-slate-200">2. S_ItemData Data Table yaratishda chiqmayapti</span>
+                  <svg class="w-4 h-4 text-slate-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+                <div class="accordion-body">
+                  <p class="text-sm text-slate-300 m-0">Struct’ni ochib Save/Compile qiling. Editor’ni qayta ishga tushirish ham yordam berishi mumkin.</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="text-sm font-medium text-slate-200">3. Interaction matni hali eski nomni ko‘rsatadi</span>
+                  <svg class="w-4 h-4 text-slate-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+                <div class="accordion-body">
+                  <p class="text-sm text-slate-300 m-0">
+                    GetInteractionText ItemName variable’idan o‘qiydi. BeginPlay da Set qilinganini tekshiring. 
+                    Play dan oldin PIЕ ni to‘xtatib qayta ishga tushiring.
+                  </p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="text-sm font-medium text-slate-200">4. Child’dagi eski ItemName hali ishlatilayapti</span>
+                  <svg class="w-4 h-4 text-slate-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+                <div class="accordion-body">
+                  <p class="text-sm text-slate-300 m-0">
+                    Child Class Defaults’da ItemName ni tozalang yoki BeginPlay dagi Set uni ustiga yozadi. 
+                    Tartib: BeginPlay ishlagach, jadvaldagi qiymat ustunlik qilishi kerak.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TEST -->
+          <section id="test">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">10</span>
+              Test Checklist — interaktiv
+            </h2>
+            <div id="checklist" class="mt-4 space-y-1"></div>
+            <div class="mt-4 flex items-center justify-between text-sm">
+              <span class="text-slate-500">Bajarildi: <span id="check-count" class="text-teal-400 font-semibold">0</span> / <span id="check-total">11</span></span>
+              <button id="btn-check-all" class="text-xs text-slate-500 hover:text-teal-400 transition">Barchasini belgilash</button>
+            </div>
+          </section>
+
+          <!-- RESULT -->
+          <section id="natija">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center text-sm font-bold">11</span>
+              Kutilayotgan natija
+            </h2>
+            <div class="bg-emerald-500/5 border border-emerald-500/25 rounded-xl p-6">
+              <ul class="space-y-3 m-0 list-none pl-0">
+                <li class="flex gap-3 text-slate-300"><span class="text-emerald-400 font-bold text-lg">✓</span><span><code>DT_Items</code> Data Table yaratilgan va to‘ldirilgan</span></li>
+                <li class="flex gap-3 text-slate-300"><span class="text-emerald-400 font-bold text-lg">✓</span><span>BP_Item BeginPlay’da jadvaldan ma’lumot o‘qiydi</span></li>
+                <li class="flex gap-3 text-slate-300"><span class="text-emerald-400 font-bold text-lg">✓</span><span>Interaction matni Data Table’dagi nomni ko‘rsatadi</span></li>
+                <li class="flex gap-3 text-slate-300"><span class="text-emerald-400 font-bold text-lg">✓</span><span>Yangi item qo‘shish = yangi qator (child shart emas)</span></li>
+                <li class="flex gap-3 text-slate-300"><span class="text-emerald-400 font-bold text-lg">✓</span><span>Data-driven Item system ishlayapti</span></li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- AVOID -->
+          <section id="qilmang">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm font-bold">12</span>
+              Bugun nima qilmang
+            </h2>
+            <div class="callout callout-danger">
+              <div class="callout-icon text-red-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+              </div>
+              <div>
+                <ul class="space-y-2 text-sm text-slate-300 m-0 list-none pl-0">
+                  <li class="flex gap-2"><span class="text-red-400 font-bold">✕</span><span>Har bir item uchun alohida qo‘lda ma’lumot kiritishni davom ettirmang.</span></li>
+                  <li class="flex gap-2"><span class="text-red-400 font-bold">✕</span><span>Data Asset (Primary Data Asset) ga o‘tish — hozircha Data Table yetarli.</span></li>
+                  <li class="flex gap-2"><span class="text-red-400 font-bold">✕</span><span>UI yoki Use Item mantig‘iga o‘tmang.</span></li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- CHALLENGE -->
+          <section id="challenge">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">★</span>
+              Qo‘shimcha Challenge
+            </h2>
+            <div class="callout callout-warning">
+              <div class="callout-icon text-amber-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-amber-300 mb-2">Challenge: Yangi item — faqat qator bilan</h4>
+                <p class="text-sm text-slate-300 mb-2">
+                  DT_Items ga to‘rtinchi qator qo‘shing: Row Name = <code>Keycard</code>, ItemName = "Qizil kalit-karta".
+                </p>
+                <p class="text-sm text-slate-400 m-0">
+                  Yangi child Blueprint yaratmang. Levelga oddiy <code>BP_Item</code> (yoki mavjud child) qo‘ying, 
+                  Details’dan ItemID ni <code>Keycard</code> qilib qo‘ying. Play qiling — interaction matni 
+                  “Olish: Qizil kalit-karta” chiqishi kerak. Bu data-driven yondashuvning kuchi.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- PROFESSOR -->
+          <section id="professor">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">★</span>
+              Professor izohi
+            </h2>
+            <div class="callout callout-professor">
+              <div class="callout-icon text-amber-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              </div>
+              <div>
+                <p class="text-sm text-slate-300 leading-relaxed mb-3">
+                  Bugun siz <strong class="text-amber-200">kod va ma’lumotni ajratdingiz</strong>. 
+                  Bu — professional dasturlashning eng muhim qadamidan biri. 
+                  Kod “qanday” ni biladi, ma’lumot “nima” ni belgilaydi.
+                </p>
+                <p class="text-sm text-slate-300 leading-relaxed m-0">
+                  Kelajakda qurol statistikasi, dushman turlari, quest ma’lumotlari — hammasi shu usulda bo‘ladi. 
+                  Bugun o‘rgangan narsa sizni butun karyerangiz davomida kuzatib boradi.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- NEXT -->
+          <section id="keyingi">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center text-sm font-bold">→</span>
+              Keyingi kun — Day 33: Use Item
+            </h2>
+            <p>
+              Ertaga Inventory’dagi item’larni haqiqiy ishlatamiz: Key → eshik ochadi, Battery → generator, Medkit → Health. 
+              Data Table va Inventory Array shu mantig‘ning asosi bo‘ladi.
+            </p>
+          </section>
+
+        </article>
+
+        <!-- BOTTOM NAV -->
+        <div class="mt-16 pt-8 border-t border-slate-800 flex flex-col sm:flex-row gap-3 justify-between">
+          <a href="day-31.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 text-sm transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Kun 31 — Inventory
+          </a>
+          <a href="../index.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium transition">
+            Kursga qaytish
+          </a>
+          <a href="day-33.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition shadow-lg shadow-teal-500/20">
+            Kun 33 — Use Item
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <footer class="mt-12 pb-8 text-center text-xs text-slate-600">
+          Betray Builder · 90 kunlik Unreal Engine 5 kursi · Kun 32 / 90 · Item Data Documentation
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const CHECKLIST_KEY = 'bb_day32_checklist';
+    const CHECK_ITEMS = [
+      "Data papkasi yaratildi (Content/BetrayBuilder/Data/)",
+      "DT_Items Data Table yaratildi (Row Struct: S_ItemData)",
+      "Key qatori qo'shildi (Row Name = Key)",
+      "Battery qatori qo'shildi",
+      "Medkit qatori qo'shildi",
+      "BP_Item BeginPlay da Get Data Table Row yozildi",
+      "Row Found → Break S_ItemData → Set variables",
+      "Row Not Found uchun ogohlantirish qo'shildi",
+      "Child'larda ItemID Data Table Row Name ga moslandi",
+      "Play da interaction matni jadvaldagi nomni ko'rsatadi",
+      "DT_Items da nom o'zgartirib, o'zgarishni tekshirildi"
+    ];
+
+    function safeGet(key) {
+      try { return JSON.parse(localStorage.getItem(key) || '[]'); }
+      catch { return []; }
+    }
+    function safeSet(key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); }
+      catch {}
+    }
+
+    let checked = new Set(safeGet(CHECKLIST_KEY));
+
+    function renderChecklist() {
+      const container = document.getElementById('checklist');
+      container.innerHTML = CHECK_ITEMS.map((text, i) => {
+        const isChecked = checked.has(i);
+        return `
+          <div class="checklist-item ${isChecked ? 'checked' : ''}" data-idx="${i}">
+            <div class="check-box">
+              ${isChecked ? '<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>' : ''}
+            </div>
+            <span class="check-label text-sm text-slate-300 leading-snug">${text}</span>
+          </div>
+        `;
+      }).join('');
+      container.querySelectorAll('.checklist-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const idx = +el.dataset.idx;
+          if (checked.has(idx)) checked.delete(idx);
+          else checked.add(idx);
+          safeSet(CHECKLIST_KEY, [...checked]);
+          renderChecklist();
+          updateProgress();
+        });
+      });
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const total = CHECK_ITEMS.length;
+      const done = checked.size;
+      const percent = Math.round((done / total) * 100);
+      document.getElementById('check-count').textContent = done;
+      document.getElementById('check-total').textContent = total;
+      document.getElementById('day-progress-text').textContent = done;
+      document.getElementById('sidebar-percent').textContent = percent + '%';
+      document.getElementById('sidebar-bar').style.width = percent + '%';
+      const ring = document.getElementById('day-progress-ring');
+      const circumference = 2 * Math.PI * 15.5;
+      ring.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+    }
+
+    document.getElementById('btn-check-all')?.addEventListener('click', () => {
+      if (checked.size === CHECK_ITEMS.length) checked.clear();
+      else CHECK_ITEMS.forEach((_, i) => checked.add(i));
+      safeSet(CHECKLIST_KEY, [...checked]);
+      renderChecklist();
+    });
+
+    document.getElementById('btn-reset-day')?.addEventListener('click', () => {
+      if (confirm('Bugungi checklist tozalansinmi?')) {
+        checked.clear();
+        safeSet(CHECKLIST_KEY, []);
+        renderChecklist();
+      }
+    });
+
+    function toggleAccordion(header) {
+      const body = header.nextElementSibling;
+      const isOpen = body.classList.contains('open');
+      document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.accordion-header').forEach(h => {
+        h.classList.remove('open');
+        h.querySelector('svg')?.classList.remove('rotate-180');
+      });
+      if (!isOpen) {
+        body.classList.add('open');
+        header.classList.add('open');
+        header.querySelector('svg')?.classList.add('rotate-180');
+      }
+    }
+
+    function copyCode(btn) {
+      const pre = btn.parentElement.querySelector('pre code');
+      const text = pre?.textContent || '';
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Nusxa olindi!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Nusxa'; btn.classList.remove('copied'); }, 2000);
+      }).catch(() => { btn.textContent = 'Xato'; });
+    }
+
+    document.querySelectorAll('.toc-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const id = link.getAttribute('href')?.slice(1);
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    renderChecklist();
+  </script>
+</body>
+</html>

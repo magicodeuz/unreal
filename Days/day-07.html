@@ -7,457 +7,662 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
           }
         }
       }
     }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', system-ui, sans-serif; }
-    .prose h2 { scroll-margin-top: 5rem; }
-    .step-num { background: linear-gradient(135deg, #26c6da, #0078d4); }
-    .ui-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      background: #2d2d2d;
-      border: 1px solid #404040;
-      padding: 0.15rem 0.45rem;
-      border-radius: 4px;
-      color: #80deea;
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+    .prose-custom h2 {
+      font-size: 1.45rem; font-weight: 800; color: #f8fafc;
+      margin-top: 3rem; margin-bottom: 1rem;
+      padding-bottom: 0.65rem; border-bottom: 1px solid #1e293b;
+      display: flex; align-items: center; gap: 0.75rem;
     }
-    .callout { border-left: 4px solid; }
-    .toc-link.active { color: #26c6da; border-left-color: #26c6da; }
-    pre, .flow {
+    .prose-custom h3 { font-size: 1.15rem; font-weight: 700; color: #86efac; margin-top: 1.75rem; margin-bottom: 0.75rem; }
+    .prose-custom p { color: #cbd5e1; line-height: 1.8; margin-bottom: 1.1rem; }
+    .prose-custom ul, .prose-custom ol { padding-left: 1.35rem; margin-bottom: 1.1rem; color: #cbd5e1; }
+    .prose-custom li { margin-bottom: 0.45rem; line-height: 1.65; }
+    .prose-custom strong { color: #f1f5f9; font-weight: 600; }
+    .prose-custom code {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      line-height: 1.65;
+      background: #1e293b; color: #86efac;
+      padding: 0.12rem 0.4rem; border-radius: 0.3rem; font-size: 0.85em;
+    }
+
+    .callout {
+      border-radius: 1rem; border: 1px solid; padding: 1.2rem 1.35rem;
+      margin: 1.4rem 0; display: flex; gap: 1rem;
+    }
+    .callout-info { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.35); }
+    .callout-tip { background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.3); }
+    .callout-warning { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); }
+    .callout-danger { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
+    .callout-milestone {
+      background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(16,185,129,0.08));
+      border-color: rgba(34,197,94,0.5);
+    }
+    .callout-professor {
+      background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(245,158,11,0.05));
+      border-color: rgba(251,191,36,0.35);
+    }
+
+    .milestone-banner {
+      background: linear-gradient(135deg, #14532d 0%, #166534 40%, #15803d 100%);
+      border: 1px solid rgba(74,222,128,0.4);
+      border-radius: 1.25rem;
+      padding: 1.75rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .milestone-banner::after {
+      content: '';
+      position: absolute; right: -20px; top: -20px;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(74,222,128,0.25), transparent 70%);
+    }
+
+    .bp-graph {
+      background: #0a0f1a;
+      border: 1px solid #1e293b;
+      border-radius: 1rem;
+      padding: 1.5rem 1.25rem;
+      margin: 1.25rem 0;
+      position: relative;
+      overflow-x: auto;
+    }
+    .bp-graph::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(30,41,59,0.5) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,41,59,0.5) 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.4;
+      pointer-events: none;
+      border-radius: 1rem;
+    }
+    .bp-graph-title {
+      position: relative; z-index: 1;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: #64748b; margin-bottom: 1rem;
+    }
+    .bp-row {
+      position: relative; z-index: 1;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem;
+      margin-bottom: 0.65rem;
+    }
+    .bp-node {
+      display: inline-flex; flex-direction: column;
+      border-radius: 0.4rem; border: 1px solid; padding: 0.4rem 0.7rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600;
+      line-height: 1.35;
+    }
+    .bp-node .bp-subtitle {
+      font-size: 0.62rem; font-weight: 500; opacity: 0.75; margin-top: 0.15rem;
+    }
+    .bp-event { background: linear-gradient(135deg, #7f1d1d, #991b1b); border-color: #f87171; color: #fecaca; }
+    .bp-func { background: linear-gradient(135deg, #14532d, #166534); border-color: #4ade80; color: #bbf7d0; }
+    .bp-var { background: linear-gradient(135deg, #4a044e, #701a75); border-color: #e879f9; color: #f5d0fe; }
+    .bp-branch { background: linear-gradient(135deg, #422006, #713f12); border-color: #fbbf24; color: #fde68a; }
+    .bp-pure { background: linear-gradient(135deg, #1e1b4b, #312e81); border-color: #a5b4fc; color: #c7d2fe; }
+    .bp-flip { background: linear-gradient(135deg, #164e63, #155e75); border-color: #22d3ee; color: #a5f3fc; }
+    .bp-arrow { color: #64748b; font-size: 1rem; font-weight: 700; padding: 0 0.15rem; }
+    .bp-label {
+      font-size: 0.65rem; color: #94a3b8; font-family: 'JetBrains Mono', monospace;
+      padding: 0.15rem 0.4rem; background: #1e293b; border-radius: 0.25rem;
+    }
+    .bp-branch-block {
+      position: relative; z-index: 1;
+      margin-left: 1.5rem; border-left: 2px solid #334155;
+      padding-left: 1rem; margin-top: 0.25rem; margin-bottom: 0.5rem;
+    }
+    .bp-branch-line {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem;
+      margin-bottom: 0.45rem; font-size: 0.72rem;
+    }
+    .bp-true { color: #4ade80; font-weight: 700; font-family: 'JetBrains Mono', monospace; min-width: 2.5rem; }
+    .bp-false { color: #f87171; font-weight: 700; font-family: 'JetBrains Mono', monospace; min-width: 2.5rem; }
+    .bp-a { color: #22d3ee; font-weight: 700; font-family: 'JetBrains Mono', monospace; min-width: 2.5rem; }
+    .bp-b { color: #c084fc; font-weight: 700; font-family: 'JetBrains Mono', monospace; min-width: 2.5rem; }
+
+    .week-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.35rem;
+    }
+    @media (max-width: 640px) { .week-grid { grid-template-columns: repeat(4, 1fr); } }
+    .week-day {
+      text-align: center; padding: 0.5rem 0.25rem; border-radius: 0.5rem;
+      border: 1px solid #1e293b; background: #0f172a; font-size: 0.7rem;
+    }
+    .week-day.done { border-color: rgba(34,197,94,0.4); background: rgba(34,197,94,0.08); }
+    .week-day.today { border-color: rgba(74,222,128,0.7); background: rgba(34,197,94,0.15); box-shadow: 0 0 0 1px rgba(74,222,128,0.3); }
+
+    .step-card {
+      background: linear-gradient(180deg, #0f172a 0%, #0c1222 100%);
+      border: 1px solid #1e293b; border-radius: 1rem; padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .step-num {
+      width: 2.25rem; height: 2.25rem; border-radius: 0.65rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.95rem; flex-shrink: 0;
+    }
+
+    .checklist-item {
+      display: flex; align-items: flex-start; gap: 0.8rem;
+      padding: 0.8rem 1rem; border-radius: 0.65rem;
+      border: 1px solid #1e293b; background: #0f172a;
+      margin-bottom: 0.45rem; cursor: pointer; transition: all 0.2s;
+    }
+    .checklist-item:hover { border-color: #334155; }
+    .checklist-item.checked { border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.06); }
+    .checklist-item.checked .check-label { text-decoration: line-through; color: #64748b; }
+    .check-box {
+      width: 1.3rem; height: 1.3rem; border-radius: 0.35rem;
+      border: 2px solid #475569; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .checklist-item.checked .check-box { background: #10b981; border-color: #10b981; }
+
+    .toc-link {
+      display: block; padding: 0.35rem 0.7rem; border-radius: 0.4rem;
+      color: #94a3b8; font-size: 0.85rem; transition: all 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .toc-link:hover { color: #86efac; background: rgba(134,239,172,0.05); border-left-color: #22c55e; }
+
+    .progress-ring-circle { transition: stroke-dashoffset 0.5s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
+
+    @media (min-width: 1024px) {
+      .sticky-toc { position: sticky; top: 5rem; max-height: calc(100vh - 6rem); overflow-y: auto; }
     }
   </style>
 </head>
-<body class="h-full bg-[#0f0f0f] text-slate-200 antialiased">
+<body class="h-full bg-slate-950 text-slate-100 antialiased">
 
-  <header class="sticky top-0 z-50 border-b border-slate-800 bg-[#0f0f0f]/90 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/95 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3 min-w-0">
-        <a href="../index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition shrink-0">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          <span class="text-sm hidden sm:inline">Kursga qaytish</span>
-        </a>
-        <div class="h-5 w-px bg-slate-700"></div>
+        <a href="../index.html" class="w-9 h-9 rounded-lg bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center font-bold text-sm shrink-0 hover:scale-105 transition shadow-lg shadow-orange-500/20">BB</a>
         <div class="min-w-0">
-          <div class="text-xs text-slate-500">Stage 1 · Fundamentals · FINAL</div>
-          <div class="font-semibold text-sm truncate">Kun 7 — MINI TEST</div>
+          <div class="font-bold text-sm sm:text-base truncate">Betray Builder Docs</div>
+          <div class="text-xs text-slate-500 truncate">Kun 7 · MINI TEST · Milestone 1</div>
         </div>
       </div>
-      <div class="flex items-center gap-2">
-        <span class="hidden sm:inline text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Milestone 1</span>
-        <a href="#vazifa" class="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Vazifa →</a>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5">
+          <svg class="w-4 h-4 text-green-400" viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="#1e293b" stroke-width="3"/>
+            <circle id="day-progress-ring" class="progress-ring-circle" cx="18" cy="18" r="15.5" fill="none"
+                    stroke="#4ade80" stroke-width="3" stroke-dasharray="97.4" stroke-dashoffset="97.4" stroke-linecap="round"/>
+          </svg>
+          <span class="text-xs text-slate-400"><span id="day-progress-text" class="text-green-400 font-semibold">0</span>/11 qadam</span>
+        </div>
+        <a href="../index.html" class="text-xs text-slate-400 hover:text-white transition px-3 py-1.5 rounded-lg hover:bg-slate-800">Kursga qaytish</a>
       </div>
     </div>
   </header>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 lg:py-12">
+    <div class="lg:grid lg:grid-cols-[230px_1fr] lg:gap-10">
 
-    <aside class="hidden lg:block w-56 shrink-0">
-      <nav class="sticky top-20 space-y-0.5 text-sm">
-        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Mundarija</div>
-        <a href="#maqsad" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Maqsad</a>
-        <a href="#eslatma" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Hafta eslatmasi</a>
-        <a href="#vazifa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Asosiy vazifa</a>
-        <a href="#qoidalar" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Qoidalar</a>
-        <a href="#ishora" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Ishora (spoiler)</a>
-        <a href="#yechim" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Yechim (faqat kerak bo'lsa)</a>
-        <a href="#challenge" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Challenge</a>
-        <a href="#checklist" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Milestone 1 checklist</a>
-        <a href="#bonus" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Bonus mashqlar</a>
-        <a href="#xulosa" class="toc-link block px-3 py-1.5 border-l-2 border-transparent text-slate-400 hover:text-white hover:border-slate-600 transition">Xulosa + Stage 2</a>
-      </nav>
-    </aside>
-
-    <main class="flex-1 min-w-0 max-w-3xl">
-
-      <!-- HERO -->
-      <div class="mb-10">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-medium mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          Stage 1 · Kun 7 / 7 · MILESTONE 1
+      <aside class="hidden lg:block">
+        <div class="sticky-toc">
+          <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-2">Mundarija</div>
+          <nav class="space-y-0.5">
+            <a href="#hero" class="toc-link">Kirish</a>
+            <a href="#milestone" class="toc-link">MILESTONE 1</a>
+            <a href="#hafta" class="toc-link">Hafta xulosasi</a>
+            <a href="#vazifa" class="toc-link">Bugungi vazifa</a>
+            <a href="#sxema-a" class="toc-link">Yechim A: Boolean + Branch</a>
+            <a href="#sxema-b" class="toc-link">Yechim B: Flip Flop</a>
+            <a href="#amaliy" class="toc-link">Amaliy qadamlar</a>
+            <a href="#test" class="toc-link">Test Checklist</a>
+            <a href="#natija" class="toc-link">Natija</a>
+            <a href="#qilmang" class="toc-link">Qilmang</a>
+            <a href="#challenge" class="toc-link">Challenge</a>
+            <a href="#professor" class="toc-link">Professor izohi</a>
+          </nav>
+          <div class="mt-8 p-4 rounded-xl bg-slate-900 border border-green-500/20">
+            <div class="text-xs text-green-400/80 mb-2">Bugungi progress</div>
+            <div class="text-2xl font-bold text-green-400" id="sidebar-percent">0%</div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full mt-2 overflow-hidden">
+              <div id="sidebar-bar" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-500" style="width:0%"></div>
+            </div>
+            <button id="btn-reset-day" class="mt-3 w-full text-xs text-slate-500 hover:text-red-400 transition py-1">Checklistni tozalash</button>
+          </div>
         </div>
-        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">MINI TEST — Blueprint Fundamentals</h1>
-        <p class="text-lg text-slate-400 leading-relaxed">
-          Yangi dars emas — <strong class="text-slate-200">mustahkamlash</strong>. Tutorialga qaramasdan, shu hafta o‘rganganlar bilan kichik mexanika yozasiz.
-        </p>
-      </div>
+      </aside>
 
-      <!-- MAQSAD -->
-      <section id="maqsad" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">🎯</span>
-          Kun maqsadi
-        </h2>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3">
-          <p class="text-slate-300 leading-relaxed">
-            <strong class="text-white">E</strong> bosilganda Cube <strong class="text-white">yo‘qolsin</strong>, yana bosilganda <strong class="text-white">qayta chiqsin</strong>.
-            Buni Boolean + Branch yoki Flip Flop, Set Actor Hidden In Game, Set Actor Enable Collision bilan qilasiz — hammasi Kun 1–6 da bor.
+      <main class="min-w-0">
+
+        <section id="hero" class="mb-8">
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700">KUN 7 / 90</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-green-500/15 text-green-400 border border-green-500/30">STAGE 1 · COMPLETE</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">MINI TEST</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tight mb-4 leading-tight">MINI TEST — Blueprint Fundamentals</h1>
+          <p class="text-lg sm:text-xl text-slate-400 max-w-3xl leading-relaxed">
+            Yangi dars yo‘q. Faqat <strong class="text-slate-200">shu hafta</strong> o‘rganganlaringiz bilan 
+            E bosilganda Cube yo‘qolsin / paydo bo‘lsin. Tutorialga qaramang — avval o‘zingiz.
           </p>
-          <div class="callout border-amber-500/50 bg-amber-500/5 rounded-r-lg p-3 mt-2">
-            <p class="text-sm text-amber-200/90"><strong class="text-amber-400">Muhim:</strong> Avval o‘zingiz yeching. Google / YouTube tayyor yechim qidirishdan oldin kamida 20–30 daqiqa o‘zingiz urinib ko‘ring. Yechim bo‘limi pastroqda — faqat tiqilib qolsangiz oching.</p>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- ESLATMA -->
-      <section id="eslatma" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">📚</span>
-          Shu haftada nima o‘rgandingiz
-        </h2>
-        <div class="rounded-xl border border-slate-800 overflow-hidden">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="border-b border-slate-700 text-left text-slate-400 bg-slate-900">
-                <th class="py-2.5 px-4 font-medium">Kun</th>
-                <th class="py-2.5 px-4 font-medium">Mavzu</th>
-                <th class="py-2.5 px-4 font-medium">Bugun foydali</th>
-              </tr>
-            </thead>
-            <tbody class="text-slate-300">
-              <tr class="border-b border-slate-800">
-                <td class="py-2 px-4 text-cyan-400">1</td>
-                <td class="py-2 px-4">Project, Viewport, Actor</td>
-                <td class="py-2 px-4 text-slate-500">Levelga Cube</td>
-              </tr>
-              <tr class="border-b border-slate-800">
-                <td class="py-2 px-4 text-cyan-400">2</td>
-                <td class="py-2 px-4">Actor + Component</td>
-                <td class="py-2 px-4 text-slate-500">BP_TestObject</td>
-              </tr>
-              <tr class="border-b border-slate-800">
-                <td class="py-2 px-4 text-cyan-400">3</td>
-                <td class="py-2 px-4">Event Graph, Branch, Variable</td>
-                <td class="py-2 px-4 text-slate-500"><strong class="text-white">Boolean, Branch</strong></td>
-              </tr>
-              <tr class="border-b border-slate-800">
-                <td class="py-2 px-4 text-cyan-400">4</td>
-                <td class="py-2 px-4">Custom Event, Function</td>
-                <td class="py-2 px-4 text-slate-500">OnActivate (ixtiyoriy)</td>
-              </tr>
-              <tr class="border-b border-slate-800">
-                <td class="py-2 px-4 text-cyan-400">5</td>
-                <td class="py-2 px-4">Cast vs Interface</td>
-                <td class="py-2 px-4 text-slate-500">Bugun Cast kerak emas</td>
-              </tr>
-              <tr>
-                <td class="py-2 px-4 text-cyan-400">6</td>
-                <td class="py-2 px-4">Enhanced Input</td>
-                <td class="py-2 px-4 text-slate-500"><strong class="text-white">IA_Interact</strong></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- VAZIFA -->
-      <section id="vazifa" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="step-num w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">1</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Asosiy vazifa</h2>
-            <p class="text-sm text-slate-500">Taxminiy vaqt: 30–60 daqiqa (o‘zingiz)</p>
-          </div>
-        </div>
-
-        <div class="rounded-xl border border-cyan-500/30 bg-cyan-500/5 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-          <ol class="list-decimal list-inside space-y-3">
-            <li>Levelga <code class="text-cyan-300 text-xs">BP_TestObject</code> (yoki Mesh’li Actor) dan <strong class="text-white">bitta</strong> instance joylashtiring.</li>
-            <li>Mantiqni <strong class="text-white">shu Actor’ning o‘z Event Graph’ida</strong> yozing (Player’da Cast/Interface emas — hali Interaction System yo‘q).</li>
-            <li><code class="text-cyan-300 text-xs">IA_Interact</code> (E) Triggered (yoki Actor ichida Enable Input + IA / Keyboard E) bosilganda:
-              <ul class="ml-6 mt-2 space-y-1 list-disc list-inside text-slate-400">
-                <li>birinchi bosish → Cube <strong class="text-white">yashirin</strong> + collision o‘chiq</li>
-                <li>ikkinchi bosish → yana <strong class="text-white">ko‘rinadi</strong> + collision yoqiladi</li>
-                <li>keyingi bosishlar — shu holatni almashtirib turadi</li>
-              </ul>
-            </li>
-            <li>Faqat shu hafta node’lari: Variable, Branch yoki Flip Flop, Set Actor Hidden In Game, Set Actor Enable Collision, Input.</li>
-          </ol>
-          <div class="callout border-emerald-500/50 bg-emerald-500/5 rounded-r-lg p-3 mt-2">
-            <p class="text-sm text-emerald-200/90"><strong class="text-emerald-400">Test:</strong> Play → E ni 4–5 marta bosing. Cube muammosiz ko‘rinadi / yo‘qoladi.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- QOIDALAR -->
-      <section id="qoidalar" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm">⛔</span>
-          Qoidalar
-        </h2>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-2 text-sm text-slate-300">
-          <ul class="space-y-2">
-            <li class="flex gap-2"><span class="text-red-400">✗</span> Tayyor tutorial video’ni ochib nusxa ko‘chirmang (avval o‘zingiz)</li>
-            <li class="flex gap-2"><span class="text-red-400">✗</span> Destroy Actor ishlatmang — qayta paydo qilish qiyinlashadi; Hidden + Collision yetarli</li>
-            <li class="flex gap-2"><span class="text-red-400">✗</span> Boshqa Actor turlariga Cast bilan murakkablashtirmang</li>
-            <li class="flex gap-2"><span class="text-emerald-400">✓</span> Print String bilan holatni tekshirishingiz mumkin</li>
-            <li class="flex gap-2"><span class="text-emerald-400">✓</span> Enable Input kerak bo‘lsa — Kun 3–4 dagi usul</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- ISHORA -->
-      <section id="ishora" class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-sm">💡</span>
-          Ishora (kichik spoiler)
-        </h2>
-        <details class="rounded-xl border border-slate-800 bg-slate-900/50 overflow-hidden group">
-          <summary class="px-5 py-3 cursor-pointer text-sm text-slate-400 hover:text-white list-none flex items-center justify-between">
-            <span>Bosib ochish — hali yechim emas</span>
-            <span class="text-xs text-slate-600 group-open:hidden">▼</span>
-            <span class="text-xs text-slate-600 hidden group-open:inline">▲</span>
-          </summary>
-          <div class="px-5 pb-5 pt-1 border-t border-slate-800 text-sm text-slate-300 space-y-2">
-            <p>Ikki yo‘l:</p>
-            <p><strong class="text-white">A)</strong> Boolean <code class="text-cyan-300 text-xs">bIsHidden</code> → Branch → true/false da Hidden + Collision → oxirida Boolean’ni teskari qiling (NOT + Set).</p>
-            <p><strong class="text-white">B)</strong> <span class="ui-label">Flip Flop</span> node — har chaqiruvda A va B ni almashtiradi. A = yashir, B = ko‘rsat.</p>
-            <p>Node nomlari: <span class="ui-label">Set Actor Hidden In Game</span>, <span class="ui-label">Set Actor Enable Collision</span> (Target: Self).</p>
-            <p>Input: Actor’da IMC + IA_Interact yoki Enable Input + E; yoki Character’dan Interface (lekin vazifa — o‘z graph’ida).</p>
-          </div>
-        </details>
-      </section>
-
-      <!-- YECHIM -->
-      <section id="yechim" class="mb-14">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center text-sm">🔓</span>
-          Yechim (faqat tiqilib qolsangiz)
-        </h2>
-        <details class="rounded-xl border border-slate-700 bg-slate-950 overflow-hidden">
-          <summary class="px-5 py-3 cursor-pointer text-sm text-slate-500 hover:text-slate-300 list-none">
-            Yechimni ochish — o‘zingiz urinib ko‘rgandan keyin
-          </summary>
-          <div class="px-5 pb-5 pt-3 border-t border-slate-800 space-y-6 text-sm text-slate-300 leading-relaxed">
-
-            <div>
-              <p class="text-xs text-emerald-400/90 font-medium mb-2">Yechim 1 — Boolean + Branch</p>
-              <pre class="flow text-cyan-300/90 bg-black/40 rounded-lg p-4 border border-slate-800">// Variable: bIsHidden (Boolean, default false)
-
-IA_Interact (Triggered)  // yoki Keyboard E / OnActivate
-    │
-    ▼
-Branch (Condition: bIsHidden)
-    │
-    ├─ True  → Set Actor Hidden In Game (False)
-    │          Set Actor Enable Collision (True)
-    │          Set bIsHidden = False
-    │
-    └─ False → Set Actor Hidden In Game (True)
-               Set Actor Enable Collision (False)
-               Set bIsHidden = True</pre>
-              <p class="text-slate-500 mt-2">Yoki Branch o‘rniga: Get bIsHidden → NOT → Set Hidden / Collision shu qiymat bilan → Set bIsHidden NOT natijasi.</p>
-            </div>
-
-            <div>
-              <p class="text-xs text-emerald-400/90 font-medium mb-2">Yechim 2 — Flip Flop (Challenge)</p>
-              <pre class="flow text-cyan-300/90 bg-black/40 rounded-lg p-4 border border-slate-800">IA_Interact (Triggered)
-    │
-    ▼
-Flip Flop
-    ├─ A → Set Actor Hidden In Game (True)
-    │      Set Actor Enable Collision (False)
-    │
-    └─ B → Set Actor Hidden In Game (False)
-           Set Actor Enable Collision (True)</pre>
-              <p class="text-slate-500 mt-2">Boolean variable shart emas — Flip Flop ichida holat saqlaydi.</p>
-            </div>
-
-            <div class="callout border-blue-500/50 bg-blue-500/5 rounded-r-lg p-3">
-              <p class="text-sm text-blue-200/90"><strong class="text-blue-400">Input eslatmasi:</strong> BP_TestObject input olishi uchun BeginPlay → Enable Input + Get Player Controller. Yoki Character’da IA_Interact Triggered → Interface Message OnActivate, va OnActivate ichida yuqoridagi Toggle. Vazifa “o‘z graph” deb aytgani uchun Enable Input + IA yoki Keyboard E qulayroq.</p>
+        <section id="milestone" class="mb-10">
+          <div class="milestone-banner">
+            <div class="relative z-10 flex flex-col sm:flex-row sm:items-center gap-4">
+              <div class="w-14 h-14 rounded-2xl bg-green-400/20 border border-green-400/40 flex items-center justify-center text-2xl shrink-0">✓</div>
+              <div>
+                <div class="text-green-300/80 text-xs font-bold tracking-widest uppercase mb-1">Milestone 1</div>
+                <div class="text-2xl sm:text-3xl font-black text-white">Blueprint fundamentals</div>
+                <p class="text-green-100/80 text-sm mt-1 m-0">Stage 1 yopildi · Actor, Graph, Event, Function, Interface, Enhanced Input</p>
+              </div>
             </div>
           </div>
-        </details>
-      </section>
+        </section>
 
-      <!-- CHALLENGE -->
-      <section id="challenge" class="mb-14">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg shrink-0">★</div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Challenge</h2>
-            <p class="text-sm text-slate-500">Flip Flop vs Boolean</p>
-          </div>
-        </div>
-        <div class="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-5 text-sm text-slate-300 leading-relaxed space-y-2">
-          <p>Xuddi shu mexanikani <strong class="text-white">Flip Flop</strong> bilan (Boolean’siz) qayta yozing.</p>
-          <p>Keyin solishtiring: qaysi biri o‘qishga oson? Qaysi biri keyinroq “faqat bir marta yashir” kabi shart qo‘shishga qulay?</p>
-        </div>
-      </section>
+        <article class="prose-custom">
 
-      <!-- CHECKLIST MILESTONE 1 -->
-      <section id="checklist" class="mb-14">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">✓</span>
-          Milestone 1 — o‘zini tekshirish
-        </h2>
-        <p class="text-sm text-slate-400 mb-4">Stage 1 yakunida quyidagilarni “ha” deb belgilay olasizmi?</p>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3 text-sm">
-          <label class="flex gap-3 items-start cursor-pointer group">
-            <input type="checkbox" class="mt-1 rounded border-slate-600 bg-slate-800 text-cyan-500 focus:ring-cyan-500/50">
-            <span class="text-slate-300 group-hover:text-white">Project ochaman, papka strukturasini bilaman</span>
-          </label>
-          <label class="flex gap-3 items-start cursor-pointer group">
-            <input type="checkbox" class="mt-1 rounded border-slate-600 bg-slate-800 text-cyan-500 focus:ring-cyan-500/50">
-            <span class="text-slate-300 group-hover:text-white">Actor Blueprint yarataman, Static Mesh + Collision qo‘shaman</span>
-          </label>
-          <label class="flex gap-3 items-start cursor-pointer group">
-            <input type="checkbox" class="mt-1 rounded border-slate-600 bg-slate-800 text-cyan-500 focus:ring-cyan-500/50">
-            <span class="text-slate-300 group-hover:text-white">Event Graph’da node ulang, execution vs data pin farqini tushunaman</span>
-          </label>
-          <label class="flex gap-3 items-start cursor-pointer group">
-            <input type="checkbox" class="mt-1 rounded border-slate-600 bg-slate-800 text-cyan-500 focus:ring-cyan-500/50">
-            <span class="text-slate-300 group-hover:text-white">Boolean / Integer variable, Branch ishlataman</span>
-          </label>
-          <label class="flex gap-3 items-start cursor-pointer group">
-            <input type="checkbox" class="mt-1 rounded border-slate-600 bg-slate-800 text-cyan-500 focus:ring-cyan-500/50">
-            <span class="text-slate-300 group-hover:text-white">Custom Event va oddiy Function yozaman</span>
-          </label>
-          <label class="flex gap-3 items-start cursor-pointer group">
-            <input type="checkbox" class="mt-1 rounded border-slate-600 bg-slate-800 text-cyan-500 focus:ring-cyan-500/50">
-            <span class="text-slate-300 group-hover:text-white">Cast va Blueprint Interface farqini aytib beraman</span>
-          </label>
-          <label class="flex gap-3 items-start cursor-pointer group">
-            <input type="checkbox" class="mt-1 rounded border-slate-600 bg-slate-800 text-cyan-500 focus:ring-cyan-500/50">
-            <span class="text-slate-300 group-hover:text-white">IA + IMC yarataman, Character’ga Add Mapping Context qilaman</span>
-          </label>
-          <label class="flex gap-3 items-start cursor-pointer group">
-            <input type="checkbox" class="mt-1 rounded border-slate-600 bg-slate-800 text-cyan-500 focus:ring-cyan-500/50">
-            <span class="text-slate-300 group-hover:text-white">Mini-test: E bilan Cube toggle ishlaydi</span>
-          </label>
-        </div>
-        <p class="text-xs text-slate-500 mt-3">Belgilash brauzerda saqlanmaydi — o‘zingiz uchun. Hammasiga ✓ qo‘ya olsangiz, Stage 1 yopildi.</p>
-      </section>
-
-      <!-- BONUS -->
-      <section id="bonus" class="mb-14">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-sm">★</span>
-          Bonus mashqlar (ixtiyoriy)
-        </h2>
-        <p class="text-sm text-slate-400 mb-4">Vaqt va ishtiyoq bo‘lsa — Stage 2 ga kirishdan oldin.</p>
-
-        <div class="space-y-4">
-          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs font-mono text-orange-400">B1</span>
-              <span class="font-semibold text-white">Rang o‘zgarishi</span>
+          <section id="hafta">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold">01</span>
+              Hafta xulosasi — nimalarni ishlatasiz
+            </h2>
+            <div class="week-grid not-prose my-4">
+              <div class="week-day done"><div class="font-bold text-green-400">1</div><div class="text-slate-500">Editor</div></div>
+              <div class="week-day done"><div class="font-bold text-green-400">2</div><div class="text-slate-500">Actor</div></div>
+              <div class="week-day done"><div class="font-bold text-green-400">3</div><div class="text-slate-500">Graph</div></div>
+              <div class="week-day done"><div class="font-bold text-green-400">4</div><div class="text-slate-500">Event/Fn</div></div>
+              <div class="week-day done"><div class="font-bold text-green-400">5</div><div class="text-slate-500">BPI</div></div>
+              <div class="week-day done"><div class="font-bold text-green-400">6</div><div class="text-slate-500">Input</div></div>
+              <div class="week-day today"><div class="font-bold text-green-300">7</div><div class="text-green-400/80">TEST</div></div>
             </div>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              Toggle bilan birga: yashirin bo‘lmaganda Static Mesh’ga Dynamic Material Instance orqali rang bering (yoki ikkita Material — oddiy / “active”). Yashirin paytda o‘zgartirish shart emas.
+            <p>
+              Bugun kerak: <strong>Variable</strong>, <strong>Branch</strong> yoki <strong>Flip Flop</strong>, 
+              <strong>IA_Interact</strong> (yoki E), <strong>Set Actor Hidden In Game</strong>, 
+              <strong>Set Actor Enable Collision</strong>. Hammasi shu haftada bor.
             </p>
-          </div>
+          </section>
 
-          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs font-mono text-orange-400">B2</span>
-              <span class="font-semibold text-white">ClickCount + chegara</span>
+          <section id="vazifa">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">02</span>
+              Bugungi vazifa (qisqa)
+            </h2>
+            <div class="callout callout-info">
+              <div class="text-green-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <p class="text-sm text-slate-300 m-0">
+                Leveldagi <code>BP_TestObject</code> (Cube). <strong>E</strong> bosilganda yo‘qoladi 
+                (hidden + collision off). Yana E — qaytadan ko‘rinadi. 
+                Cast yo‘q — mantiq shu Actor ning o‘z Event Graph ida.
+              </p>
             </div>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              Har E da ClickCount +1. Agar ClickCount ≥ 10 bo‘lsa — Print “Limit” va boshqa toggle qilmang (Branch). Reset uchun R tugmasi (yangi IA yoki Keyboard).
+            <p class="text-sm text-amber-200/90">
+              Avval o‘zingiz urinib ko‘ring. Quyidagi sxemalar — “stuck” bo‘lsangiz yoki solishtirish uchun.
             </p>
-          </div>
+          </section>
 
-          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs font-mono text-orange-400">B3</span>
-              <span class="font-semibold text-white">Ikki obyekt, bitta Interface</span>
+          <!-- YECHIM A -->
+          <section id="sxema-a">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">03</span>
+              Yechim A — Boolean + Branch (toggle)
+            </h2>
+            <p>
+              Variable: <code>bIsHidden</code> (Boolean, default false). 
+              Har E da holatni teskari qiling, Branch bilan Hidden/Collision sozlang.
+            </p>
+
+            <div class="bp-graph not-prose">
+              <div class="bp-graph-title">BP_TestObject · Event Graph · Boolean toggle</div>
+
+              <div class="bp-row">
+                <div class="bp-node bp-event">
+                  IA_Interact
+                  <span class="bp-subtitle">Triggered (yoki Keyboard E)</span>
+                </div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-pure">
+                  GET bIsHidden
+                </div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-pure">
+                  NOT Boolean
+                  <span class="bp-subtitle">teskari qilish</span>
+                </div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-var">
+                  SET bIsHidden
+                </div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-branch">
+                  Branch
+                  <span class="bp-subtitle">Condition = GET bIsHidden</span>
+                </div>
+              </div>
+
+              <div class="bp-branch-block">
+                <div class="bp-branch-line">
+                  <span class="bp-true">True →</span>
+                  <div class="bp-node bp-func">Set Actor Hidden In Game · true</div>
+                  <span class="bp-arrow">→</span>
+                  <div class="bp-node bp-func">Set Actor Enable Collision · false</div>
+                </div>
+                <div class="bp-branch-line">
+                  <span class="bp-false">False →</span>
+                  <div class="bp-node bp-func">Set Actor Hidden In Game · false</div>
+                  <span class="bp-arrow">→</span>
+                  <div class="bp-node bp-func">Set Actor Enable Collision · true</div>
+                </div>
+              </div>
+
+              <div class="mt-3 flex flex-wrap gap-2 text-xs text-slate-500">
+                <span class="bp-label">Target = self</span>
+                <span class="bp-label">Hidden true = ko'rinmaydi</span>
+                <span class="bp-label">Collision false = o'tib ketish mumkin</span>
+              </div>
             </div>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              Kun 5 dagi BPI_TestInterface + Player’dan Message: E bosilganda nishonga (reference yoki Get All) OnActivate → har obyekt o‘z toggle’ini qilsin. Bu Stage 3 Interaction’ga eng yaqin bonus.
-            </p>
-          </div>
 
-          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs font-mono text-orange-400">B4</span>
-              <span class="font-semibold text-white">Qisqa yozma</span>
+            <div class="callout callout-tip">
+              <div class="text-violet-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div class="text-sm text-slate-300">
+                <strong>Qanday yig‘iladi:</strong><br>
+                1) + Variable → <code>bIsHidden</code> Boolean<br>
+                2) IA_Interact Triggered (yoki E Pressed) → Get bIsHidden → NOT → Set bIsHidden<br>
+                3) Set dan keyin Branch (Condition yana Get bIsHidden)<br>
+                4) True: Hidden true + Enable Collision false<br>
+                5) False: Hidden false + Enable Collision true<br>
+                Node qidiruv: <code>Set Actor Hidden</code>, <code>Set Actor Enable Collision</code>
+              </div>
             </div>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              5–10 jumla: “Cast qachon hali ham kerak, Interface qachon afzal?” — Kun 5 challenge’ni yangilang. Keyingi haftalar uchun o‘zingizga eslatma.
-            </p>
-          </div>
+          </section>
 
-          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs font-mono text-orange-400">B5</span>
-              <span class="font-semibold text-white">Backup</span>
+          <!-- YECHIM B -->
+          <section id="sxema-b">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm font-bold">04</span>
+              Yechim B — Flip Flop (variable’siz)
+            </h2>
+            <p>
+              <code>Flip Flop</code> har chaqiriqda A va B ni almashadi. Boolean saqlash shart emas.
+            </p>
+
+            <div class="bp-graph not-prose">
+              <div class="bp-graph-title">BP_TestObject · Flip Flop yo‘li</div>
+
+              <div class="bp-row">
+                <div class="bp-node bp-event">
+                  IA_Interact · Triggered
+                </div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-flip">
+                  Flip Flop
+                  <span class="bp-subtitle">A / B almashadi</span>
+                </div>
+              </div>
+
+              <div class="bp-branch-block">
+                <div class="bp-branch-line">
+                  <span class="bp-a">A →</span>
+                  <div class="bp-node bp-func">Set Actor Hidden In Game · true</div>
+                  <span class="bp-arrow">→</span>
+                  <div class="bp-node bp-func">Set Actor Enable Collision · false</div>
+                </div>
+                <div class="bp-branch-line">
+                  <span class="bp-b">B →</span>
+                  <div class="bp-node bp-func">Set Actor Hidden In Game · false</div>
+                  <span class="bp-arrow">→</span>
+                  <div class="bp-node bp-func">Set Actor Enable Collision · true</div>
+                </div>
+              </div>
+
+              <div class="mt-3 flex flex-wrap gap-2 text-xs text-slate-500">
+                <span class="bp-label">Flip Flop = Utilities / Flow Control</span>
+                <span class="bp-label">Birinchi bosish A, ikkinchi B, ...</span>
+              </div>
             </div>
-            <p class="text-sm text-slate-300 leading-relaxed">
-              Project’ni saqlang. Content/BetrayBuilder papkasini yoki butun project’ni zip / Source Control. Milestone yakunida backup odat — keyingi stage’larda ham shunday qiling.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      <!-- XULOSA -->
-      <section id="xulosa" class="mb-14">
-        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">🏁</span>
-          Stage 1 yakunlandi
-        </h2>
-        <div class="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-5 space-y-4 text-sm text-slate-300 leading-relaxed">
-          <p class="text-lg text-white font-semibold">MILESTONE 1 — Blueprint fundamentals ✓</p>
-          <p>
-            Actor, Component, Event Graph, Variable, Branch, Custom Event, Function, Cast vs Interface, Enhanced Input — poydevor qo‘yildi.
-          </p>
-          <div class="border-t border-emerald-500/20 pt-4">
-            <p class="text-slate-400 mb-2"><strong class="text-white">Stage 2 (Kun 8–14) — Player & Movement</strong></p>
-            <ul class="space-y-1 text-slate-400">
-              <li>• Character Movement Component</li>
-              <li>• Walk / Sprint / Crouch haqiqiy mantiq</li>
-              <li>• Camera, Input Axis</li>
-              <li>• Milestone 2: boshqariladigan o‘yinchi</li>
+            <p>
+              Challenge: ikkala yechimni ham yozing va solishtiring — qaysi biri o‘qilishi osonroq?
+            </p>
+          </section>
+
+          <section id="amaliy">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold">05</span>
+              Amaliy qadamlar
+            </h2>
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">1</div>
+                <h3 class="m-0 text-white text-base font-bold">Level + BP_TestObject</h3>
+              </div>
+              <p class="text-sm text-slate-300 m-0">Bitta Cube instance. Character yaqinida, ko‘rinadigan joyda.</p>
+            </div>
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">2</div>
+                <h3 class="m-0 text-white text-base font-bold">O‘zingiz yozing</h3>
+              </div>
+              <p class="text-sm text-slate-300 m-0">
+                IA_Interact yoki E. Hidden + Collision. 
+                Cast yo‘q — self Event Graph. 10–15 daqiqa o‘ylab ko‘ring.
+              </p>
+            </div>
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-2">
+                <div class="step-num">3</div>
+                <h3 class="m-0 text-white text-base font-bold">Solishtiring</h3>
+              </div>
+              <p class="text-sm text-slate-300 m-0">Ishlamasa yoki ishlasa ham — yuqoridagi sxemalar bilan solishtiring. Keyin Challenge (Flip Flop).</p>
+            </div>
+          </section>
+
+          <section id="test">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">06</span>
+              Test Checklist
+            </h2>
+            <div id="checklist" class="not-prose mt-3 space-y-1"></div>
+            <div class="mt-3 flex items-center justify-between text-sm not-prose">
+              <span class="text-slate-500">Bajarildi: <span id="check-count" class="text-green-400 font-semibold">0</span> / <span id="check-total">11</span></span>
+              <button id="btn-check-all" class="text-xs text-slate-500 hover:text-green-400 transition">Barchasini belgilash</button>
+            </div>
+          </section>
+
+          <section id="natija">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center text-sm font-bold">07</span>
+              Kutilayotgan natija
+            </h2>
+            <ul>
+              <li>Mustaqil mini-mexanika — tutorialga qaramasdan</li>
+              <li>Bilim mustahkamlandi</li>
+              <li><strong>Milestone 1 · Blueprint fundamentals</strong> yopildi</li>
             </ul>
-          </div>
-          <p class="text-slate-500 pt-2">Dam oling, backup oling, keyin Stage 2 ga o‘ting. Yaxshi ish!</p>
+            <p class="text-sm text-slate-500">Structure: <code>BP_TestObject</code> yangilangan Event Graph</p>
+          </section>
+
+          <section id="qilmang">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm font-bold">08</span>
+              Qilmang
+            </h2>
+            <div class="callout callout-danger">
+              <div class="text-red-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+              </div>
+              <ul class="text-sm text-slate-300 m-0 list-none pl-0 space-y-1">
+                <li><span class="text-red-400 font-bold">✕</span> Google / YouTube dan tayyor yechim — avval o‘zingiz</li>
+                <li><span class="text-red-400 font-bold">✕</span> Cast orqali boshqa Actor dan boshqarish (hali Interaction System yo‘q)</li>
+              </ul>
+            </div>
+          </section>
+
+          <section id="challenge">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">★</span>
+              Challenge
+            </h2>
+            <div class="callout callout-warning">
+              <div class="text-amber-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-amber-300 mb-1">Boolean vs Flip Flop</h4>
+                <p class="text-sm text-slate-300 m-0">
+                  Xuddi shu mexanikani Flip Flop bilan (Boolean’siz) qayta yozing. 
+                  Qaysi biri qisqaroq? Qaysi biri keyinroq kengaytirish oson (masalan, uchinchi holat)?
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="professor">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">★</span>
+              Professor izohi
+            </h2>
+            <div class="callout callout-professor">
+              <div class="text-amber-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              </div>
+              <p class="text-sm text-slate-300 m-0 leading-relaxed">
+                Birinchi hafta tugadi. Siz endi Editorda yurasiz, Actor yig‘asiz, Graph yozasiz, 
+                Event/Function ajratasiz, Interface va Enhanced Input ni tanisiz. 
+                <strong class="text-amber-200">Milestone 1</strong> — poydevor. 
+                Keyingi stage larda shu poydevor ustiga o‘yin quriladi. Dam oling — keyin Stage 2.
+              </p>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="mt-14 pt-8 border-t border-slate-800 flex flex-col sm:flex-row gap-3 justify-between">
+          <a href="day-06.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 text-sm transition">← Kun 6</a>
+          <a href="../index.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium transition">Kursga qaytish</a>
+          <span class="flex items-center justify-center px-5 py-3 rounded-xl border border-green-500/30 text-green-400/80 text-sm font-medium">
+            Stage 1 · Complete ✓
+          </span>
         </div>
-      </section>
 
-      <div class="flex items-center justify-between gap-4 pt-6 border-t border-slate-800">
-        <a href="day-06.html" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          Kun 6
-        </a>
-        <div class="text-xs text-slate-600">Kun 7 / 90 · Stage 1 ✓</div>
-        <a href="day-08.html" class="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition font-medium">
-          Stage2 | Kun 8 →
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-
-      <div class="h-16"></div>
-    </main>
+        <footer class="mt-10 pb-8 text-center text-xs text-slate-600">
+          Betray Builder · Kun 7 / 90 · MILESTONE 1 · Blueprint fundamentals
+        </footer>
+      </main>
+    </div>
   </div>
 
   <script>
-    const links = document.querySelectorAll('.toc-link');
-    const sections = [...links].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
-    function updateToc() {
-      const scrollY = window.scrollY + 120;
-      let current = sections[0];
-      for (const s of sections) {
-        if (s.offsetTop <= scrollY) current = s;
-      }
-      links.forEach(l => {
-        l.classList.toggle('active', l.getAttribute('href') === '#' + current?.id);
-      });
+    const CHECKLIST_KEY = 'bb_day07_checklist';
+    const CHECK_ITEMS = [
+      "Levelda BP_TestObject (Cube) joylashgan",
+      "Avval o'zim yechimni o'ylab / yozib ko'rdim",
+      "IA_Interact yoki E input ulangdi",
+      "Yechim A yoki B ishlaydi: E da yo'qoladi",
+      "Yana E da qayta ko'rinadi",
+      "Hidden + Collision ikkalasi ham sozlangan",
+      "Cast ishlatilmagan — self Event Graph",
+      "Bir necha marta E: barqaror toggle",
+      "Challenge: Flip Flop versiyasi yozildi",
+      "Boolean vs Flip Flop solishtirildi",
+      "Milestone 1 — Stage 1 yopildi deb hisoblayman"
+    ];
+
+    function safeGet(key) {
+      try { return JSON.parse(localStorage.getItem(key) || '[]'); }
+      catch { return []; }
     }
-    window.addEventListener('scroll', updateToc, { passive: true });
-    updateToc();
+    function safeSet(key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); }
+      catch {}
+    }
+
+    let checked = new Set(safeGet(CHECKLIST_KEY));
+
+    function renderChecklist() {
+      const container = document.getElementById('checklist');
+      container.innerHTML = CHECK_ITEMS.map((text, i) => {
+        const isChecked = checked.has(i);
+        return `
+          <div class="checklist-item ${isChecked ? 'checked' : ''}" data-idx="${i}">
+            <div class="check-box">
+              ${isChecked ? '<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>' : ''}
+            </div>
+            <span class="check-label text-sm text-slate-300 leading-snug">${text}</span>
+          </div>
+        `;
+      }).join('');
+      container.querySelectorAll('.checklist-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const idx = +el.dataset.idx;
+          if (checked.has(idx)) checked.delete(idx);
+          else checked.add(idx);
+          safeSet(CHECKLIST_KEY, [...checked]);
+          renderChecklist();
+          updateProgress();
+        });
+      });
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const total = CHECK_ITEMS.length;
+      const done = checked.size;
+      const percent = Math.round((done / total) * 100);
+      document.getElementById('check-count').textContent = done;
+      document.getElementById('check-total').textContent = total;
+      document.getElementById('day-progress-text').textContent = done;
+      document.getElementById('sidebar-percent').textContent = percent + '%';
+      document.getElementById('sidebar-bar').style.width = percent + '%';
+      const ring = document.getElementById('day-progress-ring');
+      const circumference = 2 * Math.PI * 15.5;
+      ring.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+    }
+
+    document.getElementById('btn-check-all')?.addEventListener('click', () => {
+      if (checked.size === CHECK_ITEMS.length) checked.clear();
+      else CHECK_ITEMS.forEach((_, i) => checked.add(i));
+      safeSet(CHECKLIST_KEY, [...checked]);
+      renderChecklist();
+    });
+
+    document.getElementById('btn-reset-day')?.addEventListener('click', () => {
+      if (confirm('Bugungi checklist tozalansinmi?')) {
+        checked.clear();
+        safeSet(CHECKLIST_KEY, []);
+        renderChecklist();
+      }
+    });
+
+    document.querySelectorAll('.toc-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const id = link.getAttribute('href')?.slice(1);
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    renderChecklist();
   </script>
 </body>
 </html>
