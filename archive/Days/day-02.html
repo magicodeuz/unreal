@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kun 2 — Actor va Component | Betray Builder — To'liq Dokumentatsiya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+    .prose-custom h2 {
+      font-size: 1.5rem; font-weight: 800; color: #f8fafc;
+      margin-top: 3.25rem; margin-bottom: 1.1rem;
+      padding-bottom: 0.7rem; border-bottom: 1px solid #1e293b;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .prose-custom h3 {
+      font-size: 1.2rem; font-weight: 700; color: #c4b5fd;
+      margin-top: 2rem; margin-bottom: 0.85rem;
+    }
+    .prose-custom h4 {
+      font-size: 1.05rem; font-weight: 700; color: #a78bfa;
+      margin-top: 1.5rem; margin-bottom: 0.65rem;
+    }
+    .prose-custom p { color: #cbd5e1; line-height: 1.85; margin-bottom: 1.15rem; }
+    .prose-custom ul, .prose-custom ol { padding-left: 1.4rem; margin-bottom: 1.15rem; color: #cbd5e1; }
+    .prose-custom li { margin-bottom: 0.5rem; line-height: 1.7; }
+    .prose-custom strong { color: #f1f5f9; font-weight: 600; }
+    .prose-custom code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #1e293b; color: #c4b5fd;
+      padding: 0.12rem 0.4rem; border-radius: 0.3rem; font-size: 0.85em;
+    }
+    .prose-custom pre {
+      font-family: 'JetBrains Mono', monospace;
+      background: #0f172a; border: 1px solid #1e293b;
+      border-radius: 0.75rem; padding: 1.15rem; overflow-x: auto;
+      font-size: 0.8rem; line-height: 1.55; color: #e2e8f0; margin-bottom: 1.25rem;
+    }
+
+    .callout {
+      border-radius: 1rem; border: 1px solid; padding: 1.25rem 1.4rem;
+      margin: 1.5rem 0; display: flex; gap: 1rem;
+    }
+    .callout-info { background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.35); }
+    .callout-tip { background: rgba(56,189,248,0.08); border-color: rgba(56,189,248,0.3); }
+    .callout-warning { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); }
+    .callout-danger { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
+    .callout-success { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.3); }
+    .callout-professor {
+      background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(245,158,11,0.06));
+      border-color: rgba(251,191,36,0.4);
+    }
+    .callout-deep {
+      background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.06));
+      border-color: rgba(99,102,241,0.35);
+    }
+
+    .tree-box {
+      background: linear-gradient(180deg, #0a0f1a 0%, #0f172a 100%);
+      border: 1px solid #1e293b; border-radius: 1rem;
+      padding: 1.75rem 1.5rem; position: relative;
+      font-family: 'JetBrains Mono', monospace; margin: 1.5rem 0;
+    }
+    .tree-box::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, #1e293b 1px, transparent 0);
+      background-size: 18px 18px; opacity: 0.35; pointer-events: none; border-radius: 1rem;
+    }
+    .tree-node {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.45rem 0.9rem; border-radius: 0.5rem;
+      border: 1px solid; font-size: 0.8rem; font-weight: 600;
+      position: relative; z-index: 1;
+    }
+    .tree-root { background: rgba(99,102,241,0.18); border-color: rgba(99,102,241,0.55); color: #a5b4fc; }
+    .tree-mesh { background: rgba(16,185,129,0.14); border-color: rgba(16,185,129,0.5); color: #6ee7b7; }
+    .tree-col { background: rgba(245,158,11,0.14); border-color: rgba(245,158,11,0.5); color: #fcd34d; }
+    .tree-light { background: rgba(236,72,153,0.14); border-color: rgba(236,72,153,0.5); color: #f9a8d4; }
+    .tree-line { color: #475569; font-size: 0.9rem; line-height: 1.45; position: relative; z-index: 1; }
+
+    .step-card {
+      background: linear-gradient(180deg, #0f172a 0%, #0c1222 100%);
+      border: 1px solid #1e293b; border-radius: 1rem; padding: 1.6rem;
+      margin-bottom: 1.4rem;
+    }
+    .step-num {
+      width: 2.4rem; height: 2.4rem; border-radius: 0.7rem;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; flex-shrink: 0;
+    }
+
+    .compare-card {
+      background: #0f172a; border: 1px solid #1e293b; border-radius: 0.9rem; padding: 1.25rem;
+    }
+
+    .panel-shot {
+      background: #0a0f1a; border: 1px solid #334155; border-radius: 0.75rem;
+      padding: 1rem 1.2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+    }
+
+    .checklist-item {
+      display: flex; align-items: flex-start; gap: 0.8rem;
+      padding: 0.85rem 1rem; border-radius: 0.65rem;
+      border: 1px solid #1e293b; background: #0f172a;
+      margin-bottom: 0.5rem; cursor: pointer; transition: all 0.2s;
+    }
+    .checklist-item:hover { border-color: #334155; }
+    .checklist-item.checked { border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.06); }
+    .checklist-item.checked .check-label { text-decoration: line-through; color: #64748b; }
+    .check-box {
+      width: 1.3rem; height: 1.3rem; border-radius: 0.35rem;
+      border: 2px solid #475569; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .checklist-item.checked .check-box { background: #10b981; border-color: #10b981; }
+
+    .toc-link {
+      display: block; padding: 0.35rem 0.7rem; border-radius: 0.4rem;
+      color: #94a3b8; font-size: 0.82rem; transition: all 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .toc-link:hover { color: #c4b5fd; background: rgba(196,181,253,0.05); border-left-color: #8b5cf6; }
+
+    .progress-ring-circle { transition: stroke-dashoffset 0.5s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
+
+    .faq-item {
+      border: 1px solid #1e293b; border-radius: 0.75rem; padding: 1rem 1.2rem;
+      margin-bottom: 0.75rem; background: #0f172a;
+    }
+    .faq-q { font-weight: 700; color: #e2e8f0; margin-bottom: 0.4rem; font-size: 0.95rem; }
+    .faq-a { color: #94a3b8; font-size: 0.9rem; line-height: 1.65; margin: 0; }
+
+    .mini-table {
+      width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0;
+    }
+    .mini-table th, .mini-table td {
+      border: 1px solid #1e293b; padding: 0.65rem 0.85rem; text-align: left;
+    }
+    .mini-table th { background: #1e293b; color: #c4b5fd; font-weight: 600; }
+    .mini-table td { color: #cbd5e1; }
+
+    .kb {
+      display: inline-block; padding: 0.15rem 0.45rem; border-radius: 0.3rem;
+      background: #1e293b; border: 1px solid #334155; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; color: #e2e8f0;
+    }
+
+    @media (min-width: 1024px) {
+      .sticky-toc { position: sticky; top: 5rem; max-height: calc(100vh - 6rem); overflow-y: auto; }
+    }
+  </style>
+</head>
+<body class="h-full bg-slate-950 text-slate-100 antialiased">
+
+  <!-- ═══════════════════════════════════════════════════════════ HEADER -->
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/95 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="../index.html" class="w-9 h-9 rounded-lg bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center font-bold text-sm shrink-0 hover:scale-105 transition shadow-lg shadow-orange-500/20">BB</a>
+        <div class="min-w-0">
+          <div class="font-bold text-sm sm:text-base truncate">Betray Builder Docs</div>
+          <div class="text-xs text-slate-500 truncate">Kun 2 · Actor va Component · Stage 1 · To'liq qo'llanma</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5">
+          <svg class="w-4 h-4 text-violet-400" viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="#1e293b" stroke-width="3"/>
+            <circle id="day-progress-ring" class="progress-ring-circle" cx="18" cy="18" r="15.5" fill="none"
+                    stroke="#a78bfa" stroke-width="3" stroke-dasharray="97.4" stroke-dashoffset="97.4" stroke-linecap="round"/>
+          </svg>
+          <span class="text-xs text-slate-400"><span id="day-progress-text" class="text-violet-400 font-semibold">0</span>/<span id="day-progress-max">14</span> qadam</span>
+        </div>
+        <a href="../index.html" class="text-xs text-slate-400 hover:text-white transition px-3 py-1.5 rounded-lg hover:bg-slate-800">Kursga qaytish</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 lg:py-12">
+    <div class="lg:grid lg:grid-cols-[240px_1fr] lg:gap-10">
+
+      <!-- ═══════════════════════════════════════════════════════ SIDEBAR TOC -->
+      <aside class="hidden lg:block">
+        <div class="sticky-toc">
+          <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-2">Mundarija</div>
+          <nav class="space-y-0.5 text-sm">
+            <a href="#hero" class="toc-link">Kirish</a>
+            <a href="#maqsad" class="toc-link">Bugungi maqsad</a>
+            <a href="#nima-uchun" class="toc-link">Nima uchun bu kun muhim?</a>
+            <a href="#metafora" class="toc-link">Metafora: uy va xonalar</div>
+            <a href="#actor-nima" class="toc-link">Actor nima?</a>
+            <a href="#component-nima" class="toc-link">Component nima?</a>
+            <a href="#hierarchy" class="toc-link">Hierarchy (daraxt)</a>
+            <a href="#mesh-vs-col" class="toc-link">Mesh vs Collision</a>
+            <a href="#parent-child" class="toc-link">Parent / Child</a>
+            <a href="#transform-eslatma" class="toc-link">Transform eslatma</a>
+            <a href="#qadam0" class="toc-link">0. Oldindan tekshirish</a>
+            <a href="#qadam1" class="toc-link">1. BP_TestObject yaratish</a>
+            <a href="#qadam2" class="toc-link">2. Static Mesh qo'shish</a>
+            <a href="#qadam3" class="toc-link">3. Cube mesh tanlash</a>
+            <a href="#qadam4" class="toc-link">4. Box Collision</a>
+            <a href="#qadam5" class="toc-link">5. Parent qilish</a>
+            <a href="#qadam6" class="toc-link">6. Collision kattalashtirish</a>
+            <a href="#qadam7" class="toc-link">7. Compile va Save</a>
+            <a href="#qadam8" class="toc-link">8. Levelga joylashtirish</a>
+            <a href="#qadam9" class="toc-link">9. Show Collision</a>
+            <a href="#qadam10" class="toc-link">10. Transform sinash</a>
+            <a href="#xatoliklar" class="toc-link">Tez-tez uchraydigan xatoliklar</a>
+            <a href="#test" class="toc-link">Test Checklist</a>
+            <a href="#natija" class="toc-link">Natija</a>
+            <a href="#qilmang" class="toc-link">Bugun qilmang</a>
+            <a href="#challenge" class="toc-link">Challenge: Point Light</a>
+            <a href="#faq" class="toc-link">FAQ — savol-javob</a>
+            <a href="#professor" class="toc-link">Professor izohi</a>
+            <a href="#ertaga" class="toc-link">Ertaga nima bo'ladi?</a>
+          </nav>
+          <div class="mt-8 p-4 rounded-xl bg-slate-900 border border-violet-500/20">
+            <div class="text-xs text-violet-400/80 mb-2">Bugungi progress</div>
+            <div class="text-2xl font-bold text-violet-400" id="sidebar-percent">0%</div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full mt-2 overflow-hidden">
+              <div id="sidebar-bar" class="h-full bg-gradient-to-r from-violet-500 to-purple-400 rounded-full transition-all duration-500" style="width:0%"></div>
+            </div>
+            <button id="btn-reset-day" class="mt-3 w-full text-xs text-slate-500 hover:text-red-400 transition py-1">Checklistni tozalash</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ═══════════════════════════════════════════════════════ MAIN -->
+      <main class="min-w-0">
+
+        <!-- HERO -->
+        <section id="hero" class="mb-10">
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700">KUN 2 / 90</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-violet-500/15 text-violet-400 border border-violet-500/30">STAGE 1 · FUNDAMENTALS</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-fuchsia-500/15 text-fuchsia-400 border border-fuchsia-500/30">HIERARCHY</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">SCRIPT YO'Q</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tight mb-4 leading-tight">Actor va Component</h1>
+          <p class="text-lg sm:text-xl text-slate-400 max-w-3xl leading-relaxed">
+            Bugun sizning <strong class="text-slate-200">birinchi Blueprint Actor</strong>ingiz yaratiladi:
+            <code class="text-violet-300">BP_TestObject</code>.
+            Ichida Static Mesh (Cube) va Box Collision bo‘ladi.
+            <strong class="text-slate-200">Event Graph ga hali tegilmaydi</strong> — faqat tuzilma, hierarchy, Component daraxti.
+          </p>
+          <p class="text-slate-500 text-sm mt-3 max-w-3xl">
+            Bu sahifa juda batafsil yozilgan. Har bir tugma, har bir menyu, har bir “nimani bosaman?” savoliga javob bor.
+            Shoshilmang. Bir marta sekin o‘qing, keyin Editor da takrorlang.
+          </p>
+        </section>
+
+        <!-- MAQSAD -->
+        <section id="maqsad">
+          <div class="callout callout-info">
+            <div class="text-violet-400 shrink-0 mt-0.5">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-violet-200 text-base mb-1 m-0">Bugungi aniq maqsad (3 ta narsa)</h3>
+              <ol class="text-slate-300 text-sm leading-relaxed m-0 mt-2 pl-4 list-decimal space-y-1">
+                <li><code>BP_TestObject</code> nomli Actor Blueprint yaratish</li>
+                <li>Ungа Static Mesh (Cube) + Box Collision qo‘shish va hierarchy ni to‘g‘ri qurish</li>
+                <li>Levelga 2–3 nusxa qo‘yib, Transform va Show Collision bilan tekshirish</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <article class="prose-custom">
+
+          <!-- NIMA UCHUN -->
+          <section id="nima-uchun">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm font-bold">01</span>
+              Nima uchun bu kun muhim?
+            </h2>
+            <p>
+              Kecha (Kun 1) siz Editor ni ochdingiz, papkalar yaratdingiz, Levelga oddiy Cube/Sphere qo‘ydingiz.
+              U shakllar <strong>Place Actors</strong> dan kelgan “tayyor” narsalar edi — ularni o‘zingiz “qayta ishlab chiqmagansiz”.
+            </p>
+            <p>
+              Bugun boshqacha: siz <strong>o‘zingizning Actor Blueprint</strong>ingizni yaratasiz.
+              Keyinchalik o‘yindagi eshik, generator, kalit, battery — hammasi shu kabi Actor Blueprint bo‘ladi.
+              Agar bugun hierarchy (Mesh + Collision) ni chalkashtirsangiz, keyinroq Interaction, Overlap, Line Trace ishlamay qoladi.
+              Shu sabab bugun <em>sekin</em> va <em>aniq</em> qilamiz.
+            </p>
+            <div class="callout callout-deep">
+              <div class="text-indigo-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <p class="text-sm text-slate-300 m-0">
+                <strong>90 kunlik kurs konteksti:</strong> Day 15+ da Interaction System, Day 29+ da Item System —
+                ularning hammasi “Actor + Component + Collision” ustiga quriladi.
+                Bugun poydevor.
+              </p>
+            </div>
+          </section>
+
+          <!-- METAFORA -->
+          <section id="metafora">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-fuchsia-500/20 text-fuchsia-400 flex items-center justify-center text-sm font-bold">02</span>
+              Metafora: uy va xonalar (eslab qoling)
+            </h2>
+            <p>
+              Unreal da deyarli har bir “narsa” ikki qatlamdan iborat:
+            </p>
+            <ul>
+              <li><strong>Actor</strong> = butun uy. Level ichiga qo‘yiladigan bitta ob’ekt.</li>
+              <li><strong>Component</strong> = uyning qismlari: devor, eshik, lampochka, qulf.</li>
+            </ul>
+            <p>
+              Uy (Actor) ko‘chsa — ichidagi hamma narsa ham ko‘chadi.
+              Bu <strong>Parent / Child</strong> bog‘lanish: Parent harakatlansa, Child ham u bilan birga ketadi.
+            </p>
+            <p>
+              Bugungi uyimiz: <code>BP_TestObject</code>.
+              Xonalari:
+            </p>
+            <ul>
+              <li><strong>DefaultSceneRoot</strong> — “poydevor / ildiz” (har Actor da bor)</li>
+              <li><strong>Static Mesh</strong> — ko‘z bilan ko‘radigan Cube (devor / shakl)</li>
+              <li><strong>Box Collision</strong> — teginish / fizika chegarasi (qalin quti)</li>
+            </ul>
+            <p>
+              Challenge da yana bitta “lampochka” qo‘shasiz: <strong>Point Light</strong>.
+            </p>
+          </section>
+
+          <!-- ACTOR -->
+          <section id="actor-nima">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-sm font-bold">03</span>
+              Actor nima? (batafsil)
+            </h2>
+            <p>
+              <strong>Actor</strong> — Level (Map) ichiga joylashtirilishi mumkin bo‘lgan har qanday ob’ekt.
+              Misollar:
+            </p>
+            <ul>
+              <li>Oddiy Cube (Static Mesh Actor)</li>
+              <li>Chiroq (Point Light Actor)</li>
+              <li>O‘yinchi personaji (Character — Actor ning maxsus turi)</li>
+              <li>Eshik, generator, kalit — keyinroq siz yaratadiganlar</li>
+            </ul>
+            <p>
+              <strong>Blueprint Actor</strong> — Actor ning “qayta ishlatiladigan shabloni”.
+              Bir marta <code>BP_TestObject</code> yaratasiz, Levelga 10 ta nusxa qo‘yishingiz mumkin.
+              Har bir nusxa = <strong>Instance</strong>. Blueprint o‘zgarsa, odatda instance lar ham yangilanadi (agar override qilinmagan bo‘lsa).
+            </p>
+            <p>
+              Bugun yaratadigan narsa: <strong>Blueprint Class → Actor</strong>.
+              Parent class sifatida “Actor” tanlanadi (Character emas, Pawn emas — oddiy Actor).
+            </p>
+            <table class="mini-table not-prose">
+              <thead>
+                <tr><th>Atama</th><th>Ma'nosi</th><th>Bugun</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Actor</td><td>Leveldagi ob'ekt</td><td>Ha — BP_TestObject</td></tr>
+                <tr><td>Blueprint</td><td>Vizual shablon / klass</td><td>Ha</td></tr>
+                <tr><td>Instance</td><td>Leveldagi bitta nusxa</td><td>2–3 ta qo'yamiz</td></tr>
+                <tr><td>Event Graph</td><td>Mantiq yoziladigan joy</td><td><strong>Yo'q</strong> — ertaga</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- COMPONENT -->
+          <section id="component-nima">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">04</span>
+              Component nima? (batafsil)
+            </h2>
+            <p>
+              <strong>Component</strong> — Actor ichidagi “qism”. Actor o‘zi bo‘sh quti bo‘lishi mumkin;
+              Component lar unga qobiliyat beradi:
+            </p>
+            <ul>
+              <li><strong>Static Mesh Component</strong> — 3D model ko‘rsatadi (Cube, qurol, mebel…)</li>
+              <li><strong>Box / Sphere / Capsule Collision</strong> — fizik yoki overlap chegara</li>
+              <li><strong>Point Light / Spot Light</strong> — yorug‘lik</li>
+              <li><strong>Audio Component</strong> — ovoz</li>
+              <li><strong>Widget Component</strong> — 3D dunyoda UI (bugun <em>qilmaymiz</em>)</li>
+            </ul>
+            <p>
+              Har bir Component ning o‘z <strong>Transform</strong>i bor (Location, Rotation, Scale) —
+              lekin u odatda Parent ga nisbatan (relative) hisoblanadi.
+            </p>
+            <div class="callout callout-tip">
+              <div class="text-sky-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <p class="text-sm text-slate-300 m-0">
+                Blueprint editorida chap tomonda <strong>Components</strong> paneli bor.
+                Shu yerda daraxt ko‘rinadi: Root, Mesh, Collision…
+                Add tugmasi bilan yangi Component qo‘shiladi.
+              </p>
+            </div>
+          </section>
+
+          <!-- HIERARCHY -->
+          <section id="hierarchy">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold">05</span>
+              Hierarchy — bugungi maqsad daraxti
+            </h2>
+            <p>
+              Quyidagi daraxtni <strong>ko‘zda saqlang</strong>. Editor da Components panelida xuddi shu ko‘rinish bo‘lishi kerak
+              (Point Light — faqat challenge dan keyin):
+            </p>
+
+            <div class="tree-box not-prose">
+              <div class="relative z-10 space-y-1">
+                <div class="mb-2 text-xs text-slate-500 uppercase tracking-wider">BP_TestObject · Components</div>
+                <div><span class="tree-node tree-root">DefaultSceneRoot</span> <span class="text-slate-500 text-xs ml-2">← ildiz (o'chirilmaydi)</span></div>
+                <div class="tree-line pl-4">│</div>
+                <div class="pl-4 flex flex-wrap items-center gap-2">
+                  <span class="tree-line">├─</span>
+                  <span class="tree-node tree-mesh">StaticMeshComponent</span>
+                  <span class="text-slate-500 text-xs">← ko'rinadigan Cube mesh</span>
+                </div>
+                <div class="tree-line pl-4">│</div>
+                <div class="pl-4 flex flex-wrap items-center gap-2">
+                  <span class="tree-line">└─</span>
+                  <span class="tree-node tree-col">BoxCollision</span>
+                  <span class="text-slate-500 text-xs">← fizik / overlap chegara</span>
+                </div>
+                <div class="mt-5 pt-4 border-t border-slate-800">
+                  <div class="text-xs text-slate-500 mb-2">Challenge (ixtiyoriy, lekin tavsiya):</div>
+                  <div class="pl-4 flex flex-wrap items-center gap-2">
+                    <span class="tree-line">└─</span>
+                    <span class="tree-node tree-light">PointLightComponent</span>
+                    <span class="text-slate-500 text-xs">← rangli nur</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p>
+              <strong>DefaultSceneRoot</strong> — Unreal avtomatik qo‘yadi.
+              Ba’zi hollarda Static Mesh ni Root qilib qo‘yish mumkin (drag), lekin bugun oddiy usul:
+              Root qoladi, Mesh va Collision uning “bolalari” yoki bir-biriga bog‘langan holda turadi.
+            </p>
+            <p>
+              Ideal holat (tavsiya): Box Collision ni Static Mesh ning <strong>child</strong> i qiling —
+              Mesh siljisa, Collision ham u bilan ketadi.
+            </p>
+          </section>
+
+          <!-- MESH VS COLLISION -->
+          <section id="mesh-vs-col">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">06</span>
+              Static Mesh vs Box Collision — nima farqi?
+            </h2>
+            <p>
+              Bu ikkalasini chalkashtirish — yangi boshlovchilarning eng katta xatosi.
+              Aniq ajrating:
+            </p>
+            <div class="grid sm:grid-cols-2 gap-4 not-prose my-5">
+              <div class="compare-card border-l-4 border-l-emerald-500">
+                <div class="text-emerald-400 font-bold text-sm mb-2">Static Mesh Component</div>
+                <ul class="text-sm text-slate-400 space-y-2 m-0 pl-4 list-disc">
+                  <li><strong class="text-slate-300">Ko‘rinadi</strong> — o‘yinchi ko‘zi bilan</li>
+                  <li>Ichida “qaysi 3D model?” tanlanadi (Cube, Sphere…)</li>
+                  <li>Material / rang keyinroq o‘zgaradi</li>
+                  <li>Faqat “chiroyli quti” bo‘lishi mumkin — o‘zi fizikani to‘liq boshqarmaydi</li>
+                </ul>
+              </div>
+              <div class="compare-card border-l-4 border-l-amber-500">
+                <div class="text-amber-400 font-bold text-sm mb-2">Box Collision Component</div>
+                <ul class="text-sm text-slate-400 space-y-2 m-0 pl-4 list-disc">
+                  <li><strong class="text-slate-300">Odatda ko‘rinmaydi</strong> (Show Collision yoqilsa wireframe)</li>
+                  <li>Hit, Overlap, bloklash shu orqali</li>
+                  <li>Mesh dan biroz katta qilish foydali (Interaction osonroq)</li>
+                  <li>Keyinroq Line Trace / Overlap event lar shu chegara bilan ishlaydi</li>
+                </ul>
+              </div>
+            </div>
+            <p>
+              Qisqa: <strong>Mesh = ko‘rinish</strong>, <strong>Collision = teginish qoidasi</strong>.
+              Ikkalasi kerak. Faqat Mesh qo‘yib qo‘ysangiz, ba’zi interaction usullari ishlamasligi mumkin.
+            </p>
+          </section>
+
+          <!-- PARENT CHILD -->
+          <section id="parent-child">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center text-sm font-bold">07</span>
+              Parent / Child — nima uchun muhim?
+            </h2>
+            <p>
+              Components panelida bitta Component ni boshqasining <strong>ichiga</strong> sudrab qo‘yishingiz mumkin.
+              Yuqoridagisi = Parent, pastdagisi = Child.
+            </p>
+            <ul>
+              <li>Parent ning Location o‘zgarsa → Child ham siljiydi</li>
+              <li>Parent Scale o‘zgarsa → Child ham (odatda) kattalashadi</li>
+              <li>Child ni alohida siljitish mumkin — lekin u Parent ga nisbatan offset saqlaydi</li>
+            </ul>
+            <p>
+              <strong>Amaliy maslahat:</strong> Box Collision ni Static Mesh ostiga (child) qiling.
+              Keyin Mesh ni Details da siljitsangiz, Collision ham qoladi.
+              Agar ikkalasi “aka-uka” (bir xil Parent ostida parallel) bo‘lsa ham ishlaydi,
+              lekin child qilish tartibliroq.
+            </p>
+            <div class="panel-shot not-prose my-4 text-slate-400">
+              <div class="text-violet-300/90 mb-2">// Components panel — misol ko'rinish</div>
+              <div>DefaultSceneRoot</div>
+              <div class="pl-4">└ StaticMeshComponent &nbsp;&nbsp;<span class="text-emerald-400/80">← Parent</span></div>
+              <div class="pl-8">└ BoxCollision &nbsp;&nbsp;<span class="text-amber-400/80">← Child (Mesh ostida)</span></div>
+            </div>
+          </section>
+
+          <!-- TRANSFORM -->
+          <section id="transform-eslatma">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center text-sm font-bold">08</span>
+              Transform eslatma (Kun 1 dan)
+            </h2>
+            <p>Details panelida har Component / Actor uchun:</p>
+            <ul>
+              <li><strong>Location</strong> — X, Y, Z (qayerda)</li>
+              <li><strong>Rotation</strong> — Pitch, Yaw, Roll</li>
+              <li><strong>Scale</strong> — 1 = asl o‘lcham; 2 = ikki baravar</li>
+            </ul>
+            <p>
+              Viewport yorliqlari: <span class="kb">W</span> Move, <span class="kb">E</span> Rotate, <span class="kb">R</span> Scale.
+              Bugun asosan Details da raqam o‘zgartirish va sudrash yetarli.
+            </p>
+          </section>
+
+          <!-- ═══════════════ AMALIY QADAMLAR ═══════════════ -->
+          <h2>
+            <span class="w-8 h-8 rounded-lg bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold">09</span>
+            Amaliy qadamlar — bosqichma-bosqich (hech narsa o‘tkazmang)
+          </h2>
+          <p>
+            Quyida har bir qadamda: <em>nima qilasiz</em>, <em>qayerga bosasiz</em>, <em>nima ko‘rishingiz kerak</em>.
+            Agar biror narsa mos kelmasa — “Tez-tez uchraydigan xatoliklar” bo‘limiga o‘ting.
+          </p>
+
+          <!-- QADAM 0 -->
+          <section id="qadam0">
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="step-num">0</div>
+                <div>
+                  <h3 class="m-0 text-white text-base font-bold">Oldindan tekshirish (30 soniya)</h3>
+                  <p class="text-sm text-slate-400 mt-1 mb-0">Loyiha ochiqmi? Papkalar bormi?</p>
+                </div>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-2 list-decimal list-inside pl-1">
+                <li><strong>Unreal Editor</strong> ochiq va <code class="text-violet-300">BetrayBuilder</code> project yuklangan bo‘lsin.</li>
+                <li>Content Browser da <code class="text-violet-300">Content/BetrayBuilder/Blueprints</code> (yoki Kun 1 da yaratgan <code>Blueprints</code> papkasi) ko‘rinsin.</li>
+                <li>Agar papka yo‘q bo‘lsa: Content Browser da Right-click → New Folder → <code>Blueprints</code>.</li>
+                <li>Level ochiq bo‘lsin (MAP_Day01 yoki istalgan test level). Saqlashni unutmang.</li>
+              </ol>
+              <div class="mt-3 p-3 rounded-lg bg-slate-900/80 border border-slate-700 text-xs text-slate-400">
+                <strong class="text-slate-300">Kutiladigan holat:</strong> Editor ishlayapti, Content Browser ko‘rinadi, Blueprints papkasi mavjud.
+              </div>
+            </div>
+          </section>
+
+          <!-- QADAM 1 -->
+          <section id="qadam1">
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="step-num">1</div>
+                <div>
+                  <h3 class="m-0 text-white text-base font-bold">BP_TestObject yaratish</h3>
+                  <p class="text-sm text-slate-400 mt-1 mb-0">Birinchi Actor Blueprint</p>
+                </div>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-2.5 list-decimal list-inside pl-1">
+                <li>Content Browser da <strong>Blueprints</strong> papkasiga kiring (ikki marta bosing yoki daraxt dan tanlang).</li>
+                <li>Bo‘sh joyda <strong>o‘ng tugma (Right-click)</strong> bosing.</li>
+                <li>Menyudan: <strong>Blueprint Class</strong> ni tanlang.
+                  <ul class="mt-1 ml-4 list-disc text-slate-400 space-y-1">
+                    <li>Agar “Blueprint Class” ko‘rinmasa: “Create Advanced Asset” yoki qidiruv maydoniga <code>Blueprint</code> yozing.</li>
+                  </ul>
+                </li>
+                <li>Ochilgan oynada (Pick Parent Class):
+                  <ul class="mt-1 ml-4 list-disc text-slate-400 space-y-1">
+                    <li>Yuqorida <strong>Actor</strong> ni bosing (Common Classes ichida odatda birinchi o‘rinda).</li>
+                    <li>Character / Pawn tanlamang — bugun oddiy Actor.</li>
+                  </ul>
+                </li>
+                <li>Nom berish so‘raladi. Aniq yozing: <code class="text-violet-300">BP_TestObject</code>
+                  <ul class="mt-1 ml-4 list-disc text-slate-400 space-y-1">
+                    <li>BP_ prefiksi = Blueprint (kurs konvensiyasi).</li>
+                    <li>Bo‘sh joy qo‘ymang. Katta-kichik harf: TestObject.</li>
+                  </ul>
+                </li>
+                <li>Enter. Content Browser da yangi asset paydo bo‘ladi.</li>
+                <li>Uni <strong>ikki marta bosing</strong> — Blueprint editor ochiladi (yangi oyna yoki tab).</li>
+              </ol>
+              <div class="mt-3 p-3 rounded-lg bg-slate-900/80 border border-slate-700 text-xs text-slate-400">
+                <strong class="text-slate-300">Kutiladigan holat:</strong> Blueprint editor ochiq.
+                Chapda Components (DefaultSceneRoot), o‘rtada Viewport, o‘ngda Details.
+                Yuqorida Compile va Save tugmalari.
+              </div>
+              <div class="mt-2 p-3 rounded-lg bg-amber-500/5 border border-amber-500/20 text-xs text-amber-200/90">
+                <strong>Agar “Actor” topilmasa:</strong> Pick Parent Class oynasida qidiruvga <code>Actor</code> yozing.
+                “All Classes” ni ochib qidiring. Engine ning asosiy Actor klassi kerak.
+              </div>
+            </div>
+          </section>
+
+          <!-- QADAM 2 -->
+          <section id="qadam2">
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="step-num">2</div>
+                <div>
+                  <h3 class="m-0 text-white text-base font-bold">Static Mesh Component qo‘shish</h3>
+                  <p class="text-sm text-slate-400 mt-1 mb-0">Ko‘rinadigan qism</p>
+                </div>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-2.5 list-decimal list-inside pl-1">
+                <li>Blueprint editorida <strong>chap yuqori</strong> — Components paneli.</li>
+                <li><strong>Add</strong> tugmasi (yoki “+ Add” / “Add Component”).</li>
+                <li>Qidiruv maydoniga yozing: <code class="text-violet-300">Static Mesh</code></li>
+                <li>Ro‘yxatdan <strong>Static Mesh</strong> ni tanlang (Static Mesh Component).</li>
+                <li>Qo‘shilgach, Components daraxtida yangi yozuv paydo bo‘ladi.
+                  Nomini o‘zgartirish ixtiyoriy (masalan <code>Mesh</code>) — lekin majburiy emas.</li>
+              </ol>
+              <div class="mt-3 p-3 rounded-lg bg-slate-900/80 border border-slate-700 text-xs text-slate-400">
+                <strong class="text-slate-300">Kutiladigan holat:</strong> Components da Static Mesh bor, lekin Viewport da hali “bo‘sh” yoki default ko‘rinish —
+                chunki mesh asset hali tanlanmagan (keyingi qadam).
+              </div>
+            </div>
+          </section>
+
+          <!-- QADAM 3 -->
+          <section id="qadam3">
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="step-num">3</div>
+                <div>
+                  <h3 class="m-0 text-white text-base font-bold">Cube mesh ni tanlash</h3>
+                  <p class="text-sm text-slate-400 mt-1 mb-0">Static Mesh asset biriktirish</p>
+                </div>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-2.5 list-decimal list-inside pl-1">
+                <li>Components da <strong>Static Mesh</strong> ni tanlang (bir marta bosing).</li>
+                <li>O‘ngda <strong>Details</strong> paneli ochiladi.</li>
+                <li>Static Mesh bo‘limini toping (odatda yuqorida).</li>
+                <li><strong>Static Mesh</strong> maydoni (None yoki bo‘sh) — yonidagi ochish / dropdown.</li>
+                <li>Qidiruvga yozing: <code class="text-violet-300">Cube</code>
+                  <ul class="mt-1 ml-4 list-disc text-slate-400 space-y-1">
+                    <li>Engine Content dan <code>Shape_Cube</code> yoki <code>Cube</code> topiladi.</li>
+                    <li>Agar hech narsa chiqmasa: Content Browser filtrida “Engine Content” yoqilganini tekshiring (settings / view options).</li>
+                  </ul>
+                </li>
+                <li>Cube ni tanlang. Viewport da darhol kub ko‘rinishi kerak.</li>
+              </ol>
+              <div class="mt-3 p-3 rounded-lg bg-slate-900/80 border border-slate-700 text-xs text-slate-400">
+                <strong class="text-slate-300">Kutiladigan holat:</strong> Blueprint Viewport o‘rtasida oq/kulrang kub.
+                Agar qorong‘i bo‘lsa — Viewport da lit/unlit ni almashtirib ko‘ring; lekin mesh tanlangani muhim.
+              </div>
+              <div class="mt-2 p-3 rounded-lg bg-amber-500/5 border border-amber-500/20 text-xs text-amber-200/90">
+                <strong>Cube topilmasa:</strong> Content Browser → View Options (o‘ng pastki) →
+                “Show Engine Content” yoqing. Qayta qidiring: Shape_Cube.
+              </div>
+            </div>
+          </section>
+
+          <!-- QADAM 4 -->
+          <section id="qadam4">
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="step-num">4</div>
+                <div>
+                  <h3 class="m-0 text-white text-base font-bold">Box Collision qo‘shish</h3>
+                  <p class="text-sm text-slate-400 mt-1 mb-0">Fizik / overlap chegara</p>
+                </div>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-2.5 list-decimal list-inside pl-1">
+                <li>Yana Components → <strong>Add</strong>.</li>
+                <li>Qidiruv: <code class="text-violet-300">Box Collision</code> (yoki faqat <code>Box</code>).</li>
+                <li><strong>Box Collision</strong> ni tanlang.</li>
+                <li>Daraxtga qo‘shiladi. Hozircha Mesh bilan bir xil joyda (0,0,0) bo‘lishi mumkin.</li>
+              </ol>
+              <div class="mt-3 p-3 rounded-lg bg-slate-900/80 border border-slate-700 text-xs text-slate-400">
+                <strong class="text-slate-300">Kutiladigan holat:</strong> Components da ikkita yangi element: Static Mesh va Box Collision.
+              </div>
+            </div>
+          </section>
+
+          <!-- QADAM 5 -->
+          <section id="qadam5">
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="step-num">5</div>
+                <div>
+                  <h3 class="m-0 text-white text-base font-bold">Collision ni Mesh child qilish (tavsiya)</h3>
+                  <p class="text-sm text-slate-400 mt-1 mb-0">Parent / Child bog‘lanish</p>
+                </div>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-2.5 list-decimal list-inside pl-1">
+                <li>Components panelida <strong>Box Collision</strong> ni sichqoncha bilan ushlang.</li>
+                <li>Uni <strong>Static Mesh</strong> yozuvi <em>ustiga</em> yoki biroz pastiga (child bo‘lishi uchun) sudrang.</li>
+                <li>Qo‘yganda daraxt shunday bo‘lishi kerak:
+                  <div class="panel-shot mt-2 mb-2 text-slate-400">
+                    DefaultSceneRoot<br>
+                    &nbsp;&nbsp;└ StaticMeshComponent<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ BoxCollision
+                  </div>
+                </li>
+                <li>Agar sudrash ishlamasa: Box Collision tanlang → Details da Attach / Parent sozlamasi (kamdan-kam kerak) yoki
+                  o‘ng tugma → Attach to → Static Mesh.</li>
+              </ol>
+              <div class="mt-3 p-3 rounded-lg bg-sky-500/5 border border-sky-500/20 text-xs text-sky-200/90">
+                <strong>Majburiy emas, lekin tavsiya.</strong> Parallel (aka-uka) qilib qoldirsangiz ham bugungi test ishlaydi.
+                Child qilish — keyinroq odat yaxshi.
+              </div>
+            </div>
+          </section>
+
+          <!-- QADAM 6 -->
+          <section id="qadam6">
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="step-num">6</div>
+                <div>
+                  <h3 class="m-0 text-white text-base font-bold">Collision ni biroz kattalashtirish</h3>
+                  <p class="text-sm text-slate-400 mt-1 mb-0">Mesh atrofida “qalinroq” chegara</p>
+                </div>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-2.5 list-decimal list-inside pl-1">
+                <li>Components da <strong>Box Collision</strong> ni tanlang.</li>
+                <li>Details da <strong>Shape</strong> yoki <strong>Box Extent</strong> ni toping.
+                  <ul class="mt-1 ml-4 list-disc text-slate-400 space-y-1">
+                    <li>Box Extent: masalan X=55, Y=55, Z=55 (default ~32–50 atrofida bo‘lishi mumkin).</li>
+                    <li>Yoki Transform → Scale: 1.1 yoki 1.2 (Mesh dan biroz katta).</li>
+                  </ul>
+                </li>
+                <li>Maqsad: wireframe (keyinroq Show Collision) Mesh dan biroz tashqariga chiqsin.</li>
+                <li>Juda katta qilmang (butun xonani bosib olmasin) — 10–20% kattaroq yetarli.</li>
+              </ol>
+              <div class="mt-3 p-3 rounded-lg bg-slate-900/80 border border-slate-700 text-xs text-slate-400">
+                <strong class="text-slate-300">Nima uchun kattaroq?</strong> Keyinroq o‘yinchi “E” bosganda Line Trace / Overlap
+                chegara ichiga tushishi osonroq bo‘ladi. Juda qattiq mesh-sized collision ba’zan “tegmay” qoladi.
+              </div>
+            </div>
+          </section>
+
+          <!-- QADAM 7 -->
+          <section id="qadam7">
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="step-num">7</div>
+                <div>
+                  <h3 class="m-0 text-white text-base font-bold">Compile va Save</h3>
+                  <p class="text-sm text-slate-400 mt-1 mb-0">Har doim odat qiling</p>
+                </div>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-2 list-decimal list-inside pl-1">
+                <li>Yuqoridagi toolbar da <strong>Compile</strong> bosing (yoki <span class="kb">F7</span> — versiyaga qarab).</li>
+                <li>Yashil “checkbox” / xato yo‘qligi — muvaffaqiyat.</li>
+                <li><strong>Save</strong> (Ctrl+S). Asset saqlansin.</li>
+                <li>Agar Compile qizil xato bersa — Components da Mesh tanlanganini va nomni tekshiring. Bugun script yo‘q, xato kam bo‘ladi.</li>
+              </ol>
+            </div>
+          </section>
+
+          <!-- QADAM 8 -->
+          <section id="qadam8">
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="step-num">8</div>
+                <div>
+                  <h3 class="m-0 text-white text-base font-bold">Levelga 2–3 nusxa joylashtirish</h3>
+                  <p class="text-sm text-slate-400 mt-1 mb-0">Instance lar</p>
+                </div>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-2.5 list-decimal list-inside pl-1">
+                <li>Asosiy Level Viewport ga qayting (Blueprint oynasini yopish shart emas — tab almashtiring).</li>
+                <li>Content Browser dan <code class="text-violet-300">BP_TestObject</code> ni toping.</li>
+                <li>Uni <strong>Viewport</strong> ga sudrab tashlang (drag & drop). Birinchi instance paydo bo‘ladi.</li>
+                <li>Yana bir-ikkita:
+                  <ul class="mt-1 ml-4 list-disc text-slate-400 space-y-1">
+                    <li>Yana drag qiling, yoki</li>
+                    <li>Birinchisini tanlab <span class="kb">Alt</span> + sudrash (duplicate), yoki</li>
+                    <li>Ctrl+W / Duplicate.</li>
+                  </ul>
+                </li>
+                <li>Har birini turli joyga qo‘ying — bir-biriga yopishib qolmasin.</li>
+              </ol>
+              <div class="mt-3 p-3 rounded-lg bg-slate-900/80 border border-slate-700 text-xs text-slate-400">
+                <strong class="text-slate-300">Kutiladigan holat:</strong> Levelda 2–3 ta bir xil ko‘rinishdagi kub (sizning BP dan).
+                Outliner da BP_TestObject, BP_TestObject2… ko‘rinishi mumkin.
+              </div>
+            </div>
+          </section>
+
+          <!-- QADAM 9 -->
+          <section id="qadam9">
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="step-num">9</div>
+                <div>
+                  <h3 class="m-0 text-white text-base font-bold">Show Collision — chegara ko‘rinsin</h3>
+                  <p class="text-sm text-slate-400 mt-1 mb-0">Testning eng muhim qismi</p>
+                </div>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-2.5 list-decimal list-inside pl-1">
+                <li>Viewport da yuqori menyu: <strong>Show</strong> (yoki View) → <strong>Collision</strong> ni yoqing.
+                  <ul class="mt-1 ml-4 list-disc text-slate-400 space-y-1">
+                    <li>Ba’zi versiyalarda: Viewport chap yuqori “Lit” yonidagi Show bayroqchalari.</li>
+                    <li>Yoki <span class="kb">Alt</span> + <span class="kb">C</span> (ko‘p loyihalarda Collision toggle).</li>
+                  </ul>
+                </li>
+                <li>BP_TestObject instance lar atrofida <strong>wireframe</strong> (yashil / binafsha chiziqlar) ko‘rinishi kerak.</li>
+                <li>Wireframe Mesh dan biroz katta bo‘lsa — yaxshi (qadam 6 ishlagan).</li>
+                <li>Agar umuman ko‘rinmasa:
+                  <ul class="mt-1 ml-4 list-disc text-slate-400 space-y-1">
+                    <li>Instance tanlanganmi?</li>
+                    <li>Blueprint da Box Collision borligini qayta ochib tekshiring.</li>
+                    <li>Compile + Save qilinganmi?</li>
+                    <li>Show → Collision haqiqatan ON mi?</li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+          </section>
+
+          <!-- QADAM 10 -->
+          <section id="qadam10">
+            <div class="step-card not-prose">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="step-num">10</div>
+                <div>
+                  <h3 class="m-0 text-white text-base font-bold">Transform bilan o‘ynash</h3>
+                  <p class="text-sm text-slate-400 mt-1 mb-0">Instance larni turlicha qiling</p>
+                </div>
+              </div>
+              <ol class="text-sm text-slate-300 space-y-2 list-decimal list-inside pl-1">
+                <li>Bitta BP_TestObject ni tanlang.</li>
+                <li>Details → Transform → Location ni o‘zgartiring (masalan Z ni ko‘tarib “osib qo‘ying”).</li>
+                <li>Scale ni 0.5 yoki 2 qilib ko‘ring.</li>
+                <li>Rotation Yaw ni 45° qiling.</li>
+                <li>Boshqa instance da boshqacha qiymatlar qo‘ying — Blueprint bitta, instance lar farq qilishi mumkin.</li>
+              </ol>
+              <div class="mt-3 p-3 rounded-lg bg-slate-900/80 border border-slate-700 text-xs text-slate-400">
+                <strong class="text-slate-300">Eslatma:</strong> Instance dagi Transform — shu joydagi nusxaga tegishli.
+                Blueprint ichidagi Mesh Scale ni o‘zgartirsangiz, yangi joylashtirilganlar ta’sirlanadi;
+                allaqachon override qilingan instance lar ba’zan eski qiymatni saqlaydi.
+              </div>
+            </div>
+          </section>
+
+          <!-- XATOLIKLAR -->
+          <section id="xatoliklar">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm font-bold">!</span>
+              Tez-tez uchraydigan xatoliklar va yechimlar
+            </h2>
+
+            <div class="faq-item not-prose">
+              <div class="faq-q">1) Blueprint Class yaratmoqchi bo‘lsam, Actor chiqmayapti</div>
+              <p class="faq-a">Pick Parent Class oynasida qidiruvga <code>Actor</code> yozing. “All Classes” ni kengaytiring. Common Classes da “Actor” bo‘lishi kerak. Character tanlamang.</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">2) Static Mesh qo‘shdim, lekin Viewport bo‘sh</div>
+              <p class="faq-a">Mesh Component tanlangan, lekin Static Mesh asset (Cube) hali None. Details → Static Mesh → Cube / Shape_Cube tanlang. Engine Content yoqilganini tekshiring.</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">3) Cube umuman topilmayapti</div>
+              <p class="faq-a">Content Browser → Settings / View Options → Show Engine Content. Keyin qidiruv: Shape_Cube. Yoki Starter Content yoqilgan loyihada boshqa cube assetlar ham bo‘lishi mumkin.</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">4) Show Collision yoqsam ham wireframe yo‘q</div>
+              <p class="faq-a">BP da Box Collision borligini ishonch qiling. Compile + Save. Leveldagi instance eskisi bo‘lishi mumkin — o‘chirib qayta drag qiling. Collision Enabled (Query and Physics) ekanligini Details da tekshiring.</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">5) Levelga tashlasam, hech narsa ko‘rinmaydi</div>
+              <p class="faq-a">Kamera yerdan uzoqda yoki ichida bo‘lishi mumkin. F (Focus) tugmasi — tanlangan Actor ga fokus. Yoki Outliner dan BP_TestObject ni tanlab, Viewport da F bosing.</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">6) Components panelini topa olmayapman</div>
+              <p class="faq-a">Blueprint editor ichidasizmi (Level Viewport emas)? Window → Components. Yoki editor layout ni Default ga qaytaring.</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">7) Parent/Child sudrash ishlamayapti</div>
+              <p class="faq-a">Component ni aniq nom ustiga tashlang. Yoki o‘ng tugma → Attach To. Bugun parallel qoldirish ham mumkin — test o‘tadi.</p>
+            </div>
+          </section>
+
+          <!-- TEST -->
+          <section id="test">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">✓</span>
+              Test Checklist
+            </h2>
+            <p>Har birini bajarib, belgilang. Hammasi yashil bo‘lsa — kun yopildi.</p>
+            <div id="checklist" class="not-prose mt-3 space-y-1"></div>
+            <div class="mt-3 flex items-center justify-between text-sm not-prose">
+              <span class="text-slate-500">Bajarildi: <span id="check-count" class="text-violet-400 font-semibold">0</span> / <span id="check-total">14</span></span>
+              <button id="btn-check-all" class="text-xs text-slate-500 hover:text-violet-400 transition">Barchasini belgilash</button>
+            </div>
+          </section>
+
+          <!-- NATIJA -->
+          <section id="natija">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center text-sm font-bold">10</span>
+              Kutilayotgan natija
+            </h2>
+            <ul>
+              <li><code>BP_TestObject</code> Actor Blueprint yaratilgan va saqlangan</li>
+              <li>Component hierarchy tushunilgan: Root → Mesh → Collision (yoki parallel, lekin ikkalasi bor)</li>
+              <li>Levelda kamida 2 ta instance, turli Transform</li>
+              <li>Show Collision da chegara ko‘rinadi</li>
+            </ul>
+            <p class="text-sm text-slate-500">
+              Structure: <code>Content/BetrayBuilder/Blueprints/BP_TestObject</code>
+              (yoki sizning Blueprints papkangiz yo‘li)
+            </p>
+          </section>
+
+          <!-- QILMANG -->
+          <section id="qilmang">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-sm font-bold">✕</span>
+              Bugun nima qilmang
+            </h2>
+            <div class="callout callout-danger">
+              <div class="text-red-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+              </div>
+              <div>
+                <ul class="text-sm text-slate-300 m-0 list-none pl-0 space-y-2">
+                  <li><span class="text-red-400 font-bold">✕</span> <strong>Event Graph</strong> da node yozish — ertaga (Kun 3)</li>
+                  <li><span class="text-red-400 font-bold">✕</span> <strong>Widget Component</strong> — bugun shart emas, chalkashtiradi</li>
+                  <li><span class="text-red-400 font-bold">✕</span> C++ class yaratish</li>
+                  <li><span class="text-red-400 font-bold">✕</span> Material / Texture bilan chuqur o‘ynash</li>
+                  <li><span class="text-red-400 font-bold">✕</span> Bir nechta murakkab Actor turlari — faqat BP_TestObject</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- CHALLENGE -->
+          <section id="challenge">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">★</span>
+              Challenge — Point Light (batafsil)
+            </h2>
+            <div class="callout callout-warning">
+              <div class="text-amber-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-amber-300 mb-2 m-0">Uchinchi Component: Point Light</h4>
+                <p class="text-sm text-slate-300 m-0 mb-3">
+                  Maqsad: obyekt atrofida rangli nur. Component yana bir “qatlam” ekanligini his qilasiz.
+                </p>
+                <ol class="text-sm text-slate-300 m-0 pl-4 list-decimal space-y-1.5">
+                  <li>BP_TestObject ni oching.</li>
+                  <li>Add Component → <code>Point Light</code>.</li>
+                  <li>Details → Intensity: masalan 3000–8000 (qorong‘i levelda seziladi).</li>
+                  <li>Light Color: qizil yoki ko‘k tanlang (Color picker).</li>
+                  <li>Attenuation Radius: 200–500 (nur qancha uzoqqa yetadi).</li>
+                  <li>Compile, Save. Levelda instance yaqinida rangli yorug‘lik ko‘rinsin.</li>
+                  <li>Ixtiyoriy: Light ni Mesh child qiling — mesh siljisa nur ham ketadi.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="tree-box not-prose">
+              <div class="relative z-10 text-xs text-slate-500 mb-2">Challenge dan keyin daraxt:</div>
+              <div class="relative z-10 space-y-1">
+                <div><span class="tree-node tree-root">DefaultSceneRoot</span></div>
+                <div class="pl-4 flex flex-wrap items-center gap-2"><span class="tree-line">├─</span><span class="tree-node tree-mesh">StaticMesh</span></div>
+                <div class="pl-8 flex flex-wrap items-center gap-2"><span class="tree-line">└─</span><span class="tree-node tree-col">BoxCollision</span></div>
+                <div class="pl-4 flex flex-wrap items-center gap-2"><span class="tree-line">└─</span><span class="tree-node tree-light">PointLight</span></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- FAQ -->
+          <section id="faq">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center text-sm font-bold">?</span>
+              FAQ — o‘qiyotganda chiqadigan savollar
+            </h2>
+
+            <div class="faq-item not-prose">
+              <div class="faq-q">BP_ prefiksi majburiymi?</div>
+              <p class="faq-a">Majburiy emas, lekin 90 kunlik kursda barcha Blueprint lar BP_ bilan boshlanadi. Keyin Content Browser da topish oson. Odatlaning.</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">Nima uchun Character emas, Actor?</div>
+              <p class="faq-a">Character — yurish, capsule, input uchun maxsus. Oddiy “dunyodagi buyum” uchun Actor yetarli va engil. Eshik, quti, generator — Actor.</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">DefaultSceneRoot ni o‘chirsam bo‘ladimi?</div>
+              <p class="faq-a">Odatda yo‘q / kerak emas. Ba’zi hollarda Mesh ni root qilishadi. Bugun DefaultSceneRoot ni qoldiring.</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">Collision ni Mesh dan kichik qilsam nima bo‘ladi?</div>
+              <p class="faq-a">Tashqi “tegish” qiyinlashadi. Interaction keyinroq noqulay bo‘lishi mumkin. Biroz kattaroq — xavfsizroq.</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">Play bosib ko‘rsam bo‘ladimi?</div>
+              <p class="faq-a">Ha. Kublar turganini ko‘rasiz. Lekin bugun yangi mantiq yo‘q — E bosib hech narsa bo‘lmaydi (bu Kun 3–7).</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">Bir nechta BP_TestObject ni keyin o‘zgartirsam, hammasi yangilanadimi?</div>
+              <p class="faq-a">Blueprint dagi Component o‘zgarishlari odatda instance larga tarqaladi. Instance da override qilingan qiymatlar (masalan maxsus Scale) saqlanib qolishi mumkin.</p>
+            </div>
+            <div class="faq-item not-prose">
+              <div class="faq-q">Systems papkasidagi BP_Sandbox (Kun 1 challenge) nima bo‘ladi?</div>
+              <p class="faq-a">U alohida mashq edi. Bugun asosiy e’tibor BP_TestObject. BP_Sandbox ni xohlasangiz xuddi shu usulda Mesh qo‘shib boyitishingiz mumkin — majburiy emas.</p>
+            </div>
+          </section>
+
+          <!-- PROFESSOR -->
+          <section id="professor">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">★</span>
+              Professor izohi
+            </h2>
+            <div class="callout callout-professor">
+              <div class="text-amber-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              </div>
+              <div class="text-sm text-slate-300 leading-relaxed">
+                <p class="m-0 mb-3">
+                  Unreal da “narsa” degani deyarli har doim <strong class="text-amber-200">Actor + Components</strong>.
+                  Bugun siz shu jumlani nafaqat o‘qidingiz — qo‘lda yig‘dingiz.
+                </p>
+                <p class="m-0 mb-3">
+                  Ko‘pchilik yangi o‘quvchi darhol Event Graph ga shoshiladi.
+                  Siz esa avval <strong class="text-amber-200">suyak tuzilmani</strong> to‘g‘ri qo‘ydingiz.
+                  Ertaga BeginPlay va Print String yozasiz — lekin Mesh va Collision allaqachon joyida.
+                </p>
+                <p class="m-0">
+                  Hierarchy ni chalkashtirmang. Har safar yangi Actor ochganda so‘rang:
+                  “Ko‘rinish qayerda? Chegara qayerda? Parent kim?”
+                  Shu uchta savol 90 kun davomida sizni qutqaradi.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- ERTAGA -->
+          <section id="ertaga">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-slate-500/20 text-slate-400 flex items-center justify-center text-sm font-bold">→</span>
+              Ertaga nima bo‘ladi? (Kun 3)
+            </h2>
+            <p>
+              Kun 3 da <code>BP_TestObject</code> ning <strong>Event Graph</strong> i ochiladi.
+              Birinchi marta:
+            </p>
+            <ul>
+              <li>BeginPlay → Print String (“Salom, BetrayBuilder!”)</li>
+              <li>Boolean variable + Branch</li>
+              <li>Sichqoncha input bilan oddiy mantiq</li>
+            </ul>
+            <p>
+              Bugun yaratgan Actor — ertangi “dasturlash maydoni”.
+              Shu sabab bugun Compile/Save ni unutmang.
+            </p>
+            <div class="callout callout-success">
+              <div class="text-green-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <p class="text-sm text-slate-300 m-0">
+                Checklist dagi barcha bandlar yashil bo‘lsa — Kun 2 yopildi. Dam oling yoki Challenge (Point Light) ni qo‘shing.
+              </p>
+            </div>
+          </section>
+
+          <!-- QISQA XULOSA -->
+          <section id="xulosa">
+            <h2>
+              <span class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm font-bold">∑</span>
+              Bir qarashda xulosa
+            </h2>
+            <table class="mini-table not-prose">
+              <thead>
+                <tr><th>Tushuncha</th><th>Bugun nima qildik</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Actor</td><td>BP_TestObject yaratdik</td></tr>
+                <tr><td>Static Mesh</td><td>Cube ko'rinishini berdik</td></tr>
+                <tr><td>Box Collision</td><td>Fizik chegara qo'shdik</td></tr>
+                <tr><td>Hierarchy</td><td>Root → Mesh → Collision daraxti</td></tr>
+                <tr><td>Parent/Child</td><td>Collision ni Mesh ga bog'lash (tavsiya)</td></tr>
+                <tr><td>Instance</td><td>Levelga 2–3 nusxa</td></tr>
+                <tr><td>Show Collision</td><td>Chegarani ko'z bilan tekshirdik</td></tr>
+                <tr><td>Script</td><td>Yo'q — ertaga</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+        </article>
+
+        <!-- NAV -->
+        <div class="mt-14 pt-8 border-t border-slate-800 flex flex-col sm:flex-row gap-3 justify-between">
+          <a href="day-01.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 text-sm transition">
+            ← Kun 1
+          </a>
+          <a href="../index.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium transition">
+            Kursga qaytish
+          </a>
+          <a href="day-03.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition shadow-lg shadow-violet-500/20">
+            Kun 3 — Blueprint asoslari →
+          </a>
+        </div>
+
+        <footer class="mt-10 pb-8 text-center text-xs text-slate-600">
+          Betray Builder · Kun 2 / 90 · Actor va Component · To'liq qo'llanma · Stage 1
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const CHECKLIST_KEY = 'bb_day02_checklist_v3';
+    const CHECK_ITEMS = [
+      "BetrayBuilder project ochiq, Blueprints papkasi bor",
+      "Blueprint Class → Actor tanlandi",
+      "Nom: BP_TestObject, asset saqlandi",
+      "Blueprint editor ochildi (Components + Viewport + Details)",
+      "Static Mesh Component qo'shildi",
+      "Static Mesh maydonida Cube / Shape_Cube tanlandi",
+      "Viewport da kub ko'rinadi",
+      "Box Collision Component qo'shildi",
+      "Collision Mesh child qilindi yoki parallel qoldirildi (ongli)",
+      "Collision Mesh dan biroz kattaroq qilindi",
+      "Compile muvaffaqiyatli, Save qilindi",
+      "Levelga kamida 2 ta BP_TestObject instance qo'yildi",
+      "Show Collision yoqildi, wireframe ko'rinadi",
+      "Turli Transform (Location/Scale/Rotation) sinab ko'rildi"
+    ];
+
+    function safeGet(key) {
+      try { return JSON.parse(localStorage.getItem(key) || '[]'); }
+      catch { return []; }
+    }
+    function safeSet(key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); }
+      catch {}
+    }
+
+    let checked = new Set(safeGet(CHECKLIST_KEY));
+
+    function renderChecklist() {
+      const container = document.getElementById('checklist');
+      if (!container) return;
+      container.innerHTML = CHECK_ITEMS.map((text, i) => {
+        const isChecked = checked.has(i);
+        return `
+          <div class="checklist-item ${isChecked ? 'checked' : ''}" data-idx="${i}">
+            <div class="check-box">
+              ${isChecked ? '<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>' : ''}
+            </div>
+            <span class="check-label text-sm text-slate-300 leading-snug">${text}</span>
+          </div>
+        `;
+      }).join('');
+      container.querySelectorAll('.checklist-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const idx = +el.dataset.idx;
+          if (checked.has(idx)) checked.delete(idx);
+          else checked.add(idx);
+          safeSet(CHECKLIST_KEY, [...checked]);
+          renderChecklist();
+          updateProgress();
+        });
+      });
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const total = CHECK_ITEMS.length;
+      const done = checked.size;
+      const percent = Math.round((done / total) * 100);
+      const el = (id) => document.getElementById(id);
+      if (el('check-count')) el('check-count').textContent = done;
+      if (el('check-total')) el('check-total').textContent = total;
+      if (el('day-progress-text')) el('day-progress-text').textContent = done;
+      if (el('day-progress-max')) el('day-progress-max').textContent = total;
+      if (el('sidebar-percent')) el('sidebar-percent').textContent = percent + '%';
+      if (el('sidebar-bar')) el('sidebar-bar').style.width = percent + '%';
+      const ring = el('day-progress-ring');
+      if (ring) {
+        const circumference = 2 * Math.PI * 15.5;
+        ring.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+      }
+    }
+
+    document.getElementById('btn-check-all')?.addEventListener('click', () => {
+      if (checked.size === CHECK_ITEMS.length) checked.clear();
+      else CHECK_ITEMS.forEach((_, i) => checked.add(i));
+      safeSet(CHECKLIST_KEY, [...checked]);
+      renderChecklist();
+    });
+
+    document.getElementById('btn-reset-day')?.addEventListener('click', () => {
+      if (confirm('Bugungi checklist tozalansinmi?')) {
+        checked.clear();
+        safeSet(CHECKLIST_KEY, []);
+        renderChecklist();
+      }
+    });
+
+    document.querySelectorAll('.toc-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const id = link.getAttribute('href')?.slice(1);
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    renderChecklist();
+  </script>
+</body>
+</html>

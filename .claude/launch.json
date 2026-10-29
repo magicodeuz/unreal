@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "course",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8090", "--bind", "127.0.0.1"],
+      "port": 8090
+    },
+    {
+      "name": "neocoder",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8091", "--bind", "127.0.0.1", "--directory", "C:/Users/user/Desktop/typing_games"],
+      "port": 8091
+    }
+  ]
+}
